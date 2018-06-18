@@ -8,9 +8,6 @@ using System.IO;
 
 namespace PhotoFrame.Persistence
 {
-    // test
-    // 会社PCで編集しました
-
     /// <summary>
     /// <see cref="IPhotoFileService">の実装クラス
     /// </summary>
