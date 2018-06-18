@@ -14,6 +14,8 @@ namespace PhotoFrame.Persistence.Test
         private IPhotoRepository photoRepository;
         private IAlbumRepository albumRepository;
 
+        //　てすと
+
         [TestInitialize]
         public void SetUp()
         {
