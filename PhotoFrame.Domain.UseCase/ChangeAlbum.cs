@@ -9,6 +9,8 @@ namespace PhotoFrame.Domain.UseCase
 {
     public class ChangeAlbum
     {
+        // test
+
         private readonly IAlbumRepository albumRepository;
         private readonly IPhotoRepository photoRepository;
 
