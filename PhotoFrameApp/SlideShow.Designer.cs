@@ -30,15 +30,15 @@
         {
             this.components = new System.ComponentModel.Container();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.pictureBox_SelectedPhotos = new System.Windows.Forms.PictureBox();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.button_Back = new System.Windows.Forms.Button();
-            this.button_Next = new System.Windows.Forms.Button();
             this.checkBox_AutoPlay = new System.Windows.Forms.CheckBox();
+            this.button_Next = new System.Windows.Forms.Button();
+            this.button_Back = new System.Windows.Forms.Button();
+            this.pictureBox_SelectedPhotos = new System.Windows.Forms.PictureBox();
             this.timer_ChangePhoto = new System.Windows.Forms.Timer(this.components);
             this.panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_SelectedPhotos)).BeginInit();
             this.panel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_SelectedPhotos)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
@@ -50,15 +50,6 @@
             this.panel1.Size = new System.Drawing.Size(651, 446);
             this.panel1.TabIndex = 4;
             // 
-            // pictureBox_SelectedPhotos
-            // 
-            this.pictureBox_SelectedPhotos.Location = new System.Drawing.Point(59, 13);
-            this.pictureBox_SelectedPhotos.Name = "pictureBox_SelectedPhotos";
-            this.pictureBox_SelectedPhotos.Size = new System.Drawing.Size(523, 337);
-            this.pictureBox_SelectedPhotos.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox_SelectedPhotos.TabIndex = 1;
-            this.pictureBox_SelectedPhotos.TabStop = false;
-            // 
             // panel2
             // 
             this.panel2.Controls.Add(this.checkBox_AutoPlay);
@@ -68,28 +59,6 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(284, 54);
             this.panel2.TabIndex = 7;
-            // 
-            // button_Back
-            // 
-            this.button_Back.Font = new System.Drawing.Font("HGP創英角ｺﾞｼｯｸUB", 27.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button_Back.Location = new System.Drawing.Point(160, 3);
-            this.button_Back.Name = "button_Back";
-            this.button_Back.Size = new System.Drawing.Size(50, 45);
-            this.button_Back.TabIndex = 7;
-            this.button_Back.Text = "◀";
-            this.button_Back.UseVisualStyleBackColor = true;
-            this.button_Back.Click += new System.EventHandler(this.button_Back_Click);
-            // 
-            // button_Next
-            // 
-            this.button_Next.Font = new System.Drawing.Font("HGP創英角ｺﾞｼｯｸUB", 27.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button_Next.Location = new System.Drawing.Point(231, 3);
-            this.button_Next.Name = "button_Next";
-            this.button_Next.Size = new System.Drawing.Size(50, 45);
-            this.button_Next.TabIndex = 8;
-            this.button_Next.Text = "▶";
-            this.button_Next.UseVisualStyleBackColor = true;
-            this.button_Next.Click += new System.EventHandler(this.button_Next_Click);
             // 
             // checkBox_AutoPlay
             // 
@@ -105,6 +74,37 @@
             this.checkBox_AutoPlay.UseVisualStyleBackColor = true;
             this.checkBox_AutoPlay.CheckedChanged += new System.EventHandler(this.checkBox_AutoPlay_CheckedChanged);
             // 
+            // button_Next
+            // 
+            this.button_Next.Font = new System.Drawing.Font("HGP創英角ｺﾞｼｯｸUB", 27.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button_Next.Location = new System.Drawing.Point(231, 3);
+            this.button_Next.Name = "button_Next";
+            this.button_Next.Size = new System.Drawing.Size(50, 45);
+            this.button_Next.TabIndex = 8;
+            this.button_Next.Text = "▶";
+            this.button_Next.UseVisualStyleBackColor = true;
+            this.button_Next.Click += new System.EventHandler(this.button_Next_Click);
+            // 
+            // button_Back
+            // 
+            this.button_Back.Font = new System.Drawing.Font("HGP創英角ｺﾞｼｯｸUB", 27.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button_Back.Location = new System.Drawing.Point(160, 3);
+            this.button_Back.Name = "button_Back";
+            this.button_Back.Size = new System.Drawing.Size(50, 45);
+            this.button_Back.TabIndex = 7;
+            this.button_Back.Text = "◀";
+            this.button_Back.UseVisualStyleBackColor = true;
+            this.button_Back.Click += new System.EventHandler(this.button_Back_Click);
+            // 
+            // pictureBox_SelectedPhotos
+            // 
+            this.pictureBox_SelectedPhotos.Location = new System.Drawing.Point(59, 13);
+            this.pictureBox_SelectedPhotos.Name = "pictureBox_SelectedPhotos";
+            this.pictureBox_SelectedPhotos.Size = new System.Drawing.Size(523, 337);
+            this.pictureBox_SelectedPhotos.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox_SelectedPhotos.TabIndex = 1;
+            this.pictureBox_SelectedPhotos.TabStop = false;
+            // 
             // timer_ChangePhoto
             // 
             this.timer_ChangePhoto.Tick += new System.EventHandler(this.timer_ChangePhoto_Tick);
@@ -119,9 +119,9 @@
             this.Text = "SlideShow";
             this.Load += new System.EventHandler(this.SlideShow_Load);
             this.panel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_SelectedPhotos)).EndInit();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_SelectedPhotos)).EndInit();
             this.ResumeLayout(false);
 
         }

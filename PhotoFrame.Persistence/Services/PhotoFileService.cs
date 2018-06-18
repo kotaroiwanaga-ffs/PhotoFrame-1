@@ -51,15 +51,26 @@ namespace PhotoFrame.Persistence
 
             string[] dirs = Directory.GetDirectories(dir);
 
-            foreach(string s in dirs)
+            var options = new ParallelOptions { MaxDegreeOfParallelism = 4 };
+            Parallel.ForEach(dirs, options, dirName =>
             {
-                List<string> temp_list = Enumerate(s);
+                List<string> temp_list = Enumerate(dirName);
 
-                foreach(string t in temp_list)
+                foreach (string t in temp_list)
                 {
                     file_list.Add(t);
                 }
-            }
+            });
+
+            //foreach(string s in dirs)
+            //{
+            //    List<string> temp_list = Enumerate(s);
+
+            //    foreach(string t in temp_list)
+            //    {
+            //        file_list.Add(t);
+            //    }
+            //}
 
             return file_list;
         }
