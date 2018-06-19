@@ -38,5 +38,24 @@ namespace PhotoFrame.Domain.UseCase
 
             return photo;
         }
+
+        public async Task<Photo> ExecuteAsync(Photo photo)
+        {
+            if (photo.IsFavorite == true)
+            {
+                photo.MarkAsUnFavorite();
+            }
+            else
+            {
+                photo.MarkAsFavorite();
+            }
+
+            await Task.Run(() =>
+            {
+                photoRepository.Store(photo);
+            });
+            
+            return photo;
+        }
     }
 }

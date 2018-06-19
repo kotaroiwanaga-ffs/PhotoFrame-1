@@ -118,10 +118,15 @@ namespace PhotoFrameApp
         /// <param name="e"></param>
         private void button_ToggleFavorite_Click(object sender, EventArgs e)
         {
+            List<int> listviewIndexList = new List<int>();
+
             for (int i = 0; i < listView_PhotoList.SelectedItems.Count; i++)
             {
-                int index = listView_PhotoList.SelectedItems[i].Index;
+                listviewIndexList.Add(listView_PhotoList.SelectedItems[i].Index);
+            }
 
+            foreach(int index in listviewIndexList)
+            {
                 Photo photo = application.ToggleFavorite(searchedPhotos.ElementAt(index));
 
                 renewPhotoListViewItem(index, photo);
@@ -134,15 +139,19 @@ namespace PhotoFrameApp
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void button_ChangeAlbum_Click(object sender, EventArgs e)
+        private async void button_ChangeAlbum_Click(object sender, EventArgs e)
         {
             string newAlbumName = comboBox_ChangeAlbum.Text;
+            List<int> listviewIndexList = new List<int>();
 
-            for (int i = 0; i < listView_PhotoList.SelectedItems.Count; i++)
+            for(int i = 0; i < listView_PhotoList.SelectedItems.Count; i++)
             {
-                int index = listView_PhotoList.SelectedItems[i].Index;
+                listviewIndexList.Add(listView_PhotoList.SelectedItems[i].Index);
+            }
 
-                Photo photo = application.ChangeAlbum(searchedPhotos.ElementAt(index), newAlbumName);
+            foreach(int index in listviewIndexList)
+            {
+                Photo photo = await application.ChangeAlbumAsync(searchedPhotos.ElementAt(index), newAlbumName);
 
                 renewPhotoListViewItem(index, photo);
             }

@@ -51,5 +51,35 @@ namespace PhotoFrame.Domain.UseCase
 
             return photo;
         }
+
+        public async Task<Photo> ExecuteAsync(Photo photo, string newAlbumName)
+        {
+            Func<IQueryable<Album>, Album> query = allAlbums =>
+            {
+                foreach (Album album in allAlbums)
+                {
+                    if (album.Name == newAlbumName)
+                    {
+                        return album;
+                    }
+                }
+
+                return null;
+            };
+
+            Album newAlbum = albumRepository.Find(query);
+
+            if (newAlbum != null)
+            {
+                photo.IsAssignedTo(newAlbum);
+            }
+
+            await Task.Run(() =>
+            {
+                photoRepository.Store(photo);
+            });
+
+            return photo;
+        }
     }
 }

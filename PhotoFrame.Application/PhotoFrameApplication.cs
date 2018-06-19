@@ -27,7 +27,6 @@ namespace PhotoFrame.Application
             this.searchDirectory = new SearchDirectory(photoRepository, photoFileService);
             this.toggleFavorite = new ToggleFavorite(photoRepository);
             this.changeAlbum = new ChangeAlbum(albumRepository, photoRepository);
-            // 実装めんどくさいね
         }
 
         public int CreateAlbum(string albumName)
@@ -53,6 +52,11 @@ namespace PhotoFrame.Application
         public Photo ChangeAlbum(Photo photo, string newAlbumName)
         {
             return changeAlbum.Execute(photo, newAlbumName);
+        }
+
+        public async Task<Photo> ChangeAlbumAsync(Photo photo, string newAlbumName)
+        {
+            return await changeAlbum.ExecuteAsync(photo, newAlbumName);
         }
     }
 }

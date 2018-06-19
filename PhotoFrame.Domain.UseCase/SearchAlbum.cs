@@ -26,5 +26,10 @@ namespace PhotoFrame.Domain.UseCase
         {
             return photoRepository.Find(photos => (from p in photos where p.Album.Name == albumName select p).ToList().AsQueryable());
         }
+
+        public async Task<IEnumerable<Photo>> ExecuteAsync(string albumName)
+        {
+            return await Task.Run(() => photoRepository.Find(photos => (from p in photos where p.Album.Name == albumName select p).ToList().AsQueryable()));
+        }
     }
 }
