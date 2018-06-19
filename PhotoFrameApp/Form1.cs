@@ -14,6 +14,7 @@ using PhotoFrame.Domain.UseCase;
 using PhotoFrame.Persistence;
 using PhotoFrame.Persistence.Csv;
 using System.IO;
+using System.Threading;
 
 namespace PhotoFrameApp
 {
@@ -24,6 +25,8 @@ namespace PhotoFrameApp
         private IPhotoFileService photoFileService;
         private PhotoFrameApplication application;
         private IEnumerable<Photo> searchedPhotos; // リストビュー上のフォトのリスト
+
+        private bool asyncFlag;
 
         /// <summary>
         /// コンストラクタ
@@ -51,6 +54,7 @@ namespace PhotoFrameApp
             photoFileService = serviceFactory.PhotoFileService;
             application = new PhotoFrameApplication(albumRepository, photoRepository, photoFileService);
             searchedPhotos = new List<Photo>().AsEnumerable();
+            asyncFlag = false;
 
             // 全アルバム名を取得し、アルバム変更リストをセット
             IEnumerable<Album> allAlbums = albumRepository.Find((IQueryable<Album> albums) => albums);
@@ -72,17 +76,44 @@ namespace PhotoFrameApp
         /// <param name="e"></param>
         private void button_Search_Click(object sender, EventArgs e)
         {
-            if (radioButton_AlbumName.Checked)
+            if (!CheckAsync())
             {
-                this.searchedPhotos = application.SearchAlbum(textBox_Search.Text);
-            }
-            else if (radioButton_DirectoryName.Checked)
-            {
-                this.searchedPhotos = application.SearchDirectory(textBox_Search.Text);
-            }
+                asyncFlag = true;
+                Task.Run(() =>
+                {
+                    if (radioButton_AlbumName.Checked)
+                    {
+                        this.searchedPhotos = application.SearchAlbum(textBox_Search.Text);
+                    }
+                    else if (radioButton_DirectoryName.Checked)
+                    {
+                        this.searchedPhotos = application.SearchDirectory(textBox_Search.Text);
+                    }
 
-            renewPhotoListView();
+                    Thread.Sleep(5000);
+                })
+                .ContinueWith(task =>
+                { 
+                    renewPhotoListView();
+                    asyncFlag = false;
+
+                }, TaskScheduler.FromCurrentSynchronizationContext());
+
+            }
+           
+
+            //if (radioButton_AlbumName.Checked)
+            //{
+            //    this.searchedPhotos = application.SearchAlbum(textBox_Search.Text);
+            //}
+            //else if (radioButton_DirectoryName.Checked)
+            //{
+            //    this.searchedPhotos = application.SearchDirectory(textBox_Search.Text);
+            //}
+
+            //renewPhotoListView();
         }
+
 
         /// <summary>
         /// アルバム新規作成
@@ -237,6 +268,18 @@ namespace PhotoFrameApp
             }
         }
 
+        private bool CheckAsync()
+        {
+            if (this.asyncFlag)
+            {
+                MessageBox.Show("処理中です");
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
         
     }
 }
