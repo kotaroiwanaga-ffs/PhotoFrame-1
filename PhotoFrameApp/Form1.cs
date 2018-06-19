@@ -70,15 +70,17 @@ namespace PhotoFrameApp
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void button_Search_Click(object sender, EventArgs e)
+        private async void button_Search_Click(object sender, EventArgs e)
         {
             if (radioButton_AlbumName.Checked)
             {
-                this.searchedPhotos = application.SearchAlbum(textBox_Search.Text);
+                //this.searchedPhotos = application.SearchAlbum(textBox_Search.Text);
+                this.searchedPhotos = await application.SearchAlbumAsync(textBox_Search.Text);
             }
             else if (radioButton_DirectoryName.Checked)
             {
-                this.searchedPhotos = application.SearchDirectory(textBox_Search.Text);
+                //this.searchedPhotos = application.SearchDirectory(textBox_Search.Text);
+                this.searchedPhotos = await application.SearchDirectoryAsync(textBox_Search.Text);
             }
 
             renewPhotoListView();
@@ -89,10 +91,11 @@ namespace PhotoFrameApp
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void button_CreateAlbum_Click(object sender, EventArgs e)
+        private async void button_CreateAlbum_Click(object sender, EventArgs e)
         {
             string albumName = textBox_CreateAlbum.Text;
-            int result = application.CreateAlbum(albumName);
+            //int result = application.CreateAlbum(albumName);
+            int result = await application.CreateAlbumAsync(albumName);
 
             switch (result)
             {
@@ -116,7 +119,7 @@ namespace PhotoFrameApp
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void button_ToggleFavorite_Click(object sender, EventArgs e)
+        private async void button_ToggleFavorite_Click(object sender, EventArgs e)
         {
             List<int> listviewIndexList = new List<int>();
 
@@ -127,7 +130,8 @@ namespace PhotoFrameApp
 
             foreach(int index in listviewIndexList)
             {
-                Photo photo = application.ToggleFavorite(searchedPhotos.ElementAt(index));
+                //Photo photo = application.ToggleFavorite(searchedPhotos.ElementAt(index));
+                Photo photo = await application.ToggleFavoriteAsync(searchedPhotos.ElementAt(index));
 
                 renewPhotoListViewItem(index, photo);
             }
