@@ -91,8 +91,6 @@ namespace PhotoFrame.Persistence.Csv
         /// <returns></returns>
         public Album FindBy(string id)
         {
-            // ※コメントアウトしてるやつを使ったほうがコードは長くなるけど処理の無駄は少ない
-
             IQueryable<Album> allAlbums = FindAll();
 
             // csvファイルがあった場合
@@ -109,27 +107,6 @@ namespace PhotoFrame.Persistence.Csv
                 // なかったよ
                 return null;
             }
-            
-            //if (System.IO.File.Exists(this.CsvFilePath))
-            //{
-            //    using (StreamReader sr = new StreamReader(CsvFilePath, Encoding.UTF8))
-            //    {
-            //        while (sr.Peek() > -1)
-            //        {
-            //            string line = sr.ReadLine();
-            //            string[] albumData = line.Split(',');
-            //            if (albumData[0] == id)
-            //            {
-            //                // あったよ
-            //                return new Album(albumData[0], albumData[1], albumData[2]);
-            //            }
-            //        }
-            //    }
-            //
-            //    // なかったよ
-            //    return null;
-            //}
-
             // csvファイルがなかった場合
             else
             {
