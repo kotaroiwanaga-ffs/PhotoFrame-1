@@ -27,118 +27,132 @@ namespace PhotoFrame.Persistence.Csv
             this.albumRepository = albumRepository;
         }
 
+        /// <summary>
+        /// 用途不明(未使用)
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
         public bool Exists(Photo entity)
         {
-            // TODO: ファイルIO講座以降で実装可能
-            throw new NotImplementedException();
+            return FindBy(entity.Id) != null;
         }
 
+        /// <summary>
+        /// 指定したIDのフォトがあるか(未使用)
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public bool ExistsBy(string id)
         {
-            // TODO: ファイルIO講座以降で実装可能
-            throw new NotImplementedException();
+            return FindBy(id) != null;
         }
 
+        /// <summary>
+        /// 検索条件(query)に該当するすべてのフォトを取得
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns></returns>
         public IEnumerable<Photo> Find(Func<IQueryable<Photo>, IQueryable<Photo>> query)
         {
 
-            // TODO: イベント・デリゲート講座で実装予定
-            List<Photo> photos = new List<Photo>();
+            IQueryable<Photo> allPhotos = FindAll();
 
-            if (System.IO.File.Exists(CsvFilePath))
+            // Csvファイルがあった場合
+            if (allPhotos != null)
             {
-                using (StreamReader sr = new StreamReader(CsvFilePath, Encoding.UTF8))
-                {
-                    while (sr.Peek() > -1)
-                    {
-                        string line = sr.ReadLine();
-                        string[] photoData = line.Split(',');
-
-                        Domain.Model.File file = new Domain.Model.File(photoData[1]);
-                        Domain.Model.Album album = albumRepository.FindBy(photoData[3]);
-
-                        photos.Add(new Photo(photoData[0], file, Convert.ToBoolean(photoData[2]), photoData[3], album));
-
-                    }
-                }
-
-                return query(photos.AsQueryable<Photo>());
-
+                return query(allPhotos);
             }
+            // Csvファイルがない場合
             else
             {
-                // なかったよ
                 return null;
             }
         }
 
+        /// <summary>
+        /// 検索条件(query)に該当するフォトを一つ分取得
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns></returns>
         public Photo Find(Func<IQueryable<Photo>, Photo> query)
         {
-            // TODO: イベント・デリゲート講座で実装予定
-            List<Photo> photos = new List<Photo>();
+            IQueryable<Photo> allPhotos = FindAll();
 
-            if (System.IO.File.Exists(CsvFilePath))
+            // Csvファイルがあった場合
+            if (allPhotos != null)
             {
-                using (StreamReader sr = new StreamReader(CsvFilePath, Encoding.UTF8))
-                {
-                    while (sr.Peek() > -1)
-                    {
-                        string line = sr.ReadLine();
-                        string[] photoData = line.Split(',');
-                           
-                        Domain.Model.File file = new Domain.Model.File(photoData[1]);
-                        Domain.Model.Album album = albumRepository.FindBy(photoData[3]);
-
-                        photos.Add(new Photo(photoData[0], file, Convert.ToBoolean(photoData[2]), photoData[3], album));
-                        
-                    }
-                }
-
-                return query(photos.AsQueryable<Photo>());
-
+                return query(allPhotos);
             }
+            // Csvファイルがない場合
             else
             {
-                // なかったよ
                 return null;
             }
 
-            
+
         }
 
+        /// <summary>
+        /// IDの合致するフォトの取得
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public Photo FindBy(string id)
         {
-            // TODO: ファイルIO講座で実装
-            // 保存したcsvからidを検索
-            if (System.IO.File.Exists(CsvFilePath))
+            IQueryable<Photo> allPhotos = FindAll();
+
+            // Csvファイルがあった場合
+            if (allPhotos != null)
             {
-                using (StreamReader sr = new StreamReader(CsvFilePath, Encoding.UTF8))
+                for (int i = 0; i < allPhotos.Count(); i++)
                 {
-                    while (sr.Peek() > -1)
+                    if (allPhotos.ElementAt(i).Id == id)
                     {
-                        string line = sr.ReadLine();
-                        string[] photoData = line.Split(',');
-                        if (photoData[0] == id)
-                        {
-                            // あったよ
-                            Domain.Model.File file = new Domain.Model.File(photoData[1]);
-
-                            Domain.Model.Album album = albumRepository.FindBy(photoData[3]);
-
-                            return new Photo(photoData[0], file, Convert.ToBoolean(photoData[2]), photoData[3], album);
-                        }
+                        return allPhotos.ElementAt(i);
                     }
                 }
-
             }
 
             // なかったよ
             return null;
         }
 
-        public IEnumerable<Photo> FindByIsFavorite()
+        /// <summary>
+        /// フォトの更新・新規追加
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        public Photo Store(Photo entity)
         {
-            List<Photo> photo_list = new List<Photo>();
+            IQueryable<Photo> otherPhotos = FindAll(entity);
+
+            using (StreamWriter sw = new StreamWriter(this.CsvFilePath))
+            {
+                // ファイルあった場合
+                if (otherPhotos != null)
+                {
+                    // 既存のフォトデータの書き込み
+                    foreach (Photo photo in otherPhotos)
+                    {
+                        sw.WriteLine(ToCsvString(photo));
+                    }
+                }
+
+                // 新規フォトデータを書き込み
+                sw.WriteLine(ToCsvString(entity));
+            }
+
+            return entity;
+        }
+
+        /// <summary>
+        /// Csvファイル内のすべてのフォトの取得
+        /// (引数にフォトを渡した場合はそのフォトと同じIDのフォトをリストから除く)
+        /// </summary>
+        /// <returns></returns>
+        IQueryable<Photo> FindAll(Photo photo = null)
+        {
+            List<Photo> photos = new List<Photo>();
 
             if (System.IO.File.Exists(CsvFilePath))
             {
@@ -148,98 +162,39 @@ namespace PhotoFrame.Persistence.Csv
                     {
                         string line = sr.ReadLine();
                         string[] photoData = line.Split(',');
-                        bool isFavorite = Convert.ToBoolean(photoData[2]);
 
-                        if (isFavorite == true)
+                        Domain.Model.File file = new Domain.Model.File(photoData[1]);
+                        Domain.Model.Album album = albumRepository.FindBy(photoData[3]);
+
+                        if(photo == null || photo.Id != photoData[0])
                         {
-                            // あったよ
-                            Domain.Model.File file = new Domain.Model.File(photoData[1]);
-
-                            Domain.Model.Album album = albumRepository.FindBy(photoData[3]);
-
-                            photo_list.Add(new Photo(photoData[0], file, isFavorite, photoData[3], album));
+                            photos.Add(new Photo(photoData[0], file, Convert.ToBoolean(photoData[2]), photoData[3], album));
                         }
+
                     }
                 }
+
+                return photos.AsQueryable();
 
             }
-
-            // なかったよ
-            return photo_list;
-        }
-
-        public Photo Store(Photo entity)
-        {
-            // TODO: ファイルIO講座で実装
-            // entityをcsvファイルに1行出力して保存する
-            List<string> temp_list = new List<string>();
-
-            // ファイルあった場合
-            if (System.IO.File.Exists(this.CsvFilePath))
-            {
-                // 新規フォトとIDが合致しないフォトデータだけtemp_listに避難
-                using (StreamReader sr = new StreamReader(this.CsvFilePath))
-                {
-                    while (sr.EndOfStream == false)
-                    {
-                        string line = sr.ReadLine();
-                        string[] value = line.Split(',');
-
-                        if (value[0] != entity.Id)
-                        {
-                            temp_list.Add(line);
-                        }
-                    }
-                }
-
-                // csvファイルを空っぽにする
-                System.IO.File.Delete(this.CsvFilePath);
-                //System.IO.File.Create(this.CsvFilePath);
-
-
-                using (StreamWriter sw = new StreamWriter(this.CsvFilePath))
-                {
-                    // temp_list内のフォトデータを書き込み
-                    foreach (string data in temp_list)
-                    {
-                        sw.WriteLine(data);
-                    }
-
-                }
-
-
-            }
-            // ファイルなかった場合
             else
             {
-                //System.IO.File.Create(this.CsvFilePath);
+                // なかったよ
+                return null;
             }
-
-            // 新規フォトデータを書き込み
-            using (StreamWriter sw = new StreamWriter(this.CsvFilePath, true))
-            {
-                List<string> photoData = new List<string>();
-                photoData.Add(entity.Id);
-                photoData.Add(entity.File.FilePath);
-                photoData.Add(entity.IsFavorite.ToString());
-                photoData.Add(entity.AlbumId);
-               
-                for (int i = 0; i < photoData.Count - 1; i++)
-                {
-                    sw.Write(photoData[i]);
-                    sw.Write(",");
-                }
-                sw.WriteLine(photoData[photoData.Count - 1]);
-                
-            }
-
-            return entity;
-            //throw new NotImplementedException();
         }
 
+        string ToCsvString(Photo photo)
+        {
+            return photo.Id + "," + photo.File.FilePath + "," + photo.IsFavorite.ToString() + "," + photo.AlbumId;
+        }
+
+        /// <summary>
+        /// 何これ？
+        /// </summary>
+        /// <param name="photos"></param>
         public void StoreIfNotExists(IEnumerable<Photo> photos)
         {
-            // TODO: ファイルIO講座以降で実装可能
             throw new NotImplementedException();
         }
     }

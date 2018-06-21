@@ -52,6 +52,7 @@ namespace PhotoFrame.Persistence.Csv
         {
             IQueryable<Album> allAlbums = FindAll();
 
+            // Csvファイルがあった場合
             if (allAlbums != null)
             {
                 return query(allAlbums);
@@ -72,7 +73,8 @@ namespace PhotoFrame.Persistence.Csv
         {
             IQueryable<Album> allAlbums = FindAll();
 
-            if(allAlbums != null)
+            // Csvファイルがあった場合
+            if (allAlbums != null)
             {
                 return query(allAlbums);
             }
@@ -103,16 +105,10 @@ namespace PhotoFrame.Persistence.Csv
                         return allAlbums.ElementAt(i);
                     }
                 }
-
-                // なかったよ
-                return null;
-            }
-            // csvファイルがなかった場合
-            else
-            {
-                return null;
             }
 
+            // なかったよ
+            return null;
         }
 
         /// <summary>
