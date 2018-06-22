@@ -16,6 +16,8 @@ namespace PhotoFrame.Persistence.EF
     /// </summary>
     class AlbumRepository : IAlbumRepository
     {
+        System.Data.Entity.SqlServer.SqlProviderServices instance = System.Data.Entity.SqlServer.SqlProviderServices.Instance;
+
         public bool Exists(Album entity)
         {
             // TODO: DBプログラミング講座で実装
