@@ -54,7 +54,6 @@ namespace PhotoFrame.Persistence.EF
 
         public Photo Store(Photo entity)
         {
-            // TODO: DBプログラミング講座で実装
             using(PhotoFrameDBEntities dbentity = new PhotoFrameDBEntities())
             {
                 using(var transaction = dbentity.Database.BeginTransaction())
