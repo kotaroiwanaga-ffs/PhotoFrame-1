@@ -54,5 +54,38 @@ namespace PhotoFrame.Domain.UseCase
             }
             
         }
+
+        public async Task<int> ExecuteAsync(string albumName)
+        {
+            IEnumerable<Album> result = albumRepository.Find((IQueryable<Album> albums) => (from p in albums where p.Name == albumName select p));
+
+            if (albumName != "")
+            {
+                // 登録済みのアルバム名でない場合
+                if (result == null || result.Count() == 0)
+                {
+
+                    var album = Album.Create(albumName);
+                    await Task.Run(() =>
+                    {
+                        albumRepository.Store(album);
+                    });
+
+                    // 正常終了
+                    return 0;
+                }
+                else
+                {
+                    // 既存のアルバム名
+                    return 2;
+                }
+            }
+            else
+            {
+                // アルバム名未入力
+                return 1;
+            }
+
+        }
     }
 }

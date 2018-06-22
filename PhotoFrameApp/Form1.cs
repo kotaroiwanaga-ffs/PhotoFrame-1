@@ -14,6 +14,7 @@ using PhotoFrame.Domain.UseCase;
 using PhotoFrame.Persistence;
 using PhotoFrame.Persistence.Csv;
 using System.IO;
+using System.Threading;
 
 namespace PhotoFrameApp
 {
@@ -24,6 +25,8 @@ namespace PhotoFrameApp
         private IPhotoFileService photoFileService;
         private PhotoFrameApplication application;
         private IEnumerable<Photo> searchedPhotos; // リストビュー上のフォトのリスト
+
+        private bool flagAsync;
 
         /// <summary>
         /// コンストラクタ
@@ -52,6 +55,8 @@ namespace PhotoFrameApp
             application = new PhotoFrameApplication(albumRepository, photoRepository, photoFileService);
             searchedPhotos = new List<Photo>().AsEnumerable();
 
+            flagAsync = false;
+
             // 全アルバム名を取得し、アルバム変更リストをセット
             IEnumerable<Album> allAlbums = albumRepository.Find((IQueryable<Album> albums) => albums);
 
@@ -70,18 +75,27 @@ namespace PhotoFrameApp
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void button_Search_Click(object sender, EventArgs e)
+        private async void button_Search_Click(object sender, EventArgs e)
         {
-            if (radioButton_AlbumName.Checked)
+            if (!CheckFlag())
             {
-                this.searchedPhotos = application.SearchAlbum(textBox_Search.Text);
-            }
-            else if (radioButton_DirectoryName.Checked)
-            {
-                this.searchedPhotos = application.SearchDirectory(textBox_Search.Text);
+                flagAsync = true;
+                
+                if (radioButton_AlbumName.Checked)
+                {
+                    this.searchedPhotos = await application.SearchAlbumAsync(textBox_Search.Text);
+                }
+                else if (radioButton_DirectoryName.Checked)
+                {
+                    this.searchedPhotos = await application.SearchDirectoryAsync(textBox_Search.Text);
+                }
+                
+                renewPhotoListView();
+                
+                flagAsync = false;
             }
 
-            renewPhotoListView();
+            
         }
 
         /// <summary>
@@ -89,24 +103,31 @@ namespace PhotoFrameApp
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void button_CreateAlbum_Click(object sender, EventArgs e)
+        private async void button_CreateAlbum_Click(object sender, EventArgs e)
         {
-            string albumName = textBox_CreateAlbum.Text;
-            int result = application.CreateAlbum(albumName);
-
-            switch (result)
+            if (!CheckFlag())
             {
-                case 0:
-                    comboBox_ChangeAlbum.Items.Add(albumName);
-                    break;
-                case 1:
-                    MessageBox.Show("アルバム名が未入力です");
-                    break;
-                case 2:
-                    MessageBox.Show("既存のアルバム名です");
-                    break;
-                default:
-                    break;
+                flagAsync = true;
+
+                string albumName = textBox_CreateAlbum.Text;
+                int result = await application.CreateAlbumAsync(albumName);
+
+                switch (result)
+                {
+                    case 0:
+                        comboBox_ChangeAlbum.Items.Add(albumName);
+                        break;
+                    case 1:
+                        MessageBox.Show("アルバム名が未入力です");
+                        break;
+                    case 2:
+                        MessageBox.Show("既存のアルバム名です");
+                        break;
+                    default:
+                        break;
+                }
+
+                flagAsync = false;
             }
 
         }
@@ -116,15 +137,27 @@ namespace PhotoFrameApp
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void button_ToggleFavorite_Click(object sender, EventArgs e)
+        private async void button_ToggleFavorite_Click(object sender, EventArgs e)
         {
-            for (int i = 0; i < listView_PhotoList.SelectedItems.Count; i++)
+            if (!CheckFlag())
             {
-                int index = listView_PhotoList.SelectedItems[i].Index;
+                flagAsync = true;
 
-                Photo photo = application.ToggleFavorite(searchedPhotos.ElementAt(index));
+                List<int> listviewIndexList = new List<int>();
 
-                renewPhotoListViewItem(index, photo);
+                for (int i = 0; i < listView_PhotoList.SelectedItems.Count; i++)
+                {
+                    listviewIndexList.Add(listView_PhotoList.SelectedItems[i].Index);
+                }
+
+                foreach (int index in listviewIndexList)
+                {
+                    Photo photo = await application.ToggleFavoriteAsync(searchedPhotos.ElementAt(index));
+
+                    renewPhotoListViewItem(index, photo);
+                }
+
+                flagAsync = false;
             }
 
         }
@@ -134,17 +167,28 @@ namespace PhotoFrameApp
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void button_ChangeAlbum_Click(object sender, EventArgs e)
+        private async void button_ChangeAlbum_Click(object sender, EventArgs e)
         {
-            string newAlbumName = comboBox_ChangeAlbum.Text;
-
-            for (int i = 0; i < listView_PhotoList.SelectedItems.Count; i++)
+            if (!CheckFlag())
             {
-                int index = listView_PhotoList.SelectedItems[i].Index;
+                flagAsync = true;
 
-                Photo photo = application.ChangeAlbum(searchedPhotos.ElementAt(index), newAlbumName);
+                string newAlbumName = comboBox_ChangeAlbum.Text;
+                List<int> listviewIndexList = new List<int>();
 
-                renewPhotoListViewItem(index, photo);
+                for (int i = 0; i < listView_PhotoList.SelectedItems.Count; i++)
+                {
+                    listviewIndexList.Add(listView_PhotoList.SelectedItems[i].Index);
+                }
+
+                foreach (int index in listviewIndexList)
+                {
+                    Photo photo = await application.ChangeAlbumAsync(searchedPhotos.ElementAt(index), newAlbumName);
+
+                    renewPhotoListViewItem(index, photo);
+                }
+                
+                flagAsync = false;
             }
 
         }
@@ -237,6 +281,22 @@ namespace PhotoFrameApp
             }
         }
 
+        /// <summary>
+        /// バックグラウンド処理中かの判定
+        /// </summary>
+        /// <param name="query"></param>
+        private bool CheckFlag()
+        {
+            if (!flagAsync)
+            {
+                return flagAsync;
+            }
+            else
+            {
+                MessageBox.Show("処理中です");
+                return flagAsync;
+            }
+        }
         
     }
 }

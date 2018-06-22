@@ -58,5 +58,40 @@ namespace PhotoFrame.Domain.UseCase
             return photosInDirectory;
         }
 
+        public async Task<IEnumerable<Photo>> ExecuteAsync(string directoryName)
+        {
+            IEnumerable<Domain.Model.File> files = photoFileService.FindAllPhotoFilesFromDirectory(directoryName);
+            List<Photo> photosInDirectory = new List<Photo>();
+
+            foreach (File file in files)
+            {
+                Func<IQueryable<Photo>, Photo> query = allPhotos =>
+                {
+                    foreach (Photo photo in allPhotos)
+                    {
+                        if (photo.File.FilePath == file.FilePath)
+                        {
+                            return photo;
+                        }
+                    }
+
+                    return Photo.CreateFromFile(file);
+                };
+
+                Photo hitPhoto = await Task.Run(() => photoRepository.Find(query) );
+                
+                if (hitPhoto != null)
+                {
+                    photosInDirectory.Add(hitPhoto);
+                }
+                else
+                {
+                    photosInDirectory.Add(Photo.CreateFromFile(file));
+                }
+            }
+
+            return photosInDirectory;
+        }
+
     }
 }

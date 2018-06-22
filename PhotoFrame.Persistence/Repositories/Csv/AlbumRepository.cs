@@ -23,37 +23,39 @@ namespace PhotoFrame.Persistence.Csv
             this.CsvFilePath = $"{databaseName}_Album.csv"; // $"{...}" : 文字列展開
         }
 
+        /// <summary>
+        /// ??? ExistsByとの違いも使いどころも謎(未使用)
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
         public bool Exists(Album entity)
         {
-            // TODO: ファイルIO講座以降で実装可能
-            throw new NotImplementedException();
+            return FindBy(entity.Id) != null;
         }
 
+        /// <summary>
+        /// 指定したIDのアルバムがあるかどうか(未使用)
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public bool ExistsBy(string id)
         {
-            // TODO: ファイルIO講座以降で実装可能
-            throw new NotImplementedException();
+            return FindBy(id) != null;
         }
 
+        /// <summary>
+        /// 検索条件(query)に該当するすべてのアルバムを取得
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns></returns>
         public IEnumerable<Album> Find(Func<IQueryable<Album>, IQueryable<Album>> query)
         {
-            // TODO: イベント・デリゲート講座で実装予定
-            List<Album> albums = new List<Album>();
+            IQueryable<Album> allAlbums = FindAll();
 
-            if (System.IO.File.Exists(this.CsvFilePath))
+            // Csvファイルがあった場合
+            if (allAlbums != null)
             {
-
-                using (StreamReader sr = new StreamReader(CsvFilePath, Encoding.UTF8))
-                {
-                    while (sr.Peek() > -1)
-                    {
-                        string line = sr.ReadLine();
-                        string[] albumData = line.Split(',');
-                        albums.Add(new Album(albumData[0], albumData[1], albumData[2]));
-                    }
-                }
-
-                return query(albums.AsQueryable<Album>());
+                return query(allAlbums);
             }
             // csvファイルがなかった場合
             else
@@ -62,26 +64,19 @@ namespace PhotoFrame.Persistence.Csv
             }
         }
 
-        // IQueryable : IEnumerable ← Listとかforeachできるやつ
+        /// <summary>
+        /// 検索条件(query)に該当するアルバムを一つ分取得
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns></returns>
         public Album Find(Func<IQueryable<Album>, Album> query)
         {
-            // TODO: イベント・デリゲート講座で実装予定
-            List<Album> albums = new List<Album>();
+            IQueryable<Album> allAlbums = FindAll();
 
-            if (System.IO.File.Exists(this.CsvFilePath))
+            // Csvファイルがあった場合
+            if (allAlbums != null)
             {
-                
-                using (StreamReader sr = new StreamReader(CsvFilePath, Encoding.UTF8))
-                {
-                    while (sr.Peek() > -1)
-                    {
-                        string line = sr.ReadLine();
-                        string[] albumData = line.Split(',');
-                        albums.Add(new Album(albumData[0], albumData[1], albumData[2]));
-                    }
-                }
-
-                return query(albums.AsQueryable<Album>());
+                return query(allAlbums);
             }
             // csvファイルがなかった場合
             else
@@ -91,108 +86,101 @@ namespace PhotoFrame.Persistence.Csv
             
         }
 
+        /// <summary>
+        /// IDの合致するアルバムの取得
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public Album FindBy(string id)
         {
-            // TODO: ファイルIO講座で実装
-            // 保存したcsvからidを検索
+            IQueryable<Album> allAlbums = FindAll();
 
             // csvファイルがあった場合
-            if(System.IO.File.Exists(this.CsvFilePath))
+            if (allAlbums != null)
             {
-                using (StreamReader sr = new StreamReader(CsvFilePath, Encoding.UTF8))
+                for (int i = 0; i < allAlbums.Count(); i++)
                 {
-                    while (sr.Peek() > -1)
+                    if (allAlbums.ElementAt(i).Id == id)
                     {
-                        string line = sr.ReadLine();
-                        string[] albumData = line.Split(',');
-                        if (albumData[0] == id)
-                        {
-                            // あったよ
-                            return new Album(albumData[0], albumData[1], albumData[2]);
-                        }
+                        return allAlbums.ElementAt(i);
                     }
                 }
-            
-
-                // なかったよ
-                return null;
-            }
-            // csvファイルがなかった場合
-            else
-            {
-                return null;
             }
 
-            // throw new NotImplementedException();
+            // なかったよ
+            return null;
         }
 
+        /// <summary>
+        /// アルバムの更新・新規追加
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
         public Album Store(Album entity)
         {
-            // TODO: ファイルIO講座で実装
-            // entityをcsvファイルに1行出力して保存する
-            
-
-            // writeする前に、csvをreadして、if文を書く
-            // 同じIDのアルバムのデータがあった場合は、更新をする
-            // 更新の際は、もう一度csvデータを作り直す（リストとかで）（更新対象データ抜き）
-            // 最後尾に更新データを追加する
-            // もし更新が無かった場合は、以下のように最後尾に新しく追加する
-
-            List<string> temp_list = new List<string>();
-
-            // ファイルあった場合
-            if (System.IO.File.Exists(this.CsvFilePath))
-            {
-                // 新規アルバムとIDが合致しないアルバムデータだけtemp_listに避難
-                using (StreamReader sr = new StreamReader(this.CsvFilePath))
-                {
-                    while(sr.EndOfStream == false)
-                    {
-                        string line = sr.ReadLine();
-                        string[] value = line.Split(',');
-
-                        if(value[0] != entity.Id)
-                        {
-                            temp_list.Add(line);
-                        }
-                    }
-                }
-
-                // csvファイルを空っぽにする
-                System.IO.File.Delete(this.CsvFilePath);
-                
-                using (StreamWriter sw = new StreamWriter(this.CsvFilePath))
-                {
-                    // temp_list内のアルバムデータを書き込み
-                    foreach (string data in temp_list)
-                    {
-                        sw.WriteLine(data);
-                    }
-
-                }
-
-
-            }
-            
+            IQueryable<Album> otherAlbums = FindAll(entity);
 
             using (StreamWriter sw = new StreamWriter(this.CsvFilePath, true))
             {
-                List<string> albumData = new List<string>();
-                albumData.Add(entity.Id);
-                albumData.Add(entity.Name);
-                albumData.Add(entity.Description);
+                // ファイルあった場合
+                if (otherAlbums != null)
+                {
+                    // 既存アルバムデータの書き込み
+                    foreach(Album album in otherAlbums)
+                    {
+                        sw.WriteLine(ToCsvString(album));
+                    }
+                }
 
                 // 新規アルバムデータ書き込み
-                for (int i = 0; i < albumData.Count - 1; i++)
-                {
-                    sw.Write(albumData[i]);
-                    sw.Write(",");
-                }
-                sw.WriteLine(albumData[albumData.Count - 1]);
+                sw.WriteLine(ToCsvString(entity));
             }
 
             return entity;
-            //throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Csvファイル内のすべてのアルバムの取得
+        /// (引数にアルバムを渡した場合はそのアルバムと同じIDのアルバムをリストから除く)
+        /// </summary>
+        /// <returns></returns>
+        IQueryable<Album> FindAll(Album album = null)
+        {
+            List<Album> albums = new List<Album>();
+
+            if (System.IO.File.Exists(this.CsvFilePath))
+            {
+
+                using (StreamReader sr = new StreamReader(CsvFilePath, Encoding.UTF8))
+                {
+                    while (sr.Peek() > -1)
+                    {
+                        string line = sr.ReadLine();
+                        string[] albumData = line.Split(',');
+                        if (album == null || albumData[0] != album.Id)
+                        {
+                            albums.Add(new Album(albumData[0], albumData[1], albumData[2]));
+                        }
+                    }
+                }
+
+                return albums.AsQueryable();
+            }
+            //csvファイルがなかった場合
+            else
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// AlbumをCsvファイル保存用のString型に変換
+        /// </summary>
+        /// <param name="album"></param>
+        /// <returns></returns>
+        string ToCsvString(Album album)
+        {
+            return album.Id + "," + album.Name + "," + album.Description;
         }
 
     }
