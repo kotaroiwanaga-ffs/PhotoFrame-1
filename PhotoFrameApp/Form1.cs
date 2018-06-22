@@ -15,6 +15,7 @@ using PhotoFrame.Persistence;
 using PhotoFrame.Persistence.Csv;
 using System.IO;
 using System.Threading;
+using System.Configuration;
 
 namespace PhotoFrameApp
 {
@@ -47,7 +48,8 @@ namespace PhotoFrameApp
             }
 
             // メンバ変数初期化
-            RepositoryFactory repositoryFactory = new RepositoryFactory(PhotoFrame.Persistence.Type.Csv);
+            //RepositoryFactory repositoryFactory = new RepositoryFactory(PhotoFrame.Persistence.Type.Csv);
+            RepositoryFactory repositoryFactory = new RepositoryFactory(PhotoFrame.Persistence.Type.EF);
             ServiceFactory serviceFactory = new ServiceFactory(); 
             photoRepository = repositoryFactory.PhotoRepository;
             albumRepository = repositoryFactory.AlbumRepository;

@@ -36,8 +36,8 @@ namespace PhotoFrame.Persistence
                     break;
                 case Type.EF:
                     // TODO: EFに適した生成に変更してください
-                    AlbumRepository = new EF.AlbumRepository(/* DatabaseName */);
-                    PhotoRepository = new EF.PhotoRepository(/* DatabaseName */);
+                    AlbumRepository = new EF.AlbumRepository();
+                    PhotoRepository = new EF.PhotoRepository(AlbumRepository);
                     break;
                 default:
                     throw new ArgumentException("The specified type is not supported.");
