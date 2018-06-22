@@ -43,6 +43,8 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -55,7 +57,28 @@
     <Compile Include="Repositories\Csv\PhotoRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\EF\AlbumRepository.cs" />
+    <Compile Include="Repositories\EF\PhotoFrameDBModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PhotoFrameDBModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\EF\PhotoFrameDBModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PhotoFrameDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\EF\PhotoFrameDBModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PhotoFrameDBModel.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Repositories\EF\PhotoRepository.cs" />
+    <Compile Include="Repositories\EF\Table_Album.cs">
+      <DependentUpon>PhotoFrameDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\EF\Table_Photo.cs">
+      <DependentUpon>PhotoFrameDBModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Repositories\IRepositoryFactory.cs" />
     <Compile Include="Repositories\RepositoryFactory.cs" />
     <Compile Include="Services\IServiceFactory.cs" />
@@ -69,7 +92,30 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.Config" />
     <None Include="packages.config" />
+    <EntityDeploy Include="Repositories\EF\PhotoFrameDBModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>PhotoFrameDBModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Repositories\EF\PhotoFrameDBModel.edmx.diagram">
+      <DependentUpon>PhotoFrameDBModel.edmx</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Repositories\EF\PhotoFrameDBModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>PhotoFrameDBModel.Context.cs</LastGenOutput>
+      <DependentUpon>PhotoFrameDBModel.edmx</DependentUpon>
+    </Content>
+    <Content Include="Repositories\EF\PhotoFrameDBModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>PhotoFrameDBModel.edmx</DependentUpon>
+      <LastGenOutput>PhotoFrameDBModel.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
