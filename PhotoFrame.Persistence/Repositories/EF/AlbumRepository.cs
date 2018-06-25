@@ -48,6 +48,11 @@ namespace PhotoFrame.Persistence.EF
             return query(FindAll());
         }
 
+        /// <summary>
+        /// IDの合致するアルバムの取得
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public Album FindBy(string id)
         {
             return Find((IQueryable<Album> allAlbums) => { return (from album in allAlbums where album.Id == id select album).FirstOrDefault(); });
@@ -93,6 +98,10 @@ namespace PhotoFrame.Persistence.EF
             }
         }
 
+        /// <summary>
+        /// アルバムテーブル内のすべてのアルバムの取得
+        /// </summary>
+        /// <returns></returns>
         private IQueryable<Album> FindAll()
         {
             using (PhotoFrameDBEntities dbentity = new PhotoFrameDBEntities())
@@ -103,6 +112,11 @@ namespace PhotoFrame.Persistence.EF
             }
         }
 
+        /// <summary>
+        /// Table_Album型をAlbum型に変換
+        /// </summary>
+        /// <param name="table_Album"></param>
+        /// <returns></returns>
         private Album ToAlbum(Table_Album table_Album)
         {
             if(table_Album != null)
@@ -115,6 +129,11 @@ namespace PhotoFrame.Persistence.EF
             }
         }
 
+        /// <summary>
+        /// リスト全要素をTable_Album型からAlbum型に変換
+        /// </summary>
+        /// <param name="table_Albums"></param>
+        /// <returns></returns>
         private IQueryable<Album> ToAlbum(IQueryable<Table_Album> table_Albums)
         {
             List<Album> albums = new List<Album>();
@@ -127,6 +146,11 @@ namespace PhotoFrame.Persistence.EF
             return albums.AsQueryable();
         }
 
+        /// <summary>
+        /// Album型をTable_Album型に変換
+        /// </summary>
+        /// <param name="album"></param>
+        /// <returns></returns>
         private Table_Album toDatabase(Album album)
         {
             if(album != null)
@@ -145,6 +169,11 @@ namespace PhotoFrame.Persistence.EF
             }
         }
 
+        /// <summary>
+        /// リスト全要素をAlbum型からTable_Album型に変換
+        /// </summary>
+        /// <param name="table_Albums"></param>
+        /// <returns></returns>
         private IQueryable<Table_Album> toDatabase(IQueryable<Album> albums)
         {
             List<Table_Album> table_Albums = new List<Table_Album>();

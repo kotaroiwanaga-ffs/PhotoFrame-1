@@ -27,24 +27,41 @@ namespace PhotoFrame.Persistence.EF
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// 検索条件(query)に該当するすべてのフォトを取得
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns></returns>
         public IEnumerable<Photo> Find(Func<IQueryable<Photo>, IQueryable<Photo>> query)
         {
-            // TODO: DBプログラミング講座で実装
             return query(FindAll());
         }
 
+        /// <summary>
+        /// 検索条件(query)に該当するフォトを一つ分取得
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns></returns>
         public Photo Find(Func<IQueryable<Photo>, Photo> query)
         {
-            // TODO: DBプログラミング講座で実装
             return query(FindAll());
         }
 
+        /// <summary>
+        /// IDの合致するフォトの取得
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public Photo FindBy(string id)
         {
-            // TODO: DBプログラミング講座で実装
             return Find((IQueryable<Photo> allPhotos) => { return (from photo in allPhotos where photo.Id == id select photo).FirstOrDefault(); });
         }
 
+        /// <summary>
+        /// フォトの更新・新規追加
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
         public Photo Store(Photo entity)
         {
             using(PhotoFrameDBEntities dbentity = new PhotoFrameDBEntities())
@@ -91,10 +108,13 @@ namespace PhotoFrame.Persistence.EF
 
         public void StoreIfNotExists(IEnumerable<Photo> photos)
         {
-            // TODO: DBプログラミング講座で実装
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// フォトテーブル内のすべてのフォトの取得
+        /// </summary>
+        /// <returns></returns>
         private IQueryable<Photo> FindAll()
         {
             using(PhotoFrameDBEntities dbentity = new PhotoFrameDBEntities())
@@ -103,6 +123,11 @@ namespace PhotoFrame.Persistence.EF
             }
         }
 
+        /// <summary>
+        /// Table_Photo型をPhoto型に変換
+        /// </summary>
+        /// <param name="table_Photo"></param>
+        /// <returns></returns>
         private Photo ToPhoto(Table_Photo table_Photo)
         {
             if(table_Photo != null)
@@ -125,6 +150,11 @@ namespace PhotoFrame.Persistence.EF
             
         }
 
+        /// <summary>
+        /// リスト全要素をTable_Photo型からPhoto型に変換
+        /// </summary>
+        /// <param name="table_Photos"></param>
+        /// <returns></returns>
         private IQueryable<Photo> ToPhoto(IQueryable<Table_Photo> table_Photos)
         {
             List<Photo> photos = new List<Photo>();
@@ -137,6 +167,11 @@ namespace PhotoFrame.Persistence.EF
             return photos.AsQueryable();
         }
 
+        /// <summary>
+        /// Photo型をTable_Photo型に変換
+        /// </summary>
+        /// <param name="photo"></param>
+        /// <returns></returns>
         private Table_Photo ToDatabase(Photo photo)
         {
             if(photo != null)
@@ -160,6 +195,11 @@ namespace PhotoFrame.Persistence.EF
             }
         }
 
+        /// <summary>
+        /// リスト全要素をPhoto型からTable_Photo型に変換
+        /// </summary>
+        /// <param name="photos"></param>
+        /// <returns></returns>
         private IQueryable<Table_Photo> ToDatabase(IQueryable<Photo> photos)
         {
             List<Table_Photo> table_Photos = new List<Table_Photo>();
