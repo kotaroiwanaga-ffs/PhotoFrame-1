@@ -15,13 +15,6 @@ namespace PhotoFrame.Persistence.EF
     /// </summary>
     class PhotoRepository : IPhotoRepository
     {
-        private IAlbumRepository albumRepository;
-
-        public PhotoRepository(IAlbumRepository albumRepository)
-        {
-            this.albumRepository = albumRepository;
-        }
-
         public bool Exists(Photo entity)
         {
             // TODO: DBプログラミング講座で実装
@@ -104,15 +97,10 @@ namespace PhotoFrame.Persistence.EF
 
         private IQueryable<Photo> FindAll()
         {
-            List<Table_Photo> table_Photos;
-
-            using (PhotoFrameDBEntities dbentity = new PhotoFrameDBEntities())
+            using(PhotoFrameDBEntities dbentity = new PhotoFrameDBEntities())
             {
-                table_Photos = dbentity.Table_Photo.ToList();
+                return ToPhoto(dbentity.Table_Photo.Include(s => s.Table_Album));
             }
-
-            return ToPhoto(table_Photos.AsQueryable());
-            
         }
 
         private Photo ToPhoto(Table_Photo table_Photo)
@@ -120,12 +108,12 @@ namespace PhotoFrame.Persistence.EF
             if(table_Photo != null)
             {
                 Domain.Model.File file = new File(table_Photo.FilePath);
-                string albumId = table_Photo.AlbumId.ToString();
+                string albumId = table_Photo.AlbumId?.ToString();
                 Album album = null;
 
                 if (albumId != null)
                 {
-                    album = albumRepository.FindBy(albumId);
+                    album = new Album(table_Photo.Table_Album.Id.ToString(), table_Photo.Table_Album.Name, table_Photo.Table_Album.Descript);
                 }
 
                 return new Photo(table_Photo.Id.ToString(), file, table_Photo.isFavorite, albumId, album);
