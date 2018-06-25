@@ -20,38 +20,41 @@ namespace PhotoFrame.Persistence.EF
 
         public bool Exists(Album entity)
         {
-            // TODO: DBプログラミング講座で実装
             throw new NotImplementedException();
         }
 
         public bool ExistsBy(string id)
         {
-            // TODO: DBプログラミング講座で実装
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// 検索条件(query)に該当するすべてのアルバムを取得
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns></returns>
         public IEnumerable<Album> Find(Func<IQueryable<Album>, IQueryable<Album>> query)
         {
-            // TODO: DBプログラミング講座で実装
             return query(FindAll());
-            
         }
 
+        /// <summary>
+        /// 検索条件(query)に該当するアルバムを一つ分取得
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns></returns>
         public Album Find(Func<IQueryable<Album>, Album> query)
         {
-            // TODO: DBプログラミング講座で実装
             return query(FindAll());
         }
 
         public Album FindBy(string id)
         {
-            // TODO: DBプログラミング講座で実装
             return Find((IQueryable<Album> allAlbums) => { return (from album in allAlbums where album.Id == id select album).FirstOrDefault(); });
         }
 
         public Album Store(Album entity)
         {
-            // TODO: DBプログラミング講座で実装
             using (PhotoFrameDBEntities dbentity = new PhotoFrameDBEntities())
             {
                 using (var transaction = dbentity.Database.BeginTransaction())
@@ -94,7 +97,7 @@ namespace PhotoFrame.Persistence.EF
         {
             using (PhotoFrameDBEntities dbentity = new PhotoFrameDBEntities())
             {
-                IQueryable<Table_Album> allTable_Albums = (from t_album in dbentity.Table_Album select t_album);
+                IQueryable<Table_Album> allTable_Albums = from t_album in dbentity.Table_Album select t_album;
 
                 return (ToAlbum(allTable_Albums));
             }

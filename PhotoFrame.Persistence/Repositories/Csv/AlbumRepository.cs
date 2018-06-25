@@ -120,7 +120,7 @@ namespace PhotoFrame.Persistence.Csv
         {
             IQueryable<Album> otherAlbums = FindAll(entity);
 
-            using (StreamWriter sw = new StreamWriter(this.CsvFilePath, true))
+            using (StreamWriter sw = new StreamWriter(this.CsvFilePath, false))
             {
                 // ファイルあった場合
                 if (otherAlbums != null)
