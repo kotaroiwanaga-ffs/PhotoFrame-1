@@ -200,11 +200,11 @@ namespace PhotoFrameApp
         /// <param name="e"></param>
         private void button_SlideShow_Click(object sender, EventArgs e)
         {
-            if(this.searchedPhotos.Count() > 0)
-            {
+            //if(this.searchedPhotos.Count() > 0)
+            //{
                 SlideShow slideShowForm = new SlideShow(this.searchedPhotos);
                 slideShowForm.ShowDialog();
-            }
+            //}
             
         }
 
