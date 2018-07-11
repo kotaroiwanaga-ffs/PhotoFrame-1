@@ -7,8 +7,15 @@ using PhotoFrame.Domain.Model;
 
 namespace PhotoFrame.Domain.UseCase
 {
-    class AddKeyword
+    public class AddKeyword
     {
+        private RepositoryMaster repositoryMaster;
+
+        public AddKeyword(RepositoryMaster repositoryMaster)
+        {
+            this.repositoryMaster = repositoryMaster;
+        }
+
         public bool Execute(string keyword, IEnumerable<Photo> photos)
         {
 

@@ -14,11 +14,15 @@ namespace PhotoFrame.Application
     // TODO: 仮実装
     public class PhotoFrameApplication
     {
-        private readonly CreateAlbum createAlbum;
+        private readonly Filter filter;
+        private readonly AddKeyword addKeyword;
+        private readonly DeleteKeyword deleteKeyword;
+        private readonly ToggleIsFavorite toggleIsFavorite;
+        private readonly AddAlbum addAlbum;
         private readonly SearchAlbum searchAlbum;
-        private readonly SearchDirectory searchDirectory;
-        private readonly ToggleFavorite toggleFavorite;
-        private readonly ChangeAlbum changeAlbum;
+        private readonly SortDateAscending sortDateAscending;
+        private readonly SortDateDescending sortDateDescending;
+
 
         public PhotoFrameApplication(IAlbumRepository albumRepository, IPhotoRepository photoRepository, IPhotoFileService photoFileService)
         {

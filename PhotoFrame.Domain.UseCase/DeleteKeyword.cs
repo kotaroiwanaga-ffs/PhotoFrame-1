@@ -7,8 +7,15 @@ using PhotoFrame.Domain.Model;
 
 namespace PhotoFrame.Domain.UseCase
 {
-    class DeleteKeyword
+    public class DeleteKeyword
     {
+        private RepositoryMaster repositoryMaster;
+
+        public DeleteKeyword(RepositoryMaster repositoryMaster)
+        {
+            this.repositoryMaster = repositoryMaster;
+        }
+
         public bool Execute(string keyword, IEnumerable<Photo> photos)
         {
 
