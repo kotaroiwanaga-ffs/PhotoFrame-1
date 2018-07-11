@@ -9,6 +9,13 @@ namespace PhotoFrame.Domain.UseCase
 {
     public class ToggleIsFavorite
     {
+        private readonly RepositoryMaster repositoryMaster;
+
+        public ToggleIsFavorite(RepositoryMaster repositoryMaster)
+        {
+            this.repositoryMaster = repositoryMaster;
+        }
+
         public IEnumerable<Photo> Execute(IEnumerable<Photo> photos)
         {
 

@@ -11,15 +11,24 @@ namespace PhotoFrame.Domain.UseCase
     public class SearchAlbum
     {
         //private readonly IPhotoRepository photoRepository;
+        private readonly RepositoryMaster repositoryMaster;
 
         //public SearchAlbum(IPhotoRepository photoRepository)
         //{
         //    this.photoRepository = photoRepository;
         //}
 
+        public SearchAlbum(RepositoryMaster repositoryMaster)
+        {
+            this.repositoryMaster = repositoryMaster;
+        }
+
         public IEnumerable<Photo> Execute(string albumName)
         {
             List<Photo> photos = new List<Photo>();
+
+
+
 
             return photos;
         }
