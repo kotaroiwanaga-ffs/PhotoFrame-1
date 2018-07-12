@@ -29,18 +29,19 @@
         private void InitializeComponent()
         {
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.radioButton2 = new System.Windows.Forms.RadioButton();
-            this.radioButton1 = new System.Windows.Forms.RadioButton();
+            this.comboBox_AlbumName = new System.Windows.Forms.ComboBox();
+            this.button_SaveAlbumName = new System.Windows.Forms.Button();
+            this.textBox_SaveAlbumName = new System.Windows.Forms.TextBox();
+            this.b004 = new System.Windows.Forms.Label();
+            this.radioButton_AlbumSlideShow = new System.Windows.Forms.RadioButton();
+            this.radioButton_ListViewSlideShow = new System.Windows.Forms.RadioButton();
+            this.button2 = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
+            this.button_Stop = new System.Windows.Forms.Button();
             this.button_Next = new System.Windows.Forms.Button();
             this.button_Back = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.b004 = new System.Windows.Forms.Label();
-            this.textBox_SaveAlbumName = new System.Windows.Forms.TextBox();
-            this.button_SaveAlbumName = new System.Windows.Forms.Button();
-            this.button_Stop = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -53,15 +54,17 @@
             // 
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainer1.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer1.Margin = new System.Windows.Forms.Padding(2);
             this.splitContainer1.Name = "splitContainer1";
             // 
             // splitContainer1.Panel1
             // 
+            this.splitContainer1.Panel1.Controls.Add(this.comboBox_AlbumName);
             this.splitContainer1.Panel1.Controls.Add(this.button_SaveAlbumName);
             this.splitContainer1.Panel1.Controls.Add(this.textBox_SaveAlbumName);
             this.splitContainer1.Panel1.Controls.Add(this.b004);
-            this.splitContainer1.Panel1.Controls.Add(this.radioButton2);
-            this.splitContainer1.Panel1.Controls.Add(this.radioButton1);
+            this.splitContainer1.Panel1.Controls.Add(this.radioButton_AlbumSlideShow);
+            this.splitContainer1.Panel1.Controls.Add(this.radioButton_ListViewSlideShow);
             // 
             // splitContainer1.Panel2
             // 
@@ -71,38 +74,114 @@
             this.splitContainer1.Panel2.Controls.Add(this.button_Next);
             this.splitContainer1.Panel2.Controls.Add(this.button_Back);
             this.splitContainer1.Panel2.Controls.Add(this.panel1);
-            this.splitContainer1.Size = new System.Drawing.Size(800, 460);
-            this.splitContainer1.SplitterDistance = 199;
+            this.splitContainer1.Size = new System.Drawing.Size(559, 307);
+            this.splitContainer1.SplitterDistance = 139;
+            this.splitContainer1.SplitterWidth = 2;
             this.splitContainer1.TabIndex = 0;
             // 
-            // radioButton2
+            // comboBox_AlbumName
             // 
-            this.radioButton2.AutoSize = true;
-            this.radioButton2.Location = new System.Drawing.Point(13, 85);
-            this.radioButton2.Name = "radioButton2";
-            this.radioButton2.Size = new System.Drawing.Size(177, 22);
-            this.radioButton2.TabIndex = 1;
-            this.radioButton2.TabStop = true;
-            this.radioButton2.Text = "保存済みのアルバム";
-            this.radioButton2.UseVisualStyleBackColor = true;
+            this.comboBox_AlbumName.Enabled = false;
+            this.comboBox_AlbumName.FormattingEnabled = true;
+            this.comboBox_AlbumName.Location = new System.Drawing.Point(12, 87);
+            this.comboBox_AlbumName.Name = "comboBox_AlbumName";
+            this.comboBox_AlbumName.Size = new System.Drawing.Size(121, 20);
+            this.comboBox_AlbumName.TabIndex = 5;
             // 
-            // radioButton1
+            // button_SaveAlbumName
             // 
-            this.radioButton1.AutoSize = true;
-            this.radioButton1.Location = new System.Drawing.Point(13, 42);
-            this.radioButton1.Name = "radioButton1";
-            this.radioButton1.Size = new System.Drawing.Size(111, 22);
-            this.radioButton1.TabIndex = 0;
-            this.radioButton1.TabStop = true;
-            this.radioButton1.Text = "リストビュー";
-            this.radioButton1.UseVisualStyleBackColor = true;
+            this.button_SaveAlbumName.Location = new System.Drawing.Point(50, 238);
+            this.button_SaveAlbumName.Margin = new System.Windows.Forms.Padding(2);
+            this.button_SaveAlbumName.Name = "button_SaveAlbumName";
+            this.button_SaveAlbumName.Size = new System.Drawing.Size(55, 25);
+            this.button_SaveAlbumName.TabIndex = 4;
+            this.button_SaveAlbumName.Text = "保存";
+            this.button_SaveAlbumName.UseVisualStyleBackColor = true;
+            this.button_SaveAlbumName.Click += new System.EventHandler(this.button_SaveAlbumName_Click);
+            // 
+            // textBox_SaveAlbumName
+            // 
+            this.textBox_SaveAlbumName.Location = new System.Drawing.Point(7, 189);
+            this.textBox_SaveAlbumName.Margin = new System.Windows.Forms.Padding(2);
+            this.textBox_SaveAlbumName.Multiline = true;
+            this.textBox_SaveAlbumName.Name = "textBox_SaveAlbumName";
+            this.textBox_SaveAlbumName.Size = new System.Drawing.Size(99, 36);
+            this.textBox_SaveAlbumName.TabIndex = 3;
+            // 
+            // b004
+            // 
+            this.b004.Location = new System.Drawing.Point(7, 151);
+            this.b004.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.b004.Name = "b004";
+            this.b004.Size = new System.Drawing.Size(101, 36);
+            this.b004.TabIndex = 2;
+            this.b004.Text = "現在のスライドショーをアルバムとして保存";
+            // 
+            // radioButton_AlbumSlideShow
+            // 
+            this.radioButton_AlbumSlideShow.AutoSize = true;
+            this.radioButton_AlbumSlideShow.Location = new System.Drawing.Point(8, 57);
+            this.radioButton_AlbumSlideShow.Margin = new System.Windows.Forms.Padding(2);
+            this.radioButton_AlbumSlideShow.Name = "radioButton_AlbumSlideShow";
+            this.radioButton_AlbumSlideShow.Size = new System.Drawing.Size(119, 16);
+            this.radioButton_AlbumSlideShow.TabIndex = 1;
+            this.radioButton_AlbumSlideShow.TabStop = true;
+            this.radioButton_AlbumSlideShow.Text = "保存済みのアルバム";
+            this.radioButton_AlbumSlideShow.UseVisualStyleBackColor = true;
+            this.radioButton_AlbumSlideShow.CheckedChanged += new System.EventHandler(this.radioButton_AlbumSlideShow_CheckedChanged);
+            // 
+            // radioButton_ListViewSlideShow
+            // 
+            this.radioButton_ListViewSlideShow.AutoSize = true;
+            this.radioButton_ListViewSlideShow.Checked = true;
+            this.radioButton_ListViewSlideShow.Location = new System.Drawing.Point(8, 28);
+            this.radioButton_ListViewSlideShow.Margin = new System.Windows.Forms.Padding(2);
+            this.radioButton_ListViewSlideShow.Name = "radioButton_ListViewSlideShow";
+            this.radioButton_ListViewSlideShow.Size = new System.Drawing.Size(73, 16);
+            this.radioButton_ListViewSlideShow.TabIndex = 0;
+            this.radioButton_ListViewSlideShow.TabStop = true;
+            this.radioButton_ListViewSlideShow.Text = "リストビュー";
+            this.radioButton_ListViewSlideShow.UseVisualStyleBackColor = true;
+            this.radioButton_ListViewSlideShow.CheckedChanged += new System.EventHandler(this.radioButton_ListViewSlideShow_CheckedChanged);
+            // 
+            // button2
+            // 
+            this.button2.Font = new System.Drawing.Font("MS UI Gothic", 30F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.button2.Location = new System.Drawing.Point(226, 231);
+            this.button2.Margin = new System.Windows.Forms.Padding(2);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(41, 46);
+            this.button2.TabIndex = 5;
+            this.button2.Text = "▶";
+            this.button2.UseVisualStyleBackColor = true;
+            // 
+            // button1
+            // 
+            this.button1.Font = new System.Drawing.Font("MS UI Gothic", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.button1.Location = new System.Drawing.Point(163, 231);
+            this.button1.Margin = new System.Windows.Forms.Padding(2);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(41, 46);
+            this.button1.TabIndex = 4;
+            this.button1.Text = "||";
+            this.button1.UseVisualStyleBackColor = true;
+            // 
+            // button_Stop
+            // 
+            this.button_Stop.Location = new System.Drawing.Point(95, 231);
+            this.button_Stop.Margin = new System.Windows.Forms.Padding(2);
+            this.button_Stop.Name = "button_Stop";
+            this.button_Stop.Size = new System.Drawing.Size(41, 46);
+            this.button_Stop.TabIndex = 3;
+            this.button_Stop.UseVisualStyleBackColor = true;
             // 
             // button_Next
             // 
             this.button_Next.Font = new System.Drawing.Font("MS UI Gothic", 50F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.button_Next.Location = new System.Drawing.Point(522, 131);
+            this.button_Next.Location = new System.Drawing.Point(313, 87);
+            this.button_Next.Margin = new System.Windows.Forms.Padding(2);
             this.button_Next.Name = "button_Next";
-            this.button_Next.Size = new System.Drawing.Size(58, 102);
+            this.button_Next.Size = new System.Drawing.Size(35, 68);
             this.button_Next.TabIndex = 2;
             this.button_Next.Text = "▶";
             this.button_Next.UseVisualStyleBackColor = true;
@@ -110,9 +189,10 @@
             // button_Back
             // 
             this.button_Back.Font = new System.Drawing.Font("MS UI Gothic", 50F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.button_Back.Location = new System.Drawing.Point(56, 131);
+            this.button_Back.Location = new System.Drawing.Point(34, 87);
+            this.button_Back.Margin = new System.Windows.Forms.Padding(2);
             this.button_Back.Name = "button_Back";
-            this.button_Back.Size = new System.Drawing.Size(58, 102);
+            this.button_Back.Size = new System.Drawing.Size(35, 68);
             this.button_Back.TabIndex = 1;
             this.button_Back.Text = "◀";
             this.button_Back.UseVisualStyleBackColor = true;
@@ -120,80 +200,30 @@
             // panel1
             // 
             this.panel1.Controls.Add(this.pictureBox1);
-            this.panel1.Location = new System.Drawing.Point(120, 42);
+            this.panel1.Location = new System.Drawing.Point(72, 28);
+            this.panel1.Margin = new System.Windows.Forms.Padding(2);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(396, 273);
+            this.panel1.Size = new System.Drawing.Size(238, 182);
             this.panel1.TabIndex = 0;
             // 
             // pictureBox1
             // 
             this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pictureBox1.Location = new System.Drawing.Point(0, 0);
+            this.pictureBox1.Margin = new System.Windows.Forms.Padding(2);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(396, 273);
+            this.pictureBox1.Size = new System.Drawing.Size(238, 182);
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             // 
-            // b004
+            // SlideShow
             // 
-            this.b004.Location = new System.Drawing.Point(12, 226);
-            this.b004.Name = "b004";
-            this.b004.Size = new System.Drawing.Size(168, 54);
-            this.b004.TabIndex = 2;
-            this.b004.Text = "現在のスライドショーをアルバムとして保存";
-            // 
-            // textBox_SaveAlbumName
-            // 
-            this.textBox_SaveAlbumName.Location = new System.Drawing.Point(12, 283);
-            this.textBox_SaveAlbumName.Multiline = true;
-            this.textBox_SaveAlbumName.Name = "textBox_SaveAlbumName";
-            this.textBox_SaveAlbumName.Size = new System.Drawing.Size(163, 52);
-            this.textBox_SaveAlbumName.TabIndex = 3;
-            // 
-            // button_SaveAlbumName
-            // 
-            this.button_SaveAlbumName.Location = new System.Drawing.Point(83, 357);
-            this.button_SaveAlbumName.Name = "button_SaveAlbumName";
-            this.button_SaveAlbumName.Size = new System.Drawing.Size(92, 38);
-            this.button_SaveAlbumName.TabIndex = 4;
-            this.button_SaveAlbumName.Text = "保存";
-            this.button_SaveAlbumName.UseVisualStyleBackColor = true;
-            // 
-            // button_Stop
-            // 
-            this.button_Stop.Location = new System.Drawing.Point(158, 346);
-            this.button_Stop.Name = "button_Stop";
-            this.button_Stop.Size = new System.Drawing.Size(69, 69);
-            this.button_Stop.TabIndex = 3;
-            this.button_Stop.UseVisualStyleBackColor = true;
-            // 
-            // button1
-            // 
-            this.button1.Font = new System.Drawing.Font("MS UI Gothic", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.button1.Location = new System.Drawing.Point(271, 346);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(69, 69);
-            this.button1.TabIndex = 4;
-            this.button1.Text = "||";
-            this.button1.UseVisualStyleBackColor = true;
-            // 
-            // button2
-            // 
-            this.button2.Font = new System.Drawing.Font("MS UI Gothic", 30F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.button2.Location = new System.Drawing.Point(376, 346);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(69, 69);
-            this.button2.TabIndex = 5;
-            this.button2.Text = "▶";
-            this.button2.UseVisualStyleBackColor = true;
-            // 
-            // SldeShow
-            // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 18F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 460);
+            this.ClientSize = new System.Drawing.Size(559, 307);
             this.Controls.Add(this.splitContainer1);
-            this.Name = "SldeShow";
+            this.Margin = new System.Windows.Forms.Padding(2);
+            this.Name = "SlideShow";
             this.Text = "SldeShow";
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel1.PerformLayout();
@@ -213,13 +243,14 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Button button_Back;
         private System.Windows.Forms.Button button_Next;
-        private System.Windows.Forms.RadioButton radioButton2;
-        private System.Windows.Forms.RadioButton radioButton1;
+        private System.Windows.Forms.RadioButton radioButton_AlbumSlideShow;
+        private System.Windows.Forms.RadioButton radioButton_ListViewSlideShow;
         private System.Windows.Forms.Label b004;
         private System.Windows.Forms.Button button_SaveAlbumName;
         private System.Windows.Forms.TextBox textBox_SaveAlbumName;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button_Stop;
+        private System.Windows.Forms.ComboBox comboBox_AlbumName;
     }
 }

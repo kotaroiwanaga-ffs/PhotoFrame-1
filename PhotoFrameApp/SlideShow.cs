@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using PhotoFrame.Domain.Model;
+using PhotoFrame.Application;
 
 namespace PhotoFrameApp
 {
@@ -15,15 +16,34 @@ namespace PhotoFrameApp
     {
         private IEnumerable<Photo> photolist_listview;//リストビュー上のフォト
         private IEnumerable<Album> albumlist;
+        private PhotoFrameApplication application;
 
-        public SlideShow(IEnumerable<Photo> photolist)
+        public SlideShow(IEnumerable<Photo> photolist, PhotoFrameApplication application )
         {
-            this.photolist_listview = photolist;
-            //this.albumlist = GetAllAlbums();
             InitializeComponent();
 
+            this.photolist_listview = photolist;
+            
+            this.application = application;
+            //this.albumlist = application.GetAllAlbums();
 
 
+            //アルバムリストの一時的な初期値の設定
+            Album album1 = new Album("abc", "test1", "test説明");
+            Album album2 = new Album("def", "test2", "test1説明");
+            Album album3 = new Album("ghi", "test3", "test2説明");
+
+            List<Album> list = new List<Album>();
+            list.Add(album1);
+            list.Add(album2);
+            list.Add(album3);
+
+            this.albumlist = list;
+
+            foreach (var albums in this.albumlist)
+            {
+                comboBox_AlbumName.Items.Add(albums.Name);
+            }
 
         }
 
@@ -39,7 +59,6 @@ namespace PhotoFrameApp
             if (radioButton_AlbumSlideShow.Checked == true)
             {
                 comboBox_AlbumName.Enabled = true;
-                comboBox_AlbumName.Items.Add();
             }
             else
             {
@@ -58,6 +77,22 @@ namespace PhotoFrameApp
             {
                 comboBox_AlbumName.Enabled = false;
             }
+        }
+
+        private void button_SaveAlbumName_Click(object sender, EventArgs e)
+        {
+            string savaName = textBox_SaveAlbumName.Text;
+            var list = (from p in this.albumlist where p.Name == savaName select p).ToList();
+
+            if( list.Count != 0)
+            {
+                MessageBox.Show("すでに保存されたアルバム名です");
+            }
+            else
+            {
+
+            }
+            
         }
     }
 }
