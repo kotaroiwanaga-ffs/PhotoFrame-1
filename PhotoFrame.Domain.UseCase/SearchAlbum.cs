@@ -19,9 +19,22 @@ namespace PhotoFrame.Domain.UseCase
 
         public IEnumerable<Photo> Execute(string albumName)
         {
+            List<Photo> photos = new List<Photo>();
+            IEnumerable<string> pathlist = repositoryMaster.FindSlideShow(Album.Create(albumName));
 
+            foreach(string path in pathlist)
+            {
+                Func<IQueryable<Photo>, Photo> query = ((allPhotos) =>
+                {
+                    return allPhotos
+                        .Where(p => p.File.FilePath == path)
+                        .FirstOrDefault();
+                });
 
-            return new List<Photo>();
+                photos.Add(repositoryMaster.FindPhoto(query));
+            }
+
+            return photos;
         }
     }
 }
