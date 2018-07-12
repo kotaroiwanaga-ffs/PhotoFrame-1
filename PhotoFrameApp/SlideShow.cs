@@ -25,7 +25,7 @@ namespace PhotoFrameApp
             this.photolist_listview = photolist;
             
             this.application = application;
-            //this.albumlist = application.GetAllAlbums();
+            this.albumlist = application.GetAllAlbums();
 
 
             //アルバムリストの一時的な初期値の設定
