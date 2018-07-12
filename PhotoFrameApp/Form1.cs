@@ -35,7 +35,7 @@ namespace PhotoFrameApp
         //private IPhotoRepository photoRepository;
         //private IAlbumRepository albumRepository;
         //private IPhotoFileService photoFileService;
-        //private PhotoFrameApplication application;
+        private PhotoFrameApplication application;
         //private IEnumerable<Photo> searchedPhotos; // リストビュー上のフォトのリスト
 
         //private bool flagAsync;
@@ -48,15 +48,18 @@ namespace PhotoFrameApp
         {
             InitializeComponent();
 
+            var application = new PhotoFrameApplication();
+            this.application = application;
+
             isFavorite_F_now = false;
             isFavorite_RD_now = false;
             filepath = "";
             date_S = DateTime.Now;
             date_E = DateTime.Now;
 
-            a = new Photo(@"C:\研修用\Album1\Chrysanthemum.jpg", true, new DateTime(),null);
-            b = new Photo(@"C:\研修用\Album1\Desert.jpg", false, new DateTime(),null);
-            c = new Photo(@"C:\研修用\Album1\Hydrangeas.jpg", true, DateTime.Now, null);
+            a = new Photo(new File(@"C:\研修用\Album1\Chrysanthemum.jpg", true, new DateTime(),null);
+            //b = new Photo(@"C:\研修用\Album1\Desert.jpg", false, new DateTime(),null);
+            //c = new Photo(@"C:\研修用\Album1\Hydrangeas.jpg", true, DateTime.Now, null);
 
             Photo[] photos = { a, b, c };
             searchedPhotos =  photos.AsEnumerable<Photo>();
@@ -498,27 +501,27 @@ namespace PhotoFrameApp
         /// <param name="e"></param>
         private void slideShowButton_Click(object sender, EventArgs e)
         {
-            //SlideShow slideShowForm = new SlideShow(this.searchedPhotos,application);
-            //slideShowForm.ShowDialog();
+            SlideShow slideShowForm = new SlideShow(this.searchedPhotos, application);
+            slideShowForm.ShowDialog();
         }
     }
 
     /// <summary>
     /// テスト用
     /// </summary>
-    public class Photo
-    {
-        public string filepath;
-        public bool isFavorite;
-        public DateTime date;
-        public string[] keyword;
+    //public class Photo
+    //{
+    //    public string filepath;
+    //    public bool isFavorite;
+    //    public DateTime date;
+    //    public string[] keyword;
 
-        public Photo(string a,bool b ,DateTime c,string[] d)
-        {
-            filepath = a;
-            isFavorite = b;
-            date = c;
-            keyword = d;
-        }
-    }
+    //    public Photo(string a, bool b, DateTime c, string[] d)
+    //    {
+    //        filepath = a;
+    //        isFavorite = b;
+    //        date = c;
+    //        keyword = d;
+    //    }
+    //}
 }

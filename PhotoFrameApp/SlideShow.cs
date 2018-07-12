@@ -15,11 +15,11 @@ namespace PhotoFrameApp
     public partial class SlideShow : Form
     {
 
-        private IEnumerable<Photo> photolist_listview;//リストビュー上のフォト
+        private IEnumerable<PhotoFrame.Domain.Model.Photo> photolist_listview;//リストビュー上のフォト
         private IEnumerable<Album> albumlist;
         private PhotoFrameApplication application;
 
-        public SlideShow(IEnumerable<Photo> photolist, PhotoFrameApplication application )
+        public SlideShow(IEnumerable<PhotoFrame.Domain.Model.Photo> photolist, PhotoFrameApplication application )
         {
             InitializeComponent();
 
@@ -91,10 +91,14 @@ namespace PhotoFrameApp
             }
             else
             {
-
+                application.AddAlbum(savaName, this.photolist_listview);
             }
             
         }
 
+        private void button_StartSlideShow_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
