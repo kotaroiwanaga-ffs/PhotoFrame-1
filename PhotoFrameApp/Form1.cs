@@ -506,7 +506,7 @@ namespace PhotoFrameApp
     /// <summary>
     /// テスト用
     /// </summary>
-    class Photo
+    public class Photo
     {
         public string filepath;
         public bool isFavorite;
