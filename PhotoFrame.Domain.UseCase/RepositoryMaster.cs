@@ -112,6 +112,11 @@ namespace PhotoFrame.Domain.UseCase
             //return slideShowRepository.Store(album, photos);
             return null;
         }
+    
+
+        // Dummy Method /////////////////////////////////////////////////////
+
+
 
     }
 }

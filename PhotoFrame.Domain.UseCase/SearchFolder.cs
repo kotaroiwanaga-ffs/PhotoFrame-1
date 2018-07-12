@@ -36,7 +36,8 @@ namespace PhotoFrame.Domain.UseCase
                         .FirstOrDefault();
                 });
 
-                Photo hitPhoto = repositoryMaster.FindPhoto(query);
+                //Photo hitPhoto = repositoryMaster.FindPhoto(query);
+                Photo hitPhoto = null;
 
                 if(hitPhoto != null)
                 {
