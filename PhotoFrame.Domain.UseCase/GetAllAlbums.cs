@@ -18,10 +18,8 @@ namespace PhotoFrame.Domain.UseCase
 
         public IEnumerable<Album> Execute()
         {
-
-
-
-            return new List<Album>(); 
+            return repositoryMaster.FindAlbum((allAlbums) => allAlbums);
+ 
         }
     }
 }
