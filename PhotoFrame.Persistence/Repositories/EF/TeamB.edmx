@@ -1,0 +1,221 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="TeamB_PhotoFrameModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ALBUM_TABLE">
+          <Key>
+            <PropertyRef Name="NAME" />
+          </Key>
+          <Property Name="NAME" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AP_TABLE">
+          <Key>
+            <PropertyRef Name="FILEPATH" />
+            <PropertyRef Name="ALBUMNAME" />
+          </Key>
+          <Property Name="FILEPATH" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="ALBUMNAME" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="KEYWORD_TABLE">
+          <Key>
+            <PropertyRef Name="FILEPATH" />
+            <PropertyRef Name="KEYWORD" />
+          </Key>
+          <Property Name="FILEPATH" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="KEYWORD" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PHOTO_TABLE">
+          <Key>
+            <PropertyRef Name="FILEPATH" />
+          </Key>
+          <Property Name="FILEPATH" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="ISFAVORITE" Type="bit" />
+          <Property Name="TAKEDATE" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <Association Name="FK__AP_REFERE__ALBUM__286302EC">
+          <End Role="ALBUM_TABLE" Type="Self.ALBUM_TABLE" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AP_TABLE" Type="Self.AP_TABLE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ALBUM_TABLE">
+              <PropertyRef Name="NAME" />
+            </Principal>
+            <Dependent Role="AP_TABLE">
+              <PropertyRef Name="ALBUMNAME" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__AP_REFERE__FILEP__276EDEB3">
+          <End Role="PHOTO_TABLE" Type="Self.PHOTO_TABLE" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AP_TABLE" Type="Self.AP_TABLE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PHOTO_TABLE">
+              <PropertyRef Name="FILEPATH" />
+            </Principal>
+            <Dependent Role="AP_TABLE">
+              <PropertyRef Name="FILEPATH" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__KEYWORD_T__FILEP__24927208">
+          <End Role="PHOTO_TABLE" Type="Self.PHOTO_TABLE" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="KEYWORD_TABLE" Type="Self.KEYWORD_TABLE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PHOTO_TABLE">
+              <PropertyRef Name="FILEPATH" />
+            </Principal>
+            <Dependent Role="KEYWORD_TABLE">
+              <PropertyRef Name="FILEPATH" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="TeamB_PhotoFrameModelStoreContainer">
+          <EntitySet Name="ALBUM_TABLE" EntityType="Self.ALBUM_TABLE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AP_TABLE" EntityType="Self.AP_TABLE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="KEYWORD_TABLE" EntityType="Self.KEYWORD_TABLE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PHOTO_TABLE" EntityType="Self.PHOTO_TABLE" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__AP_REFERE__ALBUM__286302EC" Association="Self.FK__AP_REFERE__ALBUM__286302EC">
+            <End Role="ALBUM_TABLE" EntitySet="ALBUM_TABLE" />
+            <End Role="AP_TABLE" EntitySet="AP_TABLE" />
+          </AssociationSet>
+          <AssociationSet Name="FK__AP_REFERE__FILEP__276EDEB3" Association="Self.FK__AP_REFERE__FILEP__276EDEB3">
+            <End Role="PHOTO_TABLE" EntitySet="PHOTO_TABLE" />
+            <End Role="AP_TABLE" EntitySet="AP_TABLE" />
+          </AssociationSet>
+          <AssociationSet Name="FK__KEYWORD_T__FILEP__24927208" Association="Self.FK__KEYWORD_T__FILEP__24927208">
+            <End Role="PHOTO_TABLE" EntitySet="PHOTO_TABLE" />
+            <End Role="KEYWORD_TABLE" EntitySet="KEYWORD_TABLE" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="TeamB_PhotoFrameModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="ALBUM_TABLE">
+          <Key>
+            <PropertyRef Name="NAME" />
+          </Key>
+          <Property Name="NAME" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="PHOTO_TABLE" Relationship="Self.AP_TABLE" FromRole="ALBUM_TABLE" ToRole="PHOTO_TABLE" />
+        </EntityType>
+        <EntityType Name="KEYWORD_TABLE">
+          <Key>
+            <PropertyRef Name="FILEPATH" />
+            <PropertyRef Name="KEYWORD" />
+          </Key>
+          <Property Name="FILEPATH" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="KEYWORD" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="PHOTO_TABLE" Relationship="Self.FK__KEYWORD_T__FILEP__24927208" FromRole="KEYWORD_TABLE" ToRole="PHOTO_TABLE" />
+        </EntityType>
+        <EntityType Name="PHOTO_TABLE">
+          <Key>
+            <PropertyRef Name="FILEPATH" />
+          </Key>
+          <Property Name="FILEPATH" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ISFAVORITE" Type="Boolean" />
+          <Property Name="TAKEDATE" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="KEYWORD_TABLE" Relationship="Self.FK__KEYWORD_T__FILEP__24927208" FromRole="PHOTO_TABLE" ToRole="KEYWORD_TABLE" />
+          <NavigationProperty Name="ALBUM_TABLE" Relationship="Self.AP_TABLE" FromRole="PHOTO_TABLE" ToRole="ALBUM_TABLE" />
+        </EntityType>
+        <Association Name="FK__KEYWORD_T__FILEP__24927208">
+          <End Role="PHOTO_TABLE" Type="Self.PHOTO_TABLE" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="KEYWORD_TABLE" Type="Self.KEYWORD_TABLE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PHOTO_TABLE">
+              <PropertyRef Name="FILEPATH" />
+            </Principal>
+            <Dependent Role="KEYWORD_TABLE">
+              <PropertyRef Name="FILEPATH" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="AP_TABLE">
+          <End Role="ALBUM_TABLE" Type="Self.ALBUM_TABLE" Multiplicity="*" />
+          <End Role="PHOTO_TABLE" Type="Self.PHOTO_TABLE" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="TeamBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ALBUM_TABLE" EntityType="Self.ALBUM_TABLE" />
+          <EntitySet Name="KEYWORD_TABLE" EntityType="Self.KEYWORD_TABLE" />
+          <EntitySet Name="PHOTO_TABLE" EntityType="Self.PHOTO_TABLE" />
+          <AssociationSet Name="FK__KEYWORD_T__FILEP__24927208" Association="Self.FK__KEYWORD_T__FILEP__24927208">
+            <End Role="PHOTO_TABLE" EntitySet="PHOTO_TABLE" />
+            <End Role="KEYWORD_TABLE" EntitySet="KEYWORD_TABLE" />
+          </AssociationSet>
+          <AssociationSet Name="AP_TABLE" Association="Self.AP_TABLE">
+            <End Role="ALBUM_TABLE" EntitySet="ALBUM_TABLE" />
+            <End Role="PHOTO_TABLE" EntitySet="PHOTO_TABLE" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="TeamB_PhotoFrameModelStoreContainer" CdmEntityContainer="TeamBEntities">
+          <EntitySetMapping Name="ALBUM_TABLE">
+            <EntityTypeMapping TypeName="TeamB_PhotoFrameModel.ALBUM_TABLE">
+              <MappingFragment StoreEntitySet="ALBUM_TABLE">
+                <ScalarProperty Name="NAME" ColumnName="NAME" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="KEYWORD_TABLE">
+            <EntityTypeMapping TypeName="TeamB_PhotoFrameModel.KEYWORD_TABLE">
+              <MappingFragment StoreEntitySet="KEYWORD_TABLE">
+                <ScalarProperty Name="FILEPATH" ColumnName="FILEPATH" />
+                <ScalarProperty Name="KEYWORD" ColumnName="KEYWORD" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PHOTO_TABLE">
+            <EntityTypeMapping TypeName="TeamB_PhotoFrameModel.PHOTO_TABLE">
+              <MappingFragment StoreEntitySet="PHOTO_TABLE">
+                <ScalarProperty Name="FILEPATH" ColumnName="FILEPATH" />
+                <ScalarProperty Name="ISFAVORITE" ColumnName="ISFAVORITE" />
+                <ScalarProperty Name="TAKEDATE" ColumnName="TAKEDATE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="AP_TABLE" TypeName="TeamB_PhotoFrameModel.AP_TABLE" StoreEntitySet="AP_TABLE">
+            <EndProperty Name="ALBUM_TABLE">
+              <ScalarProperty Name="NAME" ColumnName="ALBUMNAME" />
+            </EndProperty>
+            <EndProperty Name="PHOTO_TABLE">
+              <ScalarProperty Name="FILEPATH" ColumnName="FILEPATH" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="なし" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
