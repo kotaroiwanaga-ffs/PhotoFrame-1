@@ -22,7 +22,17 @@ namespace PhotoFrame.Domain.UseCase
 
         public IEnumerable<Photo> Execute(string filePath)
         {
+            IEnumerable<File> files = photoFileService.FindAllPhotoFilesFromDirectory(filePath);
 
+            Func<IQueryable<Photo>, Photo> query = ((photo) =>
+            {
+                
+            });
+
+            foreach(File file in files)
+            {
+
+            }
 
             List<Photo> photos = new List<Photo>();
 
