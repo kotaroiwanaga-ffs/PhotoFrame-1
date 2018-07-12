@@ -20,7 +20,11 @@ namespace PhotoFrame.Domain.UseCase
         {
             foreach(Photo photo in photos)
             {
-                photo
+                if (!photo.IsFavorite)
+                {
+                    photo.MarkAsFavorite();
+                    repositoryMaster.StorePhoto(photo);
+                }
             }
 
             return photos;
