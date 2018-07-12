@@ -41,12 +41,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ChangeAlbum.cs" />
-    <Compile Include="CreateAlbum.cs" />
+    <Compile Include="AddAlbum.cs" />
+    <Compile Include="AddKeyword.cs" />
+    <Compile Include="DeleteKeyword.cs" />
+    <Compile Include="Filter.cs" />
+    <Compile Include="GetAllAlbums.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RepositoryMaster.cs" />
     <Compile Include="SearchAlbum.cs" />
-    <Compile Include="SearchDirectory.cs" />
-    <Compile Include="ToggleFavorite.cs" />
+    <Compile Include="SearchFolder.cs" />
+    <Compile Include="SortDateAscending.cs" />
+    <Compile Include="SortDateDescending.cs" />
+    <Compile Include="ToggleIsFavorite.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PhotoFrame.Domain.Model\PhotoFrame.Domain.Model.csproj">

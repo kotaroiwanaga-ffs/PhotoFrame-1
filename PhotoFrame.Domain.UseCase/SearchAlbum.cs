@@ -10,26 +10,32 @@ namespace PhotoFrame.Domain.UseCase
 {
     public class SearchAlbum
     {
-        private readonly IPhotoRepository photoRepository;
+        //private readonly IPhotoRepository photoRepository;
+        private readonly RepositoryMaster repositoryMaster;
 
-        public SearchAlbum(IPhotoRepository photoRepository)
+        //public SearchAlbum(IPhotoRepository photoRepository)
+        //{
+        //    this.photoRepository = photoRepository;
+        //}
+
+        public SearchAlbum(RepositoryMaster repositoryMaster)
         {
-            this.photoRepository = photoRepository;
+            this.repositoryMaster = repositoryMaster;
         }
 
-        /// <summary>
-        /// 指定した名前のアルバムに属するフォトのリストを返す
-        /// </summary>
-        /// <param name="albumName"></param>
-        /// <returns></returns>
         public IEnumerable<Photo> Execute(string albumName)
         {
-            return photoRepository.Find(photos => (from p in photos where p.Album.Name == albumName select p).ToList().AsQueryable());
+            List<Photo> photos = new List<Photo>();
+
+
+
+
+            return photos;
         }
 
-        public async Task<IEnumerable<Photo>> ExecuteAsync(string albumName)
-        {
-            return await Task.Run(() => photoRepository.Find(photos => (from p in photos where p.Album != null && p.Album.Name == albumName select p).ToList().AsQueryable()));
-        }
+        //public async Task<IEnumerable<Photo>> ExecuteAsync(string albumName)
+        //{
+        //    return await Task.Run(() => photoRepository.Find(photos => (from p in photos where p.Album != null && p.Album.Name == albumName select p).ToList().AsQueryable()));
+        //}
     }
 }
