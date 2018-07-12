@@ -42,14 +42,14 @@
             this.button_Next = new System.Windows.Forms.Button();
             this.button_Back = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.pictureBox_SlideShow = new System.Windows.Forms.PictureBox();
             this.timer_SlideShow = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             this.panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_SlideShow)).BeginInit();
             this.SuspendLayout();
             // 
             // splitContainer1
@@ -161,6 +161,7 @@
             this.button_Pause.TabIndex = 4;
             this.button_Pause.Text = "||";
             this.button_Pause.UseVisualStyleBackColor = true;
+            this.button_Pause.Click += new System.EventHandler(this.button_Pause_Click);
             // 
             // button_Stop
             // 
@@ -169,6 +170,7 @@
             this.button_Stop.Size = new System.Drawing.Size(68, 69);
             this.button_Stop.TabIndex = 3;
             this.button_Stop.UseVisualStyleBackColor = true;
+            this.button_Stop.Click += new System.EventHandler(this.button_Stop_Click);
             // 
             // button_Next
             // 
@@ -189,23 +191,25 @@
             this.button_Back.TabIndex = 1;
             this.button_Back.Text = "◀";
             this.button_Back.UseVisualStyleBackColor = true;
+            this.button_Back.Click += new System.EventHandler(this.button_Back_Click);
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.pictureBox1);
+            this.panel1.Controls.Add(this.pictureBox_SlideShow);
             this.panel1.Location = new System.Drawing.Point(120, 42);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(397, 273);
             this.panel1.TabIndex = 0;
             // 
-            // pictureBox1
+            // pictureBox_SlideShow
             // 
-            this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pictureBox1.Location = new System.Drawing.Point(0, 0);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(397, 273);
-            this.pictureBox1.TabIndex = 0;
-            this.pictureBox1.TabStop = false;
+            this.pictureBox_SlideShow.Cursor = System.Windows.Forms.Cursors.Default;
+            this.pictureBox_SlideShow.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pictureBox_SlideShow.Location = new System.Drawing.Point(0, 0);
+            this.pictureBox_SlideShow.Name = "pictureBox_SlideShow";
+            this.pictureBox_SlideShow.Size = new System.Drawing.Size(397, 273);
+            this.pictureBox_SlideShow.TabIndex = 0;
+            this.pictureBox_SlideShow.TabStop = false;
             // 
             // timer_SlideShow
             // 
@@ -226,7 +230,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_SlideShow)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -235,7 +239,7 @@
 
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.PictureBox pictureBox_SlideShow;
         private System.Windows.Forms.Button button_Back;
         private System.Windows.Forms.Button button_Next;
         private System.Windows.Forms.RadioButton radioButton_AlbumSlideShow;
