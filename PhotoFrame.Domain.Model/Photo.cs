@@ -68,23 +68,37 @@ namespace PhotoFrame.Domain.Model
 
         public bool AddKeyword(string keyword)
         {
-            var hit = this.Keywords
-                .Where(p => p == keyword)
+            var spaceCount = keyword
+                .Where(p => p == ' ')
                 .Count();
 
-            bool checkAlreadySet = hit == 0;
-            bool checkUsable = keyword != null && keyword != "";
+            bool checkNewWord = !this.Keywords.Contains(keyword);
+            bool checkUsableWord = keyword != null && keyword != "" && spaceCount == keyword.Length;
+            bool checkLength = keyword.Length <= 10;
+            bool checkCapacity = this.Keywords.Count < 5;
 
-            if(keyword != null && keyword != "" && keyword.Length <= 10 && this.Keywords.Count < 5 && hit > 0)
+            if(checkNewWord && checkUsableWord && checkLength && checkCapacity)
             {
                 this.Keywords.Add(keyword);
                 return true;
+            }
+            else
+            {
+                return false;
             }
         }
 
         public bool DeleteKeyword(string keyword)
         {
-
+            if (this.Keywords.Contains(keyword))
+            {
+                this.Keywords.Remove(keyword);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         public static Photo CreateFromFile(File file)
