@@ -96,7 +96,7 @@ namespace PhotoFrame.Application
             return this.sortDateDescending.Execute(photos);
         }
 
-        public IEnumerable<Album> GetAlbums()
+        public IEnumerable<Album> GetAllAlbums()
         {
             return this.getAllAlbums.Execute();
         }
