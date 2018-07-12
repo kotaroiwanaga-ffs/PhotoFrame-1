@@ -24,10 +24,10 @@ namespace PhotoFrame.Domain.UseCase
         {
             IEnumerable<File> files = photoFileService.FindAllPhotoFilesFromDirectory(filePath);
 
-            Func<IQueryable<Photo>, Photo> query = ((photo) =>
-            {
+            //Func<IQueryable<Photo>, Photo> query = ((photo) =>
+            //{
                 
-            });
+            //});
 
             foreach(File file in files)
             {

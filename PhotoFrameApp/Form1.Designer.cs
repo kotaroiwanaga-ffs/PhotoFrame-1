@@ -293,6 +293,7 @@
             this.photoPreview.Location = new System.Drawing.Point(4, 4);
             this.photoPreview.Name = "photoPreview";
             this.photoPreview.Size = new System.Drawing.Size(418, 248);
+            this.photoPreview.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.photoPreview.TabIndex = 1;
             this.photoPreview.TabStop = false;
             // 
@@ -301,6 +302,7 @@
             this.photoKeyword.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.photoKeyword.Location = new System.Drawing.Point(4, 264);
             this.photoKeyword.Name = "photoKeyword";
+            this.photoKeyword.ReadOnly = true;
             this.photoKeyword.Size = new System.Drawing.Size(418, 19);
             this.photoKeyword.TabIndex = 2;
             // 
@@ -503,6 +505,7 @@
             this.filterButton.TabIndex = 5;
             this.filterButton.Text = "フィルタ";
             this.filterButton.UseVisualStyleBackColor = true;
+            this.filterButton.Click += new System.EventHandler(this.filterButton_Click);
             // 
             // Form1
             // 

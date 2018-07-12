@@ -54,9 +54,10 @@ namespace PhotoFrameApp
             date_S = DateTime.Now;
             date_E = DateTime.Now;
 
-            a = new Photo(@"C:\研修用\Album1\Chrysanthemum.jpg", true, new DateTime(),null);
+            string[] aaa = { "a", "b", "aaaa" };
+            a = new Photo(@"C:\研修用\Album1\Chrysanthemum.jpg", true, new DateTime(),aaa);
             b = new Photo(@"C:\研修用\Album1\Desert.jpg", false, new DateTime(),null);
-            c = new Photo(@"C:\研修用\Album1\Hydrangeas.jpg", true, DateTime.Now, null);
+            c = new Photo(@"C:\研修用\Album1\Hydrangeas.jpg", true, DateTime.Now, aaa);
 
             Photo[] photos = { a, b, c };
             searchedPhotos =  photos.AsEnumerable<Photo>();
@@ -352,18 +353,16 @@ namespace PhotoFrameApp
         }
 
 
-            /// <summary>
+        /// <summary>
             /// ファイルボタンを押したとき
             /// </summary>
             /// <param name="sender"></param>
             /// <param name="e"></param>
-            private void fileIcon_Click(object sender, EventArgs e)
+        private void fileIcon_Click(object sender, EventArgs e)
         {
             //FolderBrowserDialogクラスのインスタンスを作成
             FolderBrowserDialog fbd = new FolderBrowserDialog();
 
-            //上部に表示する説明テキストを指定する
-            //fbd.Description = "フォルダを指定してください。";
             //ルートフォルダを指定する
             //デフォルトでDesktop
             fbd.RootFolder = Environment.SpecialFolder.Desktop;
@@ -382,6 +381,7 @@ namespace PhotoFrameApp
                 filePathView.Text = (filepath);
             }
         }
+
         /// <summary>
         /// 日付指定ボタンのチェックが変更されたとき
         /// </summary>
@@ -400,6 +400,7 @@ namespace PhotoFrameApp
                 dateEnd.Enabled = false;
             }
         }
+
         /// <summary>
         /// 上のほうの星がクリックされたとき
         /// </summary>
@@ -418,6 +419,7 @@ namespace PhotoFrameApp
                 isFavorite_F.ForeColor = Color.Yellow;
             }
         }
+        
         /// <summary>
         /// 下のほうの星がクリックされたとき
         /// </summary>
@@ -436,6 +438,7 @@ namespace PhotoFrameApp
                 isFavorite_RD.ForeColor = Color.Yellow;
             }
         }
+
         /// <summary>
         /// 日付指定始まりを変更したとき
         /// </summary>
@@ -482,11 +485,22 @@ namespace PhotoFrameApp
             }
             else if(photoListView.SelectedItems.Count == 1)
             {
-                testlabel.Text = photoListView.SelectedItems[0].Text;
+
+                int selectNumber =photoListView.SelectedItems[0].Index;
+                Photo selectedPhoto = searchedPhotos.ElementAt(selectNumber);
+                photoPreview.ImageLocation = selectedPhoto.filepath;
+                if (selectedPhoto.keyword != null)
+                {
+                    photoKeyword.Text = string.Join(",", selectedPhoto.keyword);
+                }
+                else
+                {
+                    photoKeyword.Text = "";
+                }
             }
             else
             {
-                testlabel.Text = "複数選択してるよ";
+                photoPreview.ImageLocation = @"C:\研修用\複数選択してるよ.png";
             }
             
         }
@@ -498,15 +512,28 @@ namespace PhotoFrameApp
         /// <param name="e"></param>
         private void slideShowButton_Click(object sender, EventArgs e)
         {
-            //SlideShow slideShowForm = new SlideShow(this.searchedPhotos,application);
-            //slideShowForm.ShowDialog();
+           // SlideShow slideShowForm = new SlideShow(searchedPhotos,application);
+           // slideShowForm.ShowDialog();
+        }
+
+        private void filterButton_Click(object sender, EventArgs e)
+        {
+            int result = dateEnd.Value.Date.CompareTo(dateStart.Value.Date);
+            if (result == 1)
+            {
+                //正常処理
+            }
+            else
+            {
+                MessageBox.Show("日付の設定が間違っています。左のボックスに古い日付を指定してください。");
+            }
         }
     }
 
     /// <summary>
     /// テスト用
     /// </summary>
-    class Photo
+    public class Photo
     {
         public string filepath;
         public bool isFavorite;
