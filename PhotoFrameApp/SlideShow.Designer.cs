@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.comboBox_AlbumName = new System.Windows.Forms.ComboBox();
             this.button_SaveAlbumName = new System.Windows.Forms.Button();
@@ -42,6 +43,7 @@
             this.button_Back = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.timer_SlideShow = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -205,6 +207,11 @@
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             // 
+            // timer_SlideShow
+            // 
+            this.timer_SlideShow.Interval = 3000;
+            this.timer_SlideShow.Tick += new System.EventHandler(this.button_StartSlideShow_Click);
+            // 
             // SlideShow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 18F);
@@ -240,5 +247,6 @@
         private System.Windows.Forms.Button button_Pause;
         private System.Windows.Forms.Button button_Stop;
         private System.Windows.Forms.ComboBox comboBox_AlbumName;
+        private System.Windows.Forms.Timer timer_SlideShow;
     }
 }
