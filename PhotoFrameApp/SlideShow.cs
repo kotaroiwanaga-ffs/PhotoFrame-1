@@ -14,6 +14,7 @@ namespace PhotoFrameApp
 {
     public partial class SlideShow : Form
     {
+
         private IEnumerable<Photo> photolist_listview;//リストビュー上のフォト
         private IEnumerable<Album> albumlist;
         private PhotoFrameApplication application;
@@ -94,5 +95,6 @@ namespace PhotoFrameApp
             }
             
         }
+
     }
 }
