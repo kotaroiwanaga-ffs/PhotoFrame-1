@@ -18,9 +18,14 @@ namespace PhotoFrame.Domain.UseCase
 
         public bool Execute(string keyword, IEnumerable<Photo> photos)
         {
+            bool success = false;
 
+            foreach(Photo photo in photos)
+            {
+                success = photo.DeleteKeyword(keyword) || success;
+            }
 
-            return true;
+            return success;
         }
     }
 }
