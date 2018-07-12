@@ -30,6 +30,16 @@ namespace PhotoFrame.Domain.Model
         /// </summary>
         public string AlbumId { get; set; }
 
+        /// <summary>
+        /// 撮影日時
+        /// </summary>
+        public DateTime Date { get; private set; }
+
+        /// <summary>
+        /// キーワード
+        /// </summary>
+        public List<string> Keywords { get; private set; }
+
         public Photo(string photoId, File file, bool isFavorite = false, string albumId = null, Album album = null)
         {
             Id = photoId;
@@ -37,6 +47,58 @@ namespace PhotoFrame.Domain.Model
             IsFavorite = isFavorite;
             AlbumId = albumId;
             Album = album;
+        }
+
+        public Photo(File file, DateTime date, IEnumerable<string> keywords, bool isFavorite = false)
+        {
+            this.File = file;
+            this.Date = date;
+            this.Keywords = new List<string>();
+            this.IsFavorite = IsFavorite;
+
+            if(keywords.Count() > 0)
+            {
+               foreach(string keyword in keywords)
+                {
+                    this.Keywords.Add(keyword);
+                }
+            }
+        
+        }
+
+        public bool AddKeyword(string keyword)
+        {
+            var spaceCount = keyword
+                .Where(p => p == ' ')
+                .Count();
+
+            bool checkNewWord = !this.Keywords.Contains(keyword);
+            bool checkUsableWord = keyword != null && keyword != "" && spaceCount == keyword.Length;
+            bool checkLength = keyword.Length <= 10;
+            bool checkCapacity = this.Keywords.Count < 5;
+
+            if(checkNewWord && checkUsableWord && checkLength && checkCapacity)
+            {
+                this.Keywords.Add(keyword);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool DeleteKeyword(string keyword)
+        {
+            if (this.Keywords.Contains(keyword))
+            {
+                this.Keywords.Remove(keyword);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         public static Photo CreateFromFile(File file)

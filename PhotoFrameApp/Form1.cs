@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -454,6 +454,7 @@ namespace PhotoFrameApp
         private void dateEnd_ValueChanged(object sender, EventArgs e)
         {
             date_E = dateEnd.Value;
+
         }
 
         /// <summary>
