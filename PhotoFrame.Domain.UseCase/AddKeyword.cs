@@ -24,7 +24,7 @@ namespace PhotoFrame.Domain.UseCase
             {
                 if (photo.AddKeyword(keyword))
                 {
-                    repositoryMaster.StorePhoto(photo);
+                    //repositoryMaster.StorePhoto(photo);
                     success = true;
                 }
             }
