@@ -25,6 +25,7 @@ namespace PhotoFrame.Application
         private readonly SearchAlbum searchAlbum;
         private readonly SortDateAscending sortDateAscending;
         private readonly SortDateDescending sortDateDescending;
+        private readonly GetAllAlbums getAllAlbums;
 
 
         public PhotoFrameApplication(IAlbumRepository albumRepository, IPhotoRepository photoRepository, IPhotoFileService photoFileService)
@@ -40,6 +41,7 @@ namespace PhotoFrame.Application
             this.searchAlbum = new SearchAlbum(repositoryMaster);
             this.sortDateAscending = new SortDateAscending();
             this.sortDateDescending = new SortDateDescending();
+            this.getAllAlbums = new GetAllAlbums(repositoryMaster);
 
         }
 
@@ -86,6 +88,11 @@ namespace PhotoFrame.Application
         public IEnumerable<Photo> SortDateDescending(IEnumerable<Photo> photos)
         {
             return this.sortDateDescending.Execute(photos);
+        }
+
+        public IEnumerable<Album> GetAlbums()
+        {
+            return this.getAllAlbums.Execute();
         }
 
         //public int CreateAlbum(string albumName)

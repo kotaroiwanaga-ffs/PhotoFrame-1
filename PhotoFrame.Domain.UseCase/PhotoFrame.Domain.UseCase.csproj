@@ -45,6 +45,7 @@
     <Compile Include="AddKeyword.cs" />
     <Compile Include="DeleteKeyword.cs" />
     <Compile Include="Filter.cs" />
+    <Compile Include="GetAllAlbums.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RepositoryMaster.cs" />
     <Compile Include="SearchAlbum.cs" />

@@ -33,17 +33,32 @@ namespace PhotoFrame.Domain.UseCase
 
         public IEnumerable<Photo> Filter(Func<Photo, bool> query)
         {
-            List<Photo> photos = new List<Photo>();
+            List<Photo> filterdPhotos = new List<Photo>();
 
             foreach(Photo photo in allPhotos)
             {
                 if (query(photo))
                 {
-                    photos.Add(photo);
+                    filterdPhotos.Add(photo);
                 }
             }
 
-            return photos;
+            return filterdPhotos;
+        }
+
+        public IEnumerable<Photo> Filter(Func<Photo, bool> query, IEnumerable<Photo> photos)
+        {
+            List<Photo> filterdPhotos = new List<Photo>();
+
+            foreach (Photo photo in photos)
+            {
+                if (query(photo))
+                {
+                    filterdPhotos.Add(photo);
+                }
+            }
+
+            return filterdPhotos;
         }
 
         public IEnumerable<Photo> FindPhoto(Func<IQueryable<Photo>, IQueryable<Photo>> query)

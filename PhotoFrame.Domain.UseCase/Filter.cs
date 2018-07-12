@@ -11,6 +11,13 @@ namespace PhotoFrame.Domain.UseCase
     {
         public IEnumerable<Photo> Execute(string keyword, bool isFavorite, DateTime firstDate, DateTime lastDate)
         {
+            Func<Photo, bool> query = ((photo) =>
+            {
+                
+            });
+
+
+
             List<Photo> photos = new List<Photo>();
 
 
