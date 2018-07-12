@@ -22,7 +22,11 @@ namespace PhotoFrame.Domain.UseCase
 
             foreach(Photo photo in photos)
             {
-                success = photo.AddKeyword(keyword) || success;
+                if (photo.AddKeyword(keyword))
+                {
+                    repositoryMaster.StorePhoto(photo);
+                    success = true;
+                }
             }
 
             return success;

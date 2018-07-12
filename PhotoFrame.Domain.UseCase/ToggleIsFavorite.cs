@@ -18,7 +18,10 @@ namespace PhotoFrame.Domain.UseCase
 
         public IEnumerable<Photo> Execute(IEnumerable<Photo> photos)
         {
-
+            foreach(Photo photo in photos)
+            {
+                photo
+            }
 
             return photos;
         } 
