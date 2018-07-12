@@ -12,7 +12,7 @@ namespace PhotoFrame.Domain.UseCase
     {
         private readonly IAlbumRepository albumRepository;
         private readonly IPhotoRepository photoRepository;
-        //private readonly ISlideShowRepository slideShowRepository;
+        //private readonly SlideShowRepository slideShowRepository;
 
         private IEnumerable<Photo> allPhotos;
 
@@ -21,7 +21,7 @@ namespace PhotoFrame.Domain.UseCase
             RepositoryFactory repositoryFactory = new RepositoryFactory(PhotoFrame.Persistence.Type.Csv);
             photoRepository = repositoryFactory.PhotoRepository;
             albumRepository = repositoryFactory.AlbumRepository;
-            //slideShowRepository = repositoryFactory.SlideShowRepository;
+            //slideShowRepository = new SlideShowRepository();
 
             allPhotos = new List<Photo>();
         }

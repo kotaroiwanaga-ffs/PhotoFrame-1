@@ -8,7 +8,7 @@ using PhotoFrame.Domain.Model;
 
 namespace PhotoFrame.Domain.UseCase
 {
-    class SearchFolder
+    public class SearchFolder
     {
         private readonly RepositoryMaster repositoryMaster;
 
