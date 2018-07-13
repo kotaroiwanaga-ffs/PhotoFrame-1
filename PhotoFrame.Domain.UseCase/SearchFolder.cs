@@ -27,6 +27,7 @@ namespace PhotoFrame.Domain.UseCase
             List<Photo> photos = new List<Photo>();
             IEnumerable<File> files = photoFileService.FindAllPhotoFilesFromDirectory(filePath);
 
+
             foreach(File file in files)
             {
                 Func<IQueryable<Photo>, Photo> query = ((folderPhotos) =>

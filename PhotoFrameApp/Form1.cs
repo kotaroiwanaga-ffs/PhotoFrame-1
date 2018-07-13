@@ -36,7 +36,7 @@ namespace PhotoFrameApp
         //private IPhotoRepository photoRepository;
         //private IAlbumRepository albumRepository;
         //private IPhotoFileService photoFileService;
-        //private PhotoFrameApplication application;
+        private PhotoFrameApplication application;
         //private IEnumerable<Photo> searchedPhotos; // リストビュー上のフォトのリスト
 
         //private bool flagAsync;
@@ -49,6 +49,9 @@ namespace PhotoFrameApp
         {
             InitializeComponent();
 
+            var application = new PhotoFrameApplication();
+            this.application = application;
+
             isFavorite_F_now = false;
             isFavorite_RD_now = false;
             filepath = "";
@@ -57,11 +60,13 @@ namespace PhotoFrameApp
             pullDownKeyword = new List<string>();
             List<string> aaaa = new List<string>();
 
+
             string[] aaa = { "a", "b", "aaaa" };
             string[] bbb = { "test", "takemoto" };
             a = new Photo(@"C:\研修用\Album1\Chrysanthemum.jpg", true, new DateTime(),aaa.ToList<string>());
             b = new Photo(@"C:\研修用\Album1\Desert.jpg", false, new DateTime(),aaaa);
             c = new Photo(@"C:\研修用\Album1\Hydrangeas.jpg", true, DateTime.Now, bbb.ToList());
+
 
             Photo[] photos = { a, b, c };
             searchedPhotos =  photos.AsEnumerable<Photo>();
@@ -535,6 +540,7 @@ namespace PhotoFrameApp
         /// <param name="e"></param>
         private void slideShowButton_Click(object sender, EventArgs e)
         {
+
            // SlideShow slideShowForm = new SlideShow(searchedPhotos,application);
            // slideShowForm.ShowDialog();
         }
@@ -550,12 +556,14 @@ namespace PhotoFrameApp
             {
                 MessageBox.Show("日付の設定が間違っています。左のボックスに古い日付を指定してください。");
             }
+
         }
     }
 
     /// <summary>
     /// テスト用
     /// </summary>
+
     public class Photo
     {
         public string Filepath;
@@ -571,4 +579,5 @@ namespace PhotoFrameApp
             Keywords = d;
         }
     }
+
 }
