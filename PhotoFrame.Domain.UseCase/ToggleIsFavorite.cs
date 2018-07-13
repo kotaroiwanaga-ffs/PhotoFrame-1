@@ -18,15 +18,25 @@ namespace PhotoFrame.Domain.UseCase
 
         public IEnumerable<Photo> Execute(IEnumerable<Photo> photos)
         {
-            foreach(Photo photo in photos)
+            var unFavoritePhotos = photos.Where(p => p.IsFavorite == false).ToList();
+
+            if (unFavoritePhotos.Count() > 0)
             {
-                if (!photo.IsFavorite)
+                foreach(Photo photo in unFavoritePhotos)
                 {
                     photo.MarkAsFavorite();
                     repositoryMaster.StorePhoto(photo);
                 }
             }
-
+            else
+            {
+                foreach(Photo photo in photos)
+                {
+                    photo.MarkAsUnFavorite();
+                    repositoryMaster.StorePhoto(photo);
+                }
+            }
+           
             return photos;
         } 
     }

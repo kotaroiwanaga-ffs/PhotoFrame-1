@@ -51,9 +51,9 @@ namespace PhotoFrame.Application
 
         }
 
-        public IEnumerable<Photo> SearchFolder(string filePath)
+        public IEnumerable<Photo> SearchFolder(string folderPath)
         {
-            return this.searchFolder.Execute(filePath);
+            return this.searchFolder.Execute(folderPath);
         }
 
         public IEnumerable<Photo> Filter(string keyword , bool isFavorite, DateTime firstDate, DateTime lastDate)
