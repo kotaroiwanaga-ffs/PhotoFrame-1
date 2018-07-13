@@ -7,128 +7,94 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using PhotoFrame.Application;
-using PhotoFrame.Domain;
 using PhotoFrame.Domain.Model;
-using PhotoFrame.Domain.UseCase;
-using PhotoFrame.Persistence;
-using PhotoFrame.Persistence.Csv;
+using PhotoFrame.Application;
 
 namespace PhotoFrameApp
 {
     public partial class SlideShow : Form
     {
-        IEnumerable<Photo> photos;
-        int photo_index;
 
-        public SlideShow()
+        private IEnumerable<Photo> photolist_listview;//リストビュー上のフォト
+        private IEnumerable<Album> albumlist;
+        private PhotoFrameApplication application;
+
+        public SlideShow(IEnumerable<Photo> photolist, PhotoFrameApplication application )
         {
             InitializeComponent();
-            Environment.Exit(1);
-        }
 
-        /// <summary>
-        /// コンストラクタ
-        /// </summary>
-        /// <param name="photos"></param>
-        public SlideShow(IEnumerable<Photo> photos)
-        {
-            InitializeComponent();
-            this.photos = photos;
-            this.photo_index = 0;
-        }
+            this.photolist_listview = photolist;
+            
+            this.application = application;
+            this.albumlist = application.GetAllAlbums();
 
-        /// <summary>
-        /// スライドショー画面の初期設定
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void SlideShow_Load(object sender, EventArgs e)
-        {
-            if(photos.Count() > 0)
+
+            //アルバムリストの一時的な初期値の設定
+            Album album1 = new Album("abc", "test1", "test説明");
+            Album album2 = new Album("def", "test2", "test1説明");
+            Album album3 = new Album("ghi", "test3", "test2説明");
+
+            List<Album> list = new List<Album>();
+            list.Add(album1);
+            list.Add(album2);
+            list.Add(album3);
+
+            this.albumlist = list;
+
+            foreach (var albums in this.albumlist)
             {
-                pictureBox_SelectedPhotos.ImageLocation = photos.ElementAt(photo_index).File.FilePath;
-                timer_ChangePhoto.Interval = 3000;
-                if (checkBox_AutoPlay.Checked)
-                {
-                    timer_ChangePhoto.Start();
-                }
+                comboBox_AlbumName.Items.Add(albums.Name);
             }
 
         }
 
-        /// <summary>
-        /// 一定時間ごとに画像を切り替え
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void timer_ChangePhoto_Tick(object sender, EventArgs e)
+        private void splitContainer1_SplitterMoved(object sender, SplitterEventArgs e)
         {
-            photo_index++;
 
-            if(photo_index >= photos.Count())
-            {
-                photo_index = 0;
-            }
-
-            pictureBox_SelectedPhotos.ImageLocation = photos.ElementAt(photo_index).File.FilePath;
         }
 
-        /// <summary>
-        /// 自動再生のON/OFF切り替え
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void checkBox_AutoPlay_CheckedChanged(object sender, EventArgs e)
+      
+
+        private void radioButton_AlbumSlideShow_CheckedChanged(object sender, EventArgs e)
         {
-            if (checkBox_AutoPlay.Checked)
+            if (radioButton_AlbumSlideShow.Checked == true)
             {
-                timer_ChangePhoto.Start();
+                comboBox_AlbumName.Enabled = true;
             }
             else
             {
-                timer_ChangePhoto.Stop();
+                comboBox_AlbumName.Enabled = false;
             }
         }
 
-        /// <summary>
-        /// 次の画像に切り替える(自動再生OFF)
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void button_Next_Click(object sender, EventArgs e)
+        private void radioButton_ListViewSlideShow_CheckedChanged(object sender, EventArgs e)
         {
-            checkBox_AutoPlay.Checked = false;
-            timer_ChangePhoto.Stop();
-
-            photo_index++;
-
-            if (photo_index >= photos.Count())
+            if (radioButton_AlbumSlideShow.Checked == true)
             {
-                photo_index = 0;
-            }
+                comboBox_AlbumName.Enabled = true;
 
-            pictureBox_SelectedPhotos.ImageLocation = photos.ElementAt(photo_index).File.FilePath;
+            }
+            else
+            {
+                comboBox_AlbumName.Enabled = false;
+            }
         }
 
-        /// <summary>
-        /// 一つ前の画像に戻す(自動再生OFF)
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void button_Back_Click(object sender, EventArgs e)
+        private void button_SaveAlbumName_Click(object sender, EventArgs e)
         {
-            checkBox_AutoPlay.Checked = false;
-            timer_ChangePhoto.Stop();
+            string savaName = textBox_SaveAlbumName.Text;
+            var list = (from p in this.albumlist where p.Name == savaName select p).ToList();
 
-            photo_index--;
-
-            if (photo_index < 0)
+            if( list.Count != 0)
             {
-                photo_index = photos.Count() - 1;
+                MessageBox.Show("すでに保存されたアルバム名です");
             }
+            else
+            {
 
-            pictureBox_SelectedPhotos.ImageLocation = photos.ElementAt(photo_index).File.FilePath;
+            }
+            
         }
+
     }
 }
