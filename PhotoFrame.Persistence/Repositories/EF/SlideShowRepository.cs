@@ -8,15 +8,21 @@ using PhotoFrame.Persistence.Repositories.EF;
 
 namespace PhotoFrame.Persistence.Repositories.EF
 {
-    class SlideShowRepository
+    public class SlideShowRepository
     {
         public IEnumerable<string> Find(Album album)
         {
             using (TeamBEntities database = new TeamBEntities())
             {
-                
-            }
-            throw new NotImplementedException();
+                var phototable = database.ALBUM_TABLE.Find(album.Name).PHOTO_TABLE;
+
+                List<string> photos = new List<string>();
+                foreach(var photo in phototable)
+                {
+                    photos.Add(photo.FILEPATH);
+                }
+                return photos;
+            }          
         }
 
         public void Store(Album album, Photo photo)
@@ -26,6 +32,10 @@ namespace PhotoFrame.Persistence.Repositories.EF
             {
                 try
                 {
+                    var albumtable = database.ALBUM_TABLE.Find(album.Name);
+                    var phototable = database.PHOTO_TABLE.Find(photo.File.FilePath);
+                    albumtable.PHOTO_TABLE.Add(phototable);
+
                     transaction.Commit();
                     database.SaveChanges();
                 }

@@ -122,6 +122,35 @@ namespace PhotoFrame.Persistence.EF
             {
                 try
                 {
+                    var savekeyword = database.KEYWORD_TABLE.Where(p => p.FILEPATH == photo.File.FilePath).ToList();
+                    List<KEYWORD_TABLE> Del_keyword = savekeyword;
+
+                    foreach(var keywork in photo.Keywords)
+                    {
+                        var keywordtable = new KEYWORD_TABLE
+                        {
+                            FILEPATH = photo.File.FilePath,
+                            KEYWORD = keywork
+                        };
+
+                        if (savekeyword.Contains(keywordtable))
+                        {
+                            Del_keyword.Remove(keywordtable);
+                        }
+                        else
+                        {
+                            database.KEYWORD_TABLE.Add(keywordtable);
+                        }
+                    }
+
+                    if(Del_keyword.Count != 0)
+                    {
+                        foreach(var keyword in Del_keyword)
+                        {
+                            database.KEYWORD_TABLE.Remove(keyword);
+                        }
+                    }
+                    
                     transaction.Commit();
                     database.SaveChanges();
                 }
