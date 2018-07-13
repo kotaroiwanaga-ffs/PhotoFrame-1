@@ -186,6 +186,7 @@ namespace PhotoFrameApp
         /// <param name="e"></param>
         private void button_Back_Click(object sender, EventArgs e)
         {
+
             if (this.slideindex > 0)
             {
                 slideindex--;
@@ -223,6 +224,7 @@ namespace PhotoFrameApp
             }
 
             pictureBox_SlideShow.ImageLocation = this.slideshow_list.ElementAt(slideindex).File.FilePath;
+
 
         }
 
