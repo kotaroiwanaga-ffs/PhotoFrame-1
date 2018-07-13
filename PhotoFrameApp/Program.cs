@@ -10,7 +10,7 @@ namespace PhotoFrameApp
     static class Program
     {
         /// <summary>
-        /// アプリケーションのメイン エントリ ポイントです。vvvv
+        /// アプリケーションのメイン エントリ ポイントです。
         /// </summary>
         [STAThread]
         static void Main()
