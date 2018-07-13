@@ -52,7 +52,7 @@
             this.searchButton = new System.Windows.Forms.Button();
             this.tableLayoutPanel8 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel9 = new System.Windows.Forms.TableLayoutPanel();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.selectKeyword_F = new System.Windows.Forms.ComboBox();
             this.testlabel = new System.Windows.Forms.Label();
             this.tableLayoutPanel11 = new System.Windows.Forms.TableLayoutPanel();
             this.dateCheckBox = new System.Windows.Forms.CheckBox();
@@ -381,7 +381,7 @@
             this.tableLayoutPanel9.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
             this.tableLayoutPanel9.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30F));
             this.tableLayoutPanel9.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 60F));
-            this.tableLayoutPanel9.Controls.Add(this.comboBox1, 1, 0);
+            this.tableLayoutPanel9.Controls.Add(this.selectKeyword_F, 1, 0);
             this.tableLayoutPanel9.Controls.Add(this.testlabel, 2, 0);
             this.tableLayoutPanel9.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel9.Location = new System.Drawing.Point(1, 1);
@@ -392,15 +392,15 @@
             this.tableLayoutPanel9.Size = new System.Drawing.Size(654, 35);
             this.tableLayoutPanel9.TabIndex = 0;
             // 
-            // comboBox1
+            // selectKeyword_F
             // 
-            this.comboBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(68, 7);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(190, 20);
-            this.comboBox1.TabIndex = 0;
+            this.selectKeyword_F.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.selectKeyword_F.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.selectKeyword_F.FormattingEnabled = true;
+            this.selectKeyword_F.Location = new System.Drawing.Point(68, 7);
+            this.selectKeyword_F.Name = "selectKeyword_F";
+            this.selectKeyword_F.Size = new System.Drawing.Size(190, 20);
+            this.selectKeyword_F.TabIndex = 0;
             // 
             // testlabel
             // 
@@ -564,7 +564,7 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel8;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel9;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel11;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox selectKeyword_F;
         private System.Windows.Forms.CheckBox dateCheckBox;
         private System.Windows.Forms.DateTimePicker dateStart;
         private System.Windows.Forms.DateTimePicker dateEnd;
