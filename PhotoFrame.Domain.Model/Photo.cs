@@ -49,14 +49,14 @@ namespace PhotoFrame.Domain.Model
             Album = album;
         }
 
-        public Photo(File file, DateTime date, IEnumerable<string> keywords, bool isFavorite = false)
+        public Photo(File file, DateTime date, IEnumerable<string> keywords = null, bool isFavorite = false)
         {
             this.File = file;
             this.Date = date;
             this.Keywords = new List<string>();
             this.IsFavorite = IsFavorite;
 
-            if(keywords.Count() > 0)
+            if(keywords != null)
             {
                foreach(string keyword in keywords)
                 {
