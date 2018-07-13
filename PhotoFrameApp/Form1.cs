@@ -350,13 +350,10 @@ namespace PhotoFrameApp
         /// <summary>
         /// リストビューの更新
         /// </summary>
-        //private void renewPhotoListView()
-        //{
-        //    photoListView.Items.Clear();
-        //    DateTime nullDate = new DateTime();
-
-
-
+        private void renewPhotoListView()
+        {
+            photoListView.Items.Clear();
+            DateTime nullDate = new DateTime();
             if (this.searchedPhotos != null)
             {
                 foreach (Photo photo in searchedPhotos)
