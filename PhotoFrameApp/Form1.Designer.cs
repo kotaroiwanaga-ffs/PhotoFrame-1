@@ -144,6 +144,7 @@
             this.photoListView.TabIndex = 0;
             this.photoListView.UseCompatibleStateImageBehavior = false;
             this.photoListView.View = System.Windows.Forms.View.Details;
+            this.photoListView.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.photoListView_ColumnClick);
             this.photoListView.SelectedIndexChanged += new System.EventHandler(this.photoListView_SelectedIndexChanged);
             // 
             // columnHeader1
@@ -195,8 +196,8 @@
             // tableLayoutPanel5
             // 
             this.tableLayoutPanel5.ColumnCount = 2;
-            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 70F));
-            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30F));
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 60F));
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 40F));
             this.tableLayoutPanel5.Controls.Add(this.tableLayoutPanel6, 0, 0);
             this.tableLayoutPanel5.Controls.Add(this.tableLayoutPanel7, 1, 0);
             this.tableLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -205,7 +206,6 @@
             this.tableLayoutPanel5.Name = "tableLayoutPanel5";
             this.tableLayoutPanel5.RowCount = 1;
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 72F));
             this.tableLayoutPanel5.Size = new System.Drawing.Size(422, 72);
             this.tableLayoutPanel5.TabIndex = 0;
             // 
@@ -223,7 +223,7 @@
             this.tableLayoutPanel6.RowCount = 1;
             this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 70F));
-            this.tableLayoutPanel6.Size = new System.Drawing.Size(293, 70);
+            this.tableLayoutPanel6.Size = new System.Drawing.Size(251, 70);
             this.tableLayoutPanel6.TabIndex = 0;
             // 
             // isFavorite_RD
@@ -234,7 +234,7 @@
             this.isFavorite_RD.ForeColor = System.Drawing.Color.Gray;
             this.isFavorite_RD.Location = new System.Drawing.Point(3, 0);
             this.isFavorite_RD.Name = "isFavorite_RD";
-            this.isFavorite_RD.Size = new System.Drawing.Size(52, 70);
+            this.isFavorite_RD.Size = new System.Drawing.Size(44, 70);
             this.isFavorite_RD.TabIndex = 0;
             this.isFavorite_RD.Text = "★";
             this.isFavorite_RD.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -244,9 +244,9 @@
             // 
             this.selectKeyword_RD.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.selectKeyword_RD.FormattingEnabled = true;
-            this.selectKeyword_RD.Location = new System.Drawing.Point(61, 25);
+            this.selectKeyword_RD.Location = new System.Drawing.Point(53, 25);
             this.selectKeyword_RD.Name = "selectKeyword_RD";
-            this.selectKeyword_RD.Size = new System.Drawing.Size(229, 20);
+            this.selectKeyword_RD.Size = new System.Drawing.Size(195, 20);
             this.selectKeyword_RD.TabIndex = 1;
             // 
             // tableLayoutPanel7
@@ -257,13 +257,13 @@
             this.tableLayoutPanel7.Controls.Add(this.registerButton, 0, 0);
             this.tableLayoutPanel7.Controls.Add(this.deleteButton, 0, 1);
             this.tableLayoutPanel7.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel7.Location = new System.Drawing.Point(296, 1);
+            this.tableLayoutPanel7.Location = new System.Drawing.Point(254, 1);
             this.tableLayoutPanel7.Margin = new System.Windows.Forms.Padding(1);
             this.tableLayoutPanel7.Name = "tableLayoutPanel7";
             this.tableLayoutPanel7.RowCount = 2;
             this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel7.Size = new System.Drawing.Size(125, 70);
+            this.tableLayoutPanel7.Size = new System.Drawing.Size(167, 70);
             this.tableLayoutPanel7.TabIndex = 1;
             // 
             // registerButton
@@ -271,20 +271,22 @@
             this.registerButton.Dock = System.Windows.Forms.DockStyle.Fill;
             this.registerButton.Location = new System.Drawing.Point(3, 3);
             this.registerButton.Name = "registerButton";
-            this.registerButton.Size = new System.Drawing.Size(119, 29);
+            this.registerButton.Size = new System.Drawing.Size(161, 29);
             this.registerButton.TabIndex = 0;
             this.registerButton.Text = "登録";
             this.registerButton.UseVisualStyleBackColor = true;
+            this.registerButton.Click += new System.EventHandler(this.registerButton_Click);
             // 
             // deleteButton
             // 
             this.deleteButton.Dock = System.Windows.Forms.DockStyle.Fill;
             this.deleteButton.Location = new System.Drawing.Point(3, 38);
             this.deleteButton.Name = "deleteButton";
-            this.deleteButton.Size = new System.Drawing.Size(119, 29);
+            this.deleteButton.Size = new System.Drawing.Size(161, 29);
             this.deleteButton.TabIndex = 1;
             this.deleteButton.Text = "削除";
             this.deleteButton.UseVisualStyleBackColor = true;
+            this.deleteButton.Click += new System.EventHandler(this.deleteButton_Click);
             // 
             // photoPreview
             // 
@@ -308,32 +310,29 @@
             // 
             // tableLayoutPanel10
             // 
-            this.tableLayoutPanel10.ColumnCount = 5;
+            this.tableLayoutPanel10.ColumnCount = 3;
+            this.tableLayoutPanel10.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 60F));
             this.tableLayoutPanel10.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
-            this.tableLayoutPanel10.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel10.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
-            this.tableLayoutPanel10.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanel10.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
-            this.tableLayoutPanel10.Controls.Add(this.filePathView, 1, 0);
-            this.tableLayoutPanel10.Controls.Add(this.fileIcon, 2, 0);
-            this.tableLayoutPanel10.Controls.Add(this.searchButton, 3, 0);
+            this.tableLayoutPanel10.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30F));
+            this.tableLayoutPanel10.Controls.Add(this.filePathView, 0, 0);
+            this.tableLayoutPanel10.Controls.Add(this.fileIcon, 1, 0);
+            this.tableLayoutPanel10.Controls.Add(this.searchButton, 2, 0);
             this.tableLayoutPanel10.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel10.Location = new System.Drawing.Point(2, 2);
             this.tableLayoutPanel10.Margin = new System.Windows.Forms.Padding(1);
             this.tableLayoutPanel10.Name = "tableLayoutPanel10";
             this.tableLayoutPanel10.RowCount = 1;
             this.tableLayoutPanel10.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel10.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 36F));
             this.tableLayoutPanel10.Size = new System.Drawing.Size(656, 36);
             this.tableLayoutPanel10.TabIndex = 3;
             // 
             // filePathView
             // 
             this.filePathView.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.filePathView.Location = new System.Drawing.Point(68, 8);
+            this.filePathView.Location = new System.Drawing.Point(3, 8);
             this.filePathView.Name = "filePathView";
             this.filePathView.ReadOnly = true;
-            this.filePathView.Size = new System.Drawing.Size(322, 19);
+            this.filePathView.Size = new System.Drawing.Size(387, 19);
             this.filePathView.TabIndex = 0;
             // 
             // fileIcon
@@ -352,7 +351,7 @@
             this.searchButton.Dock = System.Windows.Forms.DockStyle.Fill;
             this.searchButton.Location = new System.Drawing.Point(461, 3);
             this.searchButton.Name = "searchButton";
-            this.searchButton.Size = new System.Drawing.Size(125, 30);
+            this.searchButton.Size = new System.Drawing.Size(192, 30);
             this.searchButton.TabIndex = 2;
             this.searchButton.Text = "検索";
             this.searchButton.UseVisualStyleBackColor = true;
@@ -377,12 +376,12 @@
             // 
             // tableLayoutPanel9
             // 
-            this.tableLayoutPanel9.ColumnCount = 3;
-            this.tableLayoutPanel9.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
-            this.tableLayoutPanel9.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30F));
-            this.tableLayoutPanel9.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 60F));
-            this.tableLayoutPanel9.Controls.Add(this.selectKeyword_F, 1, 0);
-            this.tableLayoutPanel9.Controls.Add(this.testlabel, 2, 0);
+            this.tableLayoutPanel9.ColumnCount = 2;
+            this.tableLayoutPanel9.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 35F));
+            this.tableLayoutPanel9.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 65F));
+            this.tableLayoutPanel9.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel9.Controls.Add(this.selectKeyword_F, 0, 0);
+            this.tableLayoutPanel9.Controls.Add(this.testlabel, 1, 0);
             this.tableLayoutPanel9.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel9.Location = new System.Drawing.Point(1, 1);
             this.tableLayoutPanel9.Margin = new System.Windows.Forms.Padding(1);
@@ -397,45 +396,43 @@
             this.selectKeyword_F.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.selectKeyword_F.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.selectKeyword_F.FormattingEnabled = true;
-            this.selectKeyword_F.Location = new System.Drawing.Point(68, 7);
+            this.selectKeyword_F.Location = new System.Drawing.Point(3, 7);
             this.selectKeyword_F.Name = "selectKeyword_F";
-            this.selectKeyword_F.Size = new System.Drawing.Size(190, 20);
+            this.selectKeyword_F.Size = new System.Drawing.Size(222, 20);
             this.selectKeyword_F.TabIndex = 0;
             // 
             // testlabel
             // 
             this.testlabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.testlabel.AutoSize = true;
-            this.testlabel.Location = new System.Drawing.Point(264, 11);
+            this.testlabel.Location = new System.Drawing.Point(231, 11);
             this.testlabel.Name = "testlabel";
-            this.testlabel.Size = new System.Drawing.Size(387, 12);
+            this.testlabel.Size = new System.Drawing.Size(420, 12);
             this.testlabel.TabIndex = 1;
             this.testlabel.Text = "test";
             this.testlabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // tableLayoutPanel11
             // 
-            this.tableLayoutPanel11.ColumnCount = 7;
-            this.tableLayoutPanel11.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
+            this.tableLayoutPanel11.ColumnCount = 6;
             this.tableLayoutPanel11.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 15F));
             this.tableLayoutPanel11.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
             this.tableLayoutPanel11.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 5F));
             this.tableLayoutPanel11.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
             this.tableLayoutPanel11.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
-            this.tableLayoutPanel11.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanel11.Controls.Add(this.dateCheckBox, 1, 0);
-            this.tableLayoutPanel11.Controls.Add(this.dateStart, 2, 0);
-            this.tableLayoutPanel11.Controls.Add(this.dateEnd, 4, 0);
-            this.tableLayoutPanel11.Controls.Add(this.label1, 3, 0);
-            this.tableLayoutPanel11.Controls.Add(this.isFavorite_F, 5, 0);
-            this.tableLayoutPanel11.Controls.Add(this.filterButton, 6, 0);
+            this.tableLayoutPanel11.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30F));
+            this.tableLayoutPanel11.Controls.Add(this.dateCheckBox, 0, 0);
+            this.tableLayoutPanel11.Controls.Add(this.dateStart, 1, 0);
+            this.tableLayoutPanel11.Controls.Add(this.dateEnd, 3, 0);
+            this.tableLayoutPanel11.Controls.Add(this.label1, 2, 0);
+            this.tableLayoutPanel11.Controls.Add(this.isFavorite_F, 4, 0);
+            this.tableLayoutPanel11.Controls.Add(this.filterButton, 5, 0);
             this.tableLayoutPanel11.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel11.Location = new System.Drawing.Point(1, 38);
             this.tableLayoutPanel11.Margin = new System.Windows.Forms.Padding(1);
             this.tableLayoutPanel11.Name = "tableLayoutPanel11";
             this.tableLayoutPanel11.RowCount = 1;
             this.tableLayoutPanel11.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel11.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 36F));
             this.tableLayoutPanel11.Size = new System.Drawing.Size(654, 36);
             this.tableLayoutPanel11.TabIndex = 1;
             // 
@@ -443,7 +440,7 @@
             // 
             this.dateCheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.dateCheckBox.AutoSize = true;
-            this.dateCheckBox.Location = new System.Drawing.Point(68, 10);
+            this.dateCheckBox.Location = new System.Drawing.Point(3, 10);
             this.dateCheckBox.Name = "dateCheckBox";
             this.dateCheckBox.Size = new System.Drawing.Size(92, 16);
             this.dateCheckBox.TabIndex = 0;
@@ -455,7 +452,7 @@
             // 
             this.dateStart.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.dateStart.Enabled = false;
-            this.dateStart.Location = new System.Drawing.Point(166, 8);
+            this.dateStart.Location = new System.Drawing.Point(101, 8);
             this.dateStart.Name = "dateStart";
             this.dateStart.Size = new System.Drawing.Size(124, 19);
             this.dateStart.TabIndex = 1;
@@ -465,7 +462,7 @@
             // 
             this.dateEnd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.dateEnd.Enabled = false;
-            this.dateEnd.Location = new System.Drawing.Point(328, 8);
+            this.dateEnd.Location = new System.Drawing.Point(263, 8);
             this.dateEnd.Name = "dateEnd";
             this.dateEnd.Size = new System.Drawing.Size(124, 19);
             this.dateEnd.TabIndex = 2;
@@ -475,7 +472,7 @@
             // 
             this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(296, 12);
+            this.label1.Location = new System.Drawing.Point(231, 12);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(26, 12);
             this.label1.TabIndex = 3;
@@ -488,7 +485,7 @@
             this.isFavorite_F.AutoSize = true;
             this.isFavorite_F.Font = new System.Drawing.Font("MS UI Gothic", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.isFavorite_F.ForeColor = System.Drawing.Color.Gray;
-            this.isFavorite_F.Location = new System.Drawing.Point(458, 1);
+            this.isFavorite_F.Location = new System.Drawing.Point(393, 1);
             this.isFavorite_F.Name = "isFavorite_F";
             this.isFavorite_F.Size = new System.Drawing.Size(59, 33);
             this.isFavorite_F.TabIndex = 4;
@@ -499,9 +496,9 @@
             // filterButton
             // 
             this.filterButton.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.filterButton.Location = new System.Drawing.Point(523, 3);
+            this.filterButton.Location = new System.Drawing.Point(458, 3);
             this.filterButton.Name = "filterButton";
-            this.filterButton.Size = new System.Drawing.Size(128, 30);
+            this.filterButton.Size = new System.Drawing.Size(193, 30);
             this.filterButton.TabIndex = 5;
             this.filterButton.Text = "フィルタ";
             this.filterButton.UseVisualStyleBackColor = true;
