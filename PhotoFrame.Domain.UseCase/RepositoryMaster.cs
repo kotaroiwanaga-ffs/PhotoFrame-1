@@ -76,6 +76,11 @@ namespace PhotoFrame.Domain.UseCase
             return photoRepository.Store(photo);
         }
 
+        public bool ExistsPhoto(Photo photo)
+        {
+            return photoRepository.Exists(photo);
+        }
+
         public IEnumerable<Album> FindAlbum(Func<IQueryable<Album>, IQueryable<Album>> query)
         {
             return albumRepository.Find(query);
@@ -91,15 +96,27 @@ namespace PhotoFrame.Domain.UseCase
             return albumRepository.Store(album);
         }
 
-        //public IEnumerable<string> FindSlideShow(Album album)
-        //{
-        //    return slideShowRepository.Find(album);
-        //}
+        public bool ExistsAlbum(Album album)
+        {
+            return albumRepository.Exists(album);
+        }
 
-        //public Album StoreSlideShow(Album album, IEnumerable<Photo> photos)
-        //{
-        //    return slideShowRepository.Store(album, photos);
-        //}
+        public IEnumerable<string> FindSlideShow(Album album)
+        {
+            //return slideShowRepository.Find(album);
+            return null;
+        }
+
+        public Album StoreSlideShow(Album album, IEnumerable<Photo> photos)
+        {
+            //return slideShowRepository.Store(album, photos);
+            return null;
+        }
+    
+
+        // Dummy Method /////////////////////////////////////////////////////
+
+
 
     }
 }

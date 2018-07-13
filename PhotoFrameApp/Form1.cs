@@ -25,6 +25,7 @@ namespace PhotoFrameApp
         private string filepath;
         private DateTime date_S;
         private DateTime date_E;
+        private List<string> pullDownKeyword;
 
 
         Photo a;
@@ -56,10 +57,16 @@ namespace PhotoFrameApp
             filepath = "";
             date_S = DateTime.Now;
             date_E = DateTime.Now;
+            pullDownKeyword = new List<string>();
+            List<string> aaaa = new List<string>();
 
-            a = new Photo(new File(@"C:\研修用\Album1\Chrysanthemum.jpg", true, new DateTime(),null);
-            //b = new Photo(@"C:\研修用\Album1\Desert.jpg", false, new DateTime(),null);
-            //c = new Photo(@"C:\研修用\Album1\Hydrangeas.jpg", true, DateTime.Now, null);
+
+            string[] aaa = { "a", "b", "aaaa" };
+            string[] bbb = { "test", "takemoto" };
+            a = new Photo(@"C:\研修用\Album1\Chrysanthemum.jpg", true, new DateTime(),aaa.ToList<string>());
+            b = new Photo(@"C:\研修用\Album1\Desert.jpg", false, new DateTime(),aaaa);
+            c = new Photo(@"C:\研修用\Album1\Hydrangeas.jpg", true, DateTime.Now, bbb.ToList());
+
 
             Photo[] photos = { a, b, c };
             searchedPhotos =  photos.AsEnumerable<Photo>();
@@ -327,18 +334,22 @@ namespace PhotoFrameApp
         //    }
         //}
 
+        /// <summary>
+        /// リストビューの更新
+        /// </summary>
         private void renewPhotoListView()
         {
             photoListView.Items.Clear();
+            DateTime nullDate = new DateTime();
 
             if (this.searchedPhotos != null)
             {
                 foreach (Photo photo in searchedPhotos)
                 {
                     string isFavorite;
+                    string dateTime;
 
-
-                    if (photo.isFavorite)
+                    if (photo.IsFavorite)
                     {
                         isFavorite = "★";
                     }
@@ -347,26 +358,39 @@ namespace PhotoFrameApp
                         isFavorite = "";
                     }
 
-                    string[] item = { Path.GetFileName(photo.filepath), isFavorite ,photo.date.ToString()};
+                    if(photo.Date == nullDate)
+                    {
+                        dateTime = "";
+                    }
+                    else
+                    {
+                        dateTime = photo.Date.ToString();
+                    }
+
+                    string[] item = { Path.GetFileName(photo.Filepath), isFavorite ,dateTime};
                     photoListView.Items.Add(new ListViewItem(item));
 
+                    pullDownKeyword.AddRange(photo.Keywords);
+                }
+                pullDownKeyword = (from key in pullDownKeyword select key).Distinct().ToList();
+                foreach(string key in pullDownKeyword)
+                {
+                    selectKeyword_F.Items.Add(key);
                 }
             }
         }
 
 
-            /// <summary>
+        /// <summary>
             /// ファイルボタンを押したとき
             /// </summary>
             /// <param name="sender"></param>
             /// <param name="e"></param>
-            private void fileIcon_Click(object sender, EventArgs e)
+        private void fileIcon_Click(object sender, EventArgs e)
         {
             //FolderBrowserDialogクラスのインスタンスを作成
             FolderBrowserDialog fbd = new FolderBrowserDialog();
 
-            //上部に表示する説明テキストを指定する
-            //fbd.Description = "フォルダを指定してください。";
             //ルートフォルダを指定する
             //デフォルトでDesktop
             fbd.RootFolder = Environment.SpecialFolder.Desktop;
@@ -385,6 +409,7 @@ namespace PhotoFrameApp
                 filePathView.Text = (filepath);
             }
         }
+
         /// <summary>
         /// 日付指定ボタンのチェックが変更されたとき
         /// </summary>
@@ -403,6 +428,7 @@ namespace PhotoFrameApp
                 dateEnd.Enabled = false;
             }
         }
+
         /// <summary>
         /// 上のほうの星がクリックされたとき
         /// </summary>
@@ -421,6 +447,7 @@ namespace PhotoFrameApp
                 isFavorite_F.ForeColor = Color.Yellow;
             }
         }
+        
         /// <summary>
         /// 下のほうの星がクリックされたとき
         /// </summary>
@@ -439,6 +466,7 @@ namespace PhotoFrameApp
                 isFavorite_RD.ForeColor = Color.Yellow;
             }
         }
+
         /// <summary>
         /// 日付指定始まりを変更したとき
         /// </summary>
@@ -485,11 +513,22 @@ namespace PhotoFrameApp
             }
             else if(photoListView.SelectedItems.Count == 1)
             {
-                testlabel.Text = photoListView.SelectedItems[0].Text;
+
+                int selectNumber =photoListView.SelectedItems[0].Index;
+                Photo selectedPhoto = searchedPhotos.ElementAt(selectNumber);
+                photoPreview.ImageLocation = selectedPhoto.Filepath;
+                if (selectedPhoto.Keywords != null)
+                {
+                    photoKeyword.Text = string.Join(",", selectedPhoto.Keywords);
+                }
+                else
+                {
+                    photoKeyword.Text = "";
+                }
             }
             else
             {
-                testlabel.Text = "複数選択してるよ";
+                photoPreview.ImageLocation = @"C:\研修用\複数選択してるよ.png";
             }
             
         }
@@ -501,27 +540,44 @@ namespace PhotoFrameApp
         /// <param name="e"></param>
         private void slideShowButton_Click(object sender, EventArgs e)
         {
-            SlideShow slideShowForm = new SlideShow(this.searchedPhotos, application);
-            slideShowForm.ShowDialog();
+
+           // SlideShow slideShowForm = new SlideShow(searchedPhotos,application);
+           // slideShowForm.ShowDialog();
+        }
+
+        private void filterButton_Click(object sender, EventArgs e)
+        {
+            int result = dateEnd.Value.Date.CompareTo(dateStart.Value.Date);
+            if (result == 1)
+            {
+                //正常処理
+            }
+            else
+            {
+                MessageBox.Show("日付の設定が間違っています。左のボックスに古い日付を指定してください。");
+            }
+
         }
     }
 
     /// <summary>
     /// テスト用
     /// </summary>
-    //public class Photo
-    //{
-    //    public string filepath;
-    //    public bool isFavorite;
-    //    public DateTime date;
-    //    public string[] keyword;
 
-    //    public Photo(string a, bool b, DateTime c, string[] d)
-    //    {
-    //        filepath = a;
-    //        isFavorite = b;
-    //        date = c;
-    //        keyword = d;
-    //    }
-    //}
+    public class Photo
+    {
+        public string Filepath;
+        public bool IsFavorite;
+        public DateTime Date;
+        public List<string> Keywords = new List<string>();
+
+        public Photo(string a,bool b ,DateTime c,List<string> d)
+        {
+            Filepath = a;
+            IsFavorite = b;
+            Date = c;
+            Keywords = d;
+        }
+    }
+
 }
