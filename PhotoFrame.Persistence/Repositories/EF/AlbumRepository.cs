@@ -30,16 +30,25 @@ namespace PhotoFrame.Persistence.EF
         public Album Store(Album album)
         {
             using (TeamBEntities database = new TeamBEntities())
+            using (var transaction = database.Database.BeginTransaction())
             {
-                var saveAlbum = new ALBUM_TABLE
+                try
                 {
-                    NAME = album.Name
-                };
+                    var saveAlbum = new ALBUM_TABLE
+                    {
+                        NAME = album.Name
+                    };
 
-                if (!Exists(album))
-                {
-                    database.ALBUM_TABLE.Add(saveAlbum);
+                    if (!Exists(album))
+                    {
+                        database.ALBUM_TABLE.Add(saveAlbum);
+                    }
+                    transaction.Commit();
                     database.SaveChanges();
+                }
+                catch
+                {
+                    transaction.Rollback();
                 }
             }
             return album;
