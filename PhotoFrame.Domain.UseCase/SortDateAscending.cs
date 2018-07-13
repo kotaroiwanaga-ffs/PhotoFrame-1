@@ -11,9 +11,7 @@ namespace PhotoFrame.Domain.UseCase
     {
         public IEnumerable<Photo> Execute(IEnumerable<Photo> photos)
         {
-
-
-            return photos;
+            return photos.OrderBy(p => p.Date);
         }
     }
 }
