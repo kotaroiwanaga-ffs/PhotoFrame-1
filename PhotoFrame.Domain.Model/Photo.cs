@@ -54,7 +54,7 @@ namespace PhotoFrame.Domain.Model
             this.File = file;
             this.Date = date;
             this.Keywords = new List<string>();
-            this.IsFavorite = IsFavorite;
+            this.IsFavorite = isFavorite;
 
             if(keywords != null)
             {

@@ -31,7 +31,9 @@ namespace PhotoFrameApp
             this.albumlist = application.GetAllAlbums();
             this.slideindex = 0;
             pictureBox_SlideShow.ImageLocation = this.photolist_listview.ElementAt(slideindex).File.FilePath;
-            timer_SlideShow.Interval = 3000;
+            //pictureBox_SlideShow.Image = System.Drawing.Image.FromFile(@"C:\研修用\P1000299.JPG");
+
+            //timer_SlideShow.Interval = 3000;
 
             //アルバムリストの一時的な初期値の設定
             Album album1 = new Album("abc", "test1", "test説明");
@@ -106,24 +108,24 @@ namespace PhotoFrameApp
 
         private void button_StartSlideShow_Click(object sender, EventArgs e)
         {
-            timer_SlideShow.Start();
+            //timer_SlideShow.Start();
         }
 
         private void button_Pause_Click(object sender, EventArgs e)
         {
-            timer_SlideShow.Stop();
+            //timer_SlideShow.Stop();
         }
 
         private void button_Stop_Click(object sender, EventArgs e)
         {
-            timer_SlideShow.Stop();
-            slideindex = 0;
+            //timer_SlideShow.Stop();
+            //slideindex = 0;
         }
 
         private void button_Back_Click(object sender, EventArgs e)
         {
             slideindex--;
-            pictureBox_SlideShow.ImageLocation = 
+            //pictureBox_SlideShow.ImageLocation = 
         }
     }
 }

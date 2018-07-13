@@ -60,12 +60,13 @@ namespace PhotoFrameApp
             pullDownKeyword = new List<string>();
             List<string> aaaa = new List<string>();
 
+            var file1 = new PhotoFrame.Domain.Model.File(@"C:\研修用\Album1\Chrysanthemum.jpg");
 
             string[] aaa = { "a", "b", "aaaa" };
             string[] bbb = { "test", "takemoto" };
-            a = new Photo(@"C:\研修用\Album1\Chrysanthemum.jpg", true, new DateTime(),aaa.ToList<string>());
-            b = new Photo(@"C:\研修用\Album1\Desert.jpg", false, new DateTime(),aaaa);
-            c = new Photo(@"C:\研修用\Album1\Hydrangeas.jpg", true, DateTime.Now, bbb.ToList());
+            a = new Photo(new PhotoFrame.Domain.Model.File(@"C:\GW写真\キャプチャ.PNG"),  new DateTime(),aaa.ToList<string>());
+            b = new Photo(new PhotoFrame.Domain.Model.File(@"C:\GW写真\P1000644.JPG"), new DateTime(),aaaa);
+            c = new Photo(new PhotoFrame.Domain.Model.File(@"C:\GW写真\P1000645.JPG"), new DateTime(), bbb.ToList());
 
 
             Photo[] photos = { a, b, c };
@@ -337,48 +338,48 @@ namespace PhotoFrameApp
         /// <summary>
         /// リストビューの更新
         /// </summary>
-        private void renewPhotoListView()
-        {
-            photoListView.Items.Clear();
-            DateTime nullDate = new DateTime();
+        //private void renewPhotoListView()
+        //{
+        //    photoListView.Items.Clear();
+        //    DateTime nullDate = new DateTime();
 
-            if (this.searchedPhotos != null)
-            {
-                foreach (Photo photo in searchedPhotos)
-                {
-                    string isFavorite;
-                    string dateTime;
+        //    if (this.searchedPhotos != null)
+        //    {
+        //        foreach (Photo photo in searchedPhotos)
+        //        {
+        //            string isFavorite;
+        //            string dateTime;
 
-                    if (photo.IsFavorite)
-                    {
-                        isFavorite = "★";
-                    }
-                    else
-                    {
-                        isFavorite = "";
-                    }
+        //            if (photo.IsFavorite)
+        //            {
+        //                isFavorite = "★";
+        //            }
+        //            else
+        //            {
+        //                isFavorite = "";
+        //            }
 
-                    if(photo.Date == nullDate)
-                    {
-                        dateTime = "";
-                    }
-                    else
-                    {
-                        dateTime = photo.Date.ToString();
-                    }
+        //            if(photo.Date == nullDate)
+        //            {
+        //                dateTime = "";
+        //            }
+        //            else
+        //            {
+        //                dateTime = photo.Date.ToString();
+        //            }
 
-                    string[] item = { Path.GetFileName(photo.Filepath), isFavorite ,dateTime};
-                    photoListView.Items.Add(new ListViewItem(item));
+        //            string[] item = { Path.GetFileName(photo.Filepath), isFavorite ,dateTime};
+        //            photoListView.Items.Add(new ListViewItem(item));
 
-                    pullDownKeyword.AddRange(photo.Keywords);
-                }
-                pullDownKeyword = (from key in pullDownKeyword select key).Distinct().ToList();
-                foreach(string key in pullDownKeyword)
-                {
-                    selectKeyword_F.Items.Add(key);
-                }
-            }
-        }
+        //            pullDownKeyword.AddRange(photo.Keywords);
+        //        }
+        //        pullDownKeyword = (from key in pullDownKeyword select key).Distinct().ToList();
+        //        foreach(string key in pullDownKeyword)
+        //        {
+        //            selectKeyword_F.Items.Add(key);
+        //        }
+        //    }
+        //}
 
 
         /// <summary>
@@ -493,45 +494,45 @@ namespace PhotoFrameApp
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void searchButton_Click(object sender, EventArgs e)
-        {
-            //searchedFolda = SearchFolda(filepath);
-            renewPhotoListView();
-        }
+        //private void searchButton_Click(object sender, EventArgs e)
+        //{
+        //    //searchedFolda = SearchFolda(filepath);
+        //    renewPhotoListView();
+        //}
 
         /// <summary>
         /// リストビューの行が選択されたとき
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void photoListView_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            //testlabel.Text = photoListView.SelectedItems.Count.ToString();
-            if(photoListView.SelectedItems.Count==0)
-            {
+        //private void photoListView_SelectedIndexChanged(object sender, EventArgs e)
+        //{
+        //    //testlabel.Text = photoListView.SelectedItems.Count.ToString();
+        //    if(photoListView.SelectedItems.Count==0)
+        //    {
 
-            }
-            else if(photoListView.SelectedItems.Count == 1)
-            {
+        //    }
+        //    else if(photoListView.SelectedItems.Count == 1)
+        //    {
 
-                int selectNumber =photoListView.SelectedItems[0].Index;
-                Photo selectedPhoto = searchedPhotos.ElementAt(selectNumber);
-                photoPreview.ImageLocation = selectedPhoto.Filepath;
-                if (selectedPhoto.Keywords != null)
-                {
-                    photoKeyword.Text = string.Join(",", selectedPhoto.Keywords);
-                }
-                else
-                {
-                    photoKeyword.Text = "";
-                }
-            }
-            else
-            {
-                photoPreview.ImageLocation = @"C:\研修用\複数選択してるよ.png";
-            }
+        //        int selectNumber =photoListView.SelectedItems[0].Index;
+        //        Photo selectedPhoto = searchedPhotos.ElementAt(selectNumber);
+        //        photoPreview.ImageLocation = selectedPhoto.Filepath;
+        //        if (selectedPhoto.Keywords != null)
+        //        {
+        //            photoKeyword.Text = string.Join(",", selectedPhoto.Keywords);
+        //        }
+        //        else
+        //        {
+        //            photoKeyword.Text = "";
+        //        }
+        //    }
+        //    else
+        //    {
+        //        photoPreview.ImageLocation = @"C:\研修用\複数選択してるよ.png";
+        //    }
             
-        }
+        //}
 
         /// <summary>
         /// スライドショー呼び出し
@@ -541,8 +542,8 @@ namespace PhotoFrameApp
         private void slideShowButton_Click(object sender, EventArgs e)
         {
 
-           // SlideShow slideShowForm = new SlideShow(searchedPhotos,application);
-           // slideShowForm.ShowDialog();
+            SlideShow slideShowForm = new SlideShow(searchedPhotos, application);
+            slideShowForm.ShowDialog();
         }
 
         private void filterButton_Click(object sender, EventArgs e)
@@ -564,20 +565,20 @@ namespace PhotoFrameApp
     /// テスト用
     /// </summary>
 
-    public class Photo
-    {
-        public string Filepath;
-        public bool IsFavorite;
-        public DateTime Date;
-        public List<string> Keywords = new List<string>();
+    //public class Photo
+    //{
+    //    public string Filepath;
+    //    public bool IsFavorite;
+    //    public DateTime Date;
+    //    public List<string> Keywords = new List<string>();
 
-        public Photo(string a,bool b ,DateTime c,List<string> d)
-        {
-            Filepath = a;
-            IsFavorite = b;
-            Date = c;
-            Keywords = d;
-        }
-    }
+    //    public Photo(string a,bool b ,DateTime c,List<string> d)
+    //    {
+    //        Filepath = a;
+    //        IsFavorite = b;
+    //        Date = c;
+    //        Keywords = d;
+    //    }
+    //}
 
 }
