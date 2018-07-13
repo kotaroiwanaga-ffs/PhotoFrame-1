@@ -37,6 +37,8 @@ namespace PhotoFrameApp
         Photo a;
         Photo b;
         Photo c;
+        Photo d;
+        Photo e;
 
 
         //private IPhotoRepository photoRepository;
@@ -64,6 +66,7 @@ namespace PhotoFrameApp
             date_S = DateTime.Now;
             date_E = DateTime.Now;
             pullDownKeyword = new List<string>();
+
             selectNumber = -1;
             Photo selectedPhoto = null;
             sortUpDown = false;
@@ -73,11 +76,13 @@ namespace PhotoFrameApp
             List<string> aaaa = new List<string>();
             string[] aaa = { "a", "b", "aaaa" };
             string[] bbb = { "test", "takemoto" };
+
             a = new Photo(new PhotoFrame.Domain.Model.File(@"C:\研修用\Album1\Chrysanthemum.jpg"), new DateTime(), aaa, true);
             b = new Photo(new PhotoFrame.Domain.Model.File(@"C:\研修用\Album1\Desert.jpg"), new DateTime(), aaaa, false);
             c = new Photo(new PhotoFrame.Domain.Model.File(@"C:\研修用\Album1\Hydrangeas.jpg"), date_E, bbb.ToList(), false);
             Photo[] photos = { a, b, c };
             searchedPhotos = photos.AsEnumerable<Photo>();
+
 
             //// 各テストごとにデータベースファイルを削除
             //// (35-42をコメントアウトしても動きます)
@@ -345,10 +350,12 @@ namespace PhotoFrameApp
         /// <summary>
         /// リストビューの更新
         /// </summary>
-        private void renewPhotoListView()
-        {
-            photoListView.Items.Clear();
-            DateTime nullDate = new DateTime();
+        //private void renewPhotoListView()
+        //{
+        //    photoListView.Items.Clear();
+        //    DateTime nullDate = new DateTime();
+
+
 
             if (this.searchedPhotos != null)
             {
@@ -391,6 +398,7 @@ namespace PhotoFrameApp
                 }
             }
         }
+
 
         /// <summary>
         /// ファイルボタンを押したとき
@@ -533,6 +541,7 @@ namespace PhotoFrameApp
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
+
         private void searchButton_Click(object sender, EventArgs e)
         {
             //検索する
@@ -547,11 +556,13 @@ namespace PhotoFrameApp
             }
         }
 
+
         /// <summary>
         /// リストビューの行が選択されたとき
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
+
         private void photoListView_SelectedIndexChanged(object sender, EventArgs e)
         {
             //リストビューの行が何行選択されているかで場合分け
@@ -582,6 +593,7 @@ namespace PhotoFrameApp
 
         }
 
+
         /// <summary>
         /// スライドショーを押したとき
         /// </summary>
@@ -589,7 +601,9 @@ namespace PhotoFrameApp
         /// <param name="e"></param>
         private void slideShowButton_Click(object sender, EventArgs e)
         {
+
             //スライドショーを開く
+
             SlideShow slideShowForm = new SlideShow(searchedPhotos, application);
             slideShowForm.ShowDialog();
         }
@@ -666,6 +680,9 @@ namespace PhotoFrameApp
                 //なにもしない
             }
         }
+
+
+
 
         /// <summary>
         /// 登録ボタンを押したとき
@@ -759,4 +776,5 @@ namespace PhotoFrameApp
             }
         }
     }
+
 }

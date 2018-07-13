@@ -144,8 +144,10 @@
             this.photoListView.TabIndex = 0;
             this.photoListView.UseCompatibleStateImageBehavior = false;
             this.photoListView.View = System.Windows.Forms.View.Details;
+
             this.photoListView.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.photoListView_ColumnClick);
             this.photoListView.SelectedIndexChanged += new System.EventHandler(this.photoListView_SelectedIndexChanged);
+
             // 
             // columnHeader1
             // 
@@ -355,7 +357,7 @@
             this.searchButton.TabIndex = 2;
             this.searchButton.Text = "検索";
             this.searchButton.UseVisualStyleBackColor = true;
-            this.searchButton.Click += new System.EventHandler(this.searchButton_Click);
+            //this.searchButton.Click += new System.EventHandler(this.searchButton_Click);
             // 
             // tableLayoutPanel8
             // 
