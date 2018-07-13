@@ -123,7 +123,7 @@ namespace PhotoFrameApp
         private void button_Back_Click(object sender, EventArgs e)
         {
             slideindex--;
-            pictureBox_SlideShow.ImageLocation = 
+            //pictureBox_SlideShow.ImageLocation = 
         }
     }
 }
