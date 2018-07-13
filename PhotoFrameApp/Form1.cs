@@ -25,6 +25,7 @@ namespace PhotoFrameApp
         private string filepath;
         private DateTime date_S;
         private DateTime date_E;
+        private List<string> pullDownKeyword;
 
 
         Photo a;
@@ -53,11 +54,14 @@ namespace PhotoFrameApp
             filepath = "";
             date_S = DateTime.Now;
             date_E = DateTime.Now;
+            pullDownKeyword = new List<string>();
+            List<string> aaaa = new List<string>();
 
             string[] aaa = { "a", "b", "aaaa" };
-            a = new Photo(@"C:\研修用\Album1\Chrysanthemum.jpg", true, new DateTime(),aaa);
-            b = new Photo(@"C:\研修用\Album1\Desert.jpg", false, new DateTime(),null);
-            c = new Photo(@"C:\研修用\Album1\Hydrangeas.jpg", true, DateTime.Now, aaa);
+            string[] bbb = { "test", "takemoto" };
+            a = new Photo(@"C:\研修用\Album1\Chrysanthemum.jpg", true, new DateTime(),aaa.ToList<string>());
+            b = new Photo(@"C:\研修用\Album1\Desert.jpg", false, new DateTime(),aaaa);
+            c = new Photo(@"C:\研修用\Album1\Hydrangeas.jpg", true, DateTime.Now, bbb.ToList());
 
             Photo[] photos = { a, b, c };
             searchedPhotos =  photos.AsEnumerable<Photo>();
@@ -325,18 +329,22 @@ namespace PhotoFrameApp
         //    }
         //}
 
+        /// <summary>
+        /// リストビューの更新
+        /// </summary>
         private void renewPhotoListView()
         {
             photoListView.Items.Clear();
+            DateTime nullDate = new DateTime();
 
             if (this.searchedPhotos != null)
             {
                 foreach (Photo photo in searchedPhotos)
                 {
                     string isFavorite;
+                    string dateTime;
 
-
-                    if (photo.isFavorite)
+                    if (photo.IsFavorite)
                     {
                         isFavorite = "★";
                     }
@@ -345,9 +353,24 @@ namespace PhotoFrameApp
                         isFavorite = "";
                     }
 
-                    string[] item = { Path.GetFileName(photo.filepath), isFavorite ,photo.date.ToString()};
+                    if(photo.Date == nullDate)
+                    {
+                        dateTime = "";
+                    }
+                    else
+                    {
+                        dateTime = photo.Date.ToString();
+                    }
+
+                    string[] item = { Path.GetFileName(photo.Filepath), isFavorite ,dateTime};
                     photoListView.Items.Add(new ListViewItem(item));
 
+                    pullDownKeyword.AddRange(photo.Keywords);
+                }
+                pullDownKeyword = (from key in pullDownKeyword select key).Distinct().ToList();
+                foreach(string key in pullDownKeyword)
+                {
+                    selectKeyword_F.Items.Add(key);
                 }
             }
         }
@@ -488,10 +511,10 @@ namespace PhotoFrameApp
 
                 int selectNumber =photoListView.SelectedItems[0].Index;
                 Photo selectedPhoto = searchedPhotos.ElementAt(selectNumber);
-                photoPreview.ImageLocation = selectedPhoto.filepath;
-                if (selectedPhoto.keyword != null)
+                photoPreview.ImageLocation = selectedPhoto.Filepath;
+                if (selectedPhoto.Keywords != null)
                 {
-                    photoKeyword.Text = string.Join(",", selectedPhoto.keyword);
+                    photoKeyword.Text = string.Join(",", selectedPhoto.Keywords);
                 }
                 else
                 {
@@ -535,17 +558,17 @@ namespace PhotoFrameApp
     /// </summary>
     public class Photo
     {
-        public string filepath;
-        public bool isFavorite;
-        public DateTime date;
-        public string[] keyword;
+        public string Filepath;
+        public bool IsFavorite;
+        public DateTime Date;
+        public List<string> Keywords = new List<string>();
 
-        public Photo(string a,bool b ,DateTime c,string[] d)
+        public Photo(string a,bool b ,DateTime c,List<string> d)
         {
-            filepath = a;
-            isFavorite = b;
-            date = c;
-            keyword = d;
+            Filepath = a;
+            IsFavorite = b;
+            Date = c;
+            Keywords = d;
         }
     }
 }
