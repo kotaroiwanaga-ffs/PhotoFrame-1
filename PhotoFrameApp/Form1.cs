@@ -31,6 +31,8 @@ namespace PhotoFrameApp
         Photo a;
         Photo b;
         Photo c;
+        Photo d;
+        Photo e;
 
         IEnumerable<Photo> searchedPhotos;
         //private IPhotoRepository photoRepository;
@@ -65,11 +67,13 @@ namespace PhotoFrameApp
             string[] aaa = { "a", "b", "aaaa" };
             string[] bbb = { "test", "takemoto" };
             a = new Photo(new PhotoFrame.Domain.Model.File(@"C:\GW写真\キャプチャ.PNG"),  new DateTime(),aaa.ToList<string>());
-            b = new Photo(new PhotoFrame.Domain.Model.File(@"C:\GW写真\P1000644.JPG"), new DateTime(),aaaa);
-            c = new Photo(new PhotoFrame.Domain.Model.File(@"C:\GW写真\P1000645.JPG"), new DateTime(), bbb.ToList());
+            b = new Photo(new PhotoFrame.Domain.Model.File(@"C:\GW写真\キャプチャ1.PNG"), new DateTime(),aaaa);
+            c = new Photo(new PhotoFrame.Domain.Model.File(@"C:\GW写真\キャプチャ2.PNG"), new DateTime(), bbb.ToList());
+            d = new Photo(new PhotoFrame.Domain.Model.File(@"C:\GW写真\キャプチャ3.PNG"), new DateTime(), aaaa);
+            e = new Photo(new PhotoFrame.Domain.Model.File(@"C:\GW写真\キャプチャ4.PNG"), new DateTime(), bbb.ToList());
 
 
-            Photo[] photos = { a, b, c };
+            Photo[] photos = { a, b, c, d, e };
             searchedPhotos =  photos.AsEnumerable<Photo>();
 
             //// 各テストごとにデータベースファイルを削除

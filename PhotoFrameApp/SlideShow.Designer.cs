@@ -37,8 +37,8 @@
             this.radioButton_AlbumSlideShow = new System.Windows.Forms.RadioButton();
             this.radioButton_ListViewSlideShow = new System.Windows.Forms.RadioButton();
             this.button_StartSlideShow = new System.Windows.Forms.Button();
-            this.button_Pause = new System.Windows.Forms.Button();
-            this.button_Stop = new System.Windows.Forms.Button();
+            this.button_Pause_SlideShow = new System.Windows.Forms.Button();
+            this.button_StopSlideShow = new System.Windows.Forms.Button();
             this.button_Next = new System.Windows.Forms.Button();
             this.button_Back = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
@@ -56,7 +56,7 @@
             // 
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainer1.Location = new System.Drawing.Point(0, 0);
-            this.splitContainer1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.splitContainer1.Margin = new System.Windows.Forms.Padding(2);
             this.splitContainer1.Name = "splitContainer1";
             // 
             // splitContainer1.Panel1
@@ -71,8 +71,8 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.button_StartSlideShow);
-            this.splitContainer1.Panel2.Controls.Add(this.button_Pause);
-            this.splitContainer1.Panel2.Controls.Add(this.button_Stop);
+            this.splitContainer1.Panel2.Controls.Add(this.button_Pause_SlideShow);
+            this.splitContainer1.Panel2.Controls.Add(this.button_StopSlideShow);
             this.splitContainer1.Panel2.Controls.Add(this.button_Next);
             this.splitContainer1.Panel2.Controls.Add(this.button_Back);
             this.splitContainer1.Panel2.Controls.Add(this.panel1);
@@ -89,11 +89,12 @@
             this.comboBox_AlbumName.Name = "comboBox_AlbumName";
             this.comboBox_AlbumName.Size = new System.Drawing.Size(121, 20);
             this.comboBox_AlbumName.TabIndex = 5;
+            this.comboBox_AlbumName.SelectedIndexChanged += new System.EventHandler(this.comboBox_AlbumName_SelectedIndexChanged);
             // 
             // button_SaveAlbumName
             // 
             this.button_SaveAlbumName.Location = new System.Drawing.Point(50, 238);
-            this.button_SaveAlbumName.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.button_SaveAlbumName.Margin = new System.Windows.Forms.Padding(2);
             this.button_SaveAlbumName.Name = "button_SaveAlbumName";
             this.button_SaveAlbumName.Size = new System.Drawing.Size(55, 25);
             this.button_SaveAlbumName.TabIndex = 4;
@@ -104,7 +105,7 @@
             // textBox_SaveAlbumName
             // 
             this.textBox_SaveAlbumName.Location = new System.Drawing.Point(7, 189);
-            this.textBox_SaveAlbumName.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.textBox_SaveAlbumName.Margin = new System.Windows.Forms.Padding(2);
             this.textBox_SaveAlbumName.Multiline = true;
             this.textBox_SaveAlbumName.Name = "textBox_SaveAlbumName";
             this.textBox_SaveAlbumName.Size = new System.Drawing.Size(99, 36);
@@ -123,7 +124,7 @@
             // 
             this.radioButton_AlbumSlideShow.AutoSize = true;
             this.radioButton_AlbumSlideShow.Location = new System.Drawing.Point(8, 57);
-            this.radioButton_AlbumSlideShow.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.radioButton_AlbumSlideShow.Margin = new System.Windows.Forms.Padding(2);
             this.radioButton_AlbumSlideShow.Name = "radioButton_AlbumSlideShow";
             this.radioButton_AlbumSlideShow.Size = new System.Drawing.Size(119, 16);
             this.radioButton_AlbumSlideShow.TabIndex = 1;
@@ -137,7 +138,7 @@
             this.radioButton_ListViewSlideShow.AutoSize = true;
             this.radioButton_ListViewSlideShow.Checked = true;
             this.radioButton_ListViewSlideShow.Location = new System.Drawing.Point(8, 28);
-            this.radioButton_ListViewSlideShow.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.radioButton_ListViewSlideShow.Margin = new System.Windows.Forms.Padding(2);
             this.radioButton_ListViewSlideShow.Name = "radioButton_ListViewSlideShow";
             this.radioButton_ListViewSlideShow.Size = new System.Drawing.Size(73, 16);
             this.radioButton_ListViewSlideShow.TabIndex = 0;
@@ -150,7 +151,7 @@
             // 
             this.button_StartSlideShow.Font = new System.Drawing.Font("MS UI Gothic", 30F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.button_StartSlideShow.Location = new System.Drawing.Point(226, 231);
-            this.button_StartSlideShow.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.button_StartSlideShow.Margin = new System.Windows.Forms.Padding(2);
             this.button_StartSlideShow.Name = "button_StartSlideShow";
             this.button_StartSlideShow.Size = new System.Drawing.Size(41, 46);
             this.button_StartSlideShow.TabIndex = 5;
@@ -158,44 +159,45 @@
             this.button_StartSlideShow.UseVisualStyleBackColor = true;
             this.button_StartSlideShow.Click += new System.EventHandler(this.button_StartSlideShow_Click);
             // 
-            // button_Pause
+            // button_Pause_SlideShow
             // 
-            this.button_Pause.Font = new System.Drawing.Font("MS UI Gothic", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.button_Pause.Location = new System.Drawing.Point(163, 231);
-            this.button_Pause.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.button_Pause.Name = "button_Pause";
-            this.button_Pause.Size = new System.Drawing.Size(41, 46);
-            this.button_Pause.TabIndex = 4;
-            this.button_Pause.Text = "||";
-            this.button_Pause.UseVisualStyleBackColor = true;
-            this.button_Pause.Click += new System.EventHandler(this.button_Pause_Click);
+            this.button_Pause_SlideShow.Font = new System.Drawing.Font("MS UI Gothic", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.button_Pause_SlideShow.Location = new System.Drawing.Point(163, 231);
+            this.button_Pause_SlideShow.Margin = new System.Windows.Forms.Padding(2);
+            this.button_Pause_SlideShow.Name = "button_Pause_SlideShow";
+            this.button_Pause_SlideShow.Size = new System.Drawing.Size(41, 46);
+            this.button_Pause_SlideShow.TabIndex = 4;
+            this.button_Pause_SlideShow.Text = "||";
+            this.button_Pause_SlideShow.UseVisualStyleBackColor = true;
+            this.button_Pause_SlideShow.Click += new System.EventHandler(this.button_Pause_Click);
             // 
-            // button_Stop
+            // button_StopSlideShow
             // 
-            this.button_Stop.Location = new System.Drawing.Point(95, 231);
-            this.button_Stop.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.button_Stop.Name = "button_Stop";
-            this.button_Stop.Size = new System.Drawing.Size(41, 46);
-            this.button_Stop.TabIndex = 3;
-            this.button_Stop.UseVisualStyleBackColor = true;
-            this.button_Stop.Click += new System.EventHandler(this.button_Stop_Click);
+            this.button_StopSlideShow.Location = new System.Drawing.Point(95, 231);
+            this.button_StopSlideShow.Margin = new System.Windows.Forms.Padding(2);
+            this.button_StopSlideShow.Name = "button_StopSlideShow";
+            this.button_StopSlideShow.Size = new System.Drawing.Size(41, 46);
+            this.button_StopSlideShow.TabIndex = 3;
+            this.button_StopSlideShow.UseVisualStyleBackColor = true;
+            this.button_StopSlideShow.Click += new System.EventHandler(this.button_Stop_Click);
             // 
             // button_Next
             // 
             this.button_Next.Font = new System.Drawing.Font("MS UI Gothic", 50F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.button_Next.Location = new System.Drawing.Point(313, 87);
-            this.button_Next.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.button_Next.Margin = new System.Windows.Forms.Padding(2);
             this.button_Next.Name = "button_Next";
             this.button_Next.Size = new System.Drawing.Size(35, 68);
             this.button_Next.TabIndex = 2;
             this.button_Next.Text = "▶";
             this.button_Next.UseVisualStyleBackColor = true;
+            this.button_Next.Click += new System.EventHandler(this.button_Next_Click);
             // 
             // button_Back
             // 
             this.button_Back.Font = new System.Drawing.Font("MS UI Gothic", 50F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.button_Back.Location = new System.Drawing.Point(34, 87);
-            this.button_Back.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.button_Back.Margin = new System.Windows.Forms.Padding(2);
             this.button_Back.Name = "button_Back";
             this.button_Back.Size = new System.Drawing.Size(35, 68);
             this.button_Back.TabIndex = 1;
@@ -207,7 +209,7 @@
             // 
             this.panel1.Controls.Add(this.pictureBox_SlideShow);
             this.panel1.Location = new System.Drawing.Point(72, 28);
-            this.panel1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel1.Margin = new System.Windows.Forms.Padding(2);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(238, 182);
             this.panel1.TabIndex = 0;
@@ -218,7 +220,7 @@
             this.pictureBox_SlideShow.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pictureBox_SlideShow.ImageLocation = "";
             this.pictureBox_SlideShow.Location = new System.Drawing.Point(0, 0);
-            this.pictureBox_SlideShow.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.pictureBox_SlideShow.Margin = new System.Windows.Forms.Padding(2);
             this.pictureBox_SlideShow.Name = "pictureBox_SlideShow";
             this.pictureBox_SlideShow.Size = new System.Drawing.Size(238, 182);
             this.pictureBox_SlideShow.TabIndex = 0;
@@ -227,7 +229,7 @@
             // timer_SlideShow
             // 
             this.timer_SlideShow.Interval = 3000;
-            this.timer_SlideShow.Tick += new System.EventHandler(this.button_StartSlideShow_Click);
+            this.timer_SlideShow.Tick += new System.EventHandler(this.timer_SlideShow_Tick);
             // 
             // SlideShow
             // 
@@ -235,7 +237,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(600, 314);
             this.Controls.Add(this.splitContainer1);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "SlideShow";
             this.Text = "SldeShow";
             this.splitContainer1.Panel1.ResumeLayout(false);
@@ -262,8 +264,8 @@
         private System.Windows.Forms.Button button_SaveAlbumName;
         private System.Windows.Forms.TextBox textBox_SaveAlbumName;
         private System.Windows.Forms.Button button_StartSlideShow;
-        private System.Windows.Forms.Button button_Pause;
-        private System.Windows.Forms.Button button_Stop;
+        private System.Windows.Forms.Button button_Pause_SlideShow;
+        private System.Windows.Forms.Button button_StopSlideShow;
         private System.Windows.Forms.ComboBox comboBox_AlbumName;
         private System.Windows.Forms.Timer timer_SlideShow;
     }
