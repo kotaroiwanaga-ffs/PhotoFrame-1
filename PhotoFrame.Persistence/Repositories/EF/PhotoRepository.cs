@@ -11,7 +11,7 @@ namespace PhotoFrame.Persistence.EF
     /// <summary>
     /// <see cref="IPhotoRepository">の実装クラス
     /// </summary>
-    class PhotoRepository : IPhotoRepository
+    public class PhotoRepository : IPhotoRepository
     {
         public IEnumerable<Photo> Find()
         {

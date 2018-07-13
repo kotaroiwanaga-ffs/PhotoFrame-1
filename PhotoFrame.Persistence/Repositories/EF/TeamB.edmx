@@ -11,7 +11,7 @@
           </Key>
           <Property Name="NAME" Type="varchar" MaxLength="100" Nullable="false" />
         </EntityType>
-        <EntityType Name="AP_TABLE">
+        <EntityType Name="AP_REFERENCE">
           <Key>
             <PropertyRef Name="FILEPATH" />
             <PropertyRef Name="ALBUMNAME" />
@@ -39,12 +39,12 @@
           <End Role="ALBUM_TABLE" Type="Self.ALBUM_TABLE" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="AP_TABLE" Type="Self.AP_TABLE" Multiplicity="*" />
+          <End Role="AP_REFERENCE" Type="Self.AP_REFERENCE" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="ALBUM_TABLE">
               <PropertyRef Name="NAME" />
             </Principal>
-            <Dependent Role="AP_TABLE">
+            <Dependent Role="AP_REFERENCE">
               <PropertyRef Name="ALBUMNAME" />
             </Dependent>
           </ReferentialConstraint>
@@ -53,12 +53,12 @@
           <End Role="PHOTO_TABLE" Type="Self.PHOTO_TABLE" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="AP_TABLE" Type="Self.AP_TABLE" Multiplicity="*" />
+          <End Role="AP_REFERENCE" Type="Self.AP_REFERENCE" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="PHOTO_TABLE">
               <PropertyRef Name="FILEPATH" />
             </Principal>
-            <Dependent Role="AP_TABLE">
+            <Dependent Role="AP_REFERENCE">
               <PropertyRef Name="FILEPATH" />
             </Dependent>
           </ReferentialConstraint>
@@ -79,16 +79,16 @@
         </Association>
         <EntityContainer Name="TeamB_PhotoFrameModelStoreContainer">
           <EntitySet Name="ALBUM_TABLE" EntityType="Self.ALBUM_TABLE" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="AP_TABLE" EntityType="Self.AP_TABLE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AP_REFERENCE" EntityType="Self.AP_REFERENCE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="KEYWORD_TABLE" EntityType="Self.KEYWORD_TABLE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PHOTO_TABLE" EntityType="Self.PHOTO_TABLE" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK__AP_TABLE__ALBUMN__182C9B23" Association="Self.FK__AP_TABLE__ALBUMN__182C9B23">
             <End Role="ALBUM_TABLE" EntitySet="ALBUM_TABLE" />
-            <End Role="AP_TABLE" EntitySet="AP_TABLE" />
+            <End Role="AP_REFERENCE" EntitySet="AP_REFERENCE" />
           </AssociationSet>
           <AssociationSet Name="FK__AP_TABLE__FILEPA__173876EA" Association="Self.FK__AP_TABLE__FILEPA__173876EA">
             <End Role="PHOTO_TABLE" EntitySet="PHOTO_TABLE" />
-            <End Role="AP_TABLE" EntitySet="AP_TABLE" />
+            <End Role="AP_REFERENCE" EntitySet="AP_REFERENCE" />
           </AssociationSet>
           <AssociationSet Name="FK__KEYWORD_T__FILEP__145C0A3F" Association="Self.FK__KEYWORD_T__FILEP__145C0A3F">
             <End Role="PHOTO_TABLE" EntitySet="PHOTO_TABLE" />
@@ -105,7 +105,7 @@
             <PropertyRef Name="NAME" />
           </Key>
           <Property Name="NAME" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="PHOTO_TABLE" Relationship="Self.AP_TABLE" FromRole="ALBUM_TABLE" ToRole="PHOTO_TABLE" />
+          <NavigationProperty Name="PHOTO_TABLE" Relationship="Self.AP_REFERENCE" FromRole="ALBUM_TABLE" ToRole="PHOTO_TABLE" />
         </EntityType>
         <EntityType Name="KEYWORD_TABLE">
           <Key>
@@ -124,7 +124,7 @@
           <Property Name="ISFAVORITE" Type="Boolean" />
           <Property Name="TAKEDATE" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="KEYWORD_TABLE" Relationship="Self.FK__KEYWORD_T__FILEP__145C0A3F" FromRole="PHOTO_TABLE" ToRole="KEYWORD_TABLE" />
-          <NavigationProperty Name="ALBUM_TABLE" Relationship="Self.AP_TABLE" FromRole="PHOTO_TABLE" ToRole="ALBUM_TABLE" />
+          <NavigationProperty Name="ALBUM_TABLE" Relationship="Self.AP_REFERENCE" FromRole="PHOTO_TABLE" ToRole="ALBUM_TABLE" />
         </EntityType>
         <Association Name="FK__KEYWORD_T__FILEP__145C0A3F">
           <End Role="PHOTO_TABLE" Type="Self.PHOTO_TABLE" Multiplicity="1">
@@ -140,7 +140,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="AP_TABLE">
+        <Association Name="AP_REFERENCE">
           <End Role="ALBUM_TABLE" Type="Self.ALBUM_TABLE" Multiplicity="*" />
           <End Role="PHOTO_TABLE" Type="Self.PHOTO_TABLE" Multiplicity="*" />
         </Association>
@@ -152,7 +152,7 @@
             <End Role="PHOTO_TABLE" EntitySet="PHOTO_TABLE" />
             <End Role="KEYWORD_TABLE" EntitySet="KEYWORD_TABLE" />
           </AssociationSet>
-          <AssociationSet Name="AP_TABLE" Association="Self.AP_TABLE">
+          <AssociationSet Name="AP_REFERENCE" Association="Self.AP_REFERENCE">
             <End Role="ALBUM_TABLE" EntitySet="ALBUM_TABLE" />
             <End Role="PHOTO_TABLE" EntitySet="PHOTO_TABLE" />
           </AssociationSet>
@@ -187,7 +187,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <AssociationSetMapping Name="AP_TABLE" TypeName="TeamB_PhotoFrameModel.AP_TABLE" StoreEntitySet="AP_TABLE">
+          <AssociationSetMapping Name="AP_REFERENCE" TypeName="TeamB_PhotoFrameModel.AP_REFERENCE" StoreEntitySet="AP_REFERENCE">
             <EndProperty Name="ALBUM_TABLE">
               <ScalarProperty Name="NAME" ColumnName="ALBUMNAME" />
             </EndProperty>

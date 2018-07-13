@@ -11,7 +11,7 @@ namespace PhotoFrame.Persistence.EF
     /// <summary>
     /// <see cref="IAlbumRepository">の実装クラス
     /// </summary>
-    class AlbumRepository : IAlbumRepository
+    public class AlbumRepository : IAlbumRepository
     {
         public IEnumerable<Album> Find()
         {
@@ -35,7 +35,12 @@ namespace PhotoFrame.Persistence.EF
                 {
                     NAME = album.Name
                 };
-                database.ALBUM_TABLE.Add(saveAlbum);
+
+                if (!Exists(album))
+                {
+                    database.ALBUM_TABLE.Add(saveAlbum);
+                    database.SaveChanges();
+                }
             }
             return album;
         }

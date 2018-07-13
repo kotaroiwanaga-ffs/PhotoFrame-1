@@ -4,12 +4,12 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="e6c1b8f575b84ccba36c4fa4587f3af4" Name="Diagram1">
+      <Diagram DiagramId="5918ce5bbcf94bb99b94c8313cdbc4fd" Name="Diagram1">
         <EntityTypeShape EntityType="TeamB_PhotoFrameModel.ALBUM_TABLE" Width="1.5" PointX="0.75" PointY="1.25" IsExpanded="true" />
         <EntityTypeShape EntityType="TeamB_PhotoFrameModel.KEYWORD_TABLE" Width="1.5" PointX="5.25" PointY="1.125" IsExpanded="true" />
         <EntityTypeShape EntityType="TeamB_PhotoFrameModel.PHOTO_TABLE" Width="1.5" PointX="3" PointY="0.875" IsExpanded="true" />
         <AssociationConnector Association="TeamB_PhotoFrameModel.FK__KEYWORD_T__FILEP__145C0A3F" ManuallyRouted="false" />
-        <AssociationConnector Association="TeamB_PhotoFrameModel.AP_TABLE" ManuallyRouted="false" />
+        <AssociationConnector Association="TeamB_PhotoFrameModel.AP_REFERENCE" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
