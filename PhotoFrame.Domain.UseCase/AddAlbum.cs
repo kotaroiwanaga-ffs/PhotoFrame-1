@@ -18,9 +18,27 @@ namespace PhotoFrame.Domain.UseCase
 
         public bool Execute(string albumName, IEnumerable<Photo> photos)
         {
+            Album album = Album.Create(albumName);
 
+            if(repositoryMaster.ExistsAlbum(album))
+            {
+                repositoryMaster.StoreAlbum(album);
+                
+                foreach(Photo photo in photos)
+                {
+                    if (!repositoryMaster.ExistsPhoto(photo))
+                    {
+                        repositoryMaster.StorePhoto(photo);
+                    }
+                }
 
-            return true;
+                repositoryMaster.StoreSlideShow(album, photos);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }

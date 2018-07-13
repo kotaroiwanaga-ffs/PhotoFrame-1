@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -20,13 +20,27 @@ namespace PhotoFrameApp
 {
     public partial class Form1 : Form
     {
-        private IPhotoRepository photoRepository;
-        private IAlbumRepository albumRepository;
-        private IPhotoFileService photoFileService;
-        private PhotoFrameApplication application;
-        private IEnumerable<Photo> searchedPhotos; // リストビュー上のフォトのリスト
+        private bool isFavorite_F_now;
+        private bool isFavorite_RD_now;
+        private string filepath;
+        private DateTime date_S;
+        private DateTime date_E;
+        private List<string> pullDownKeyword;
 
-        private bool flagAsync;
+
+        Photo a;
+        Photo b;
+        Photo c;
+
+        IEnumerable<Photo> searchedPhotos;
+        //private IPhotoRepository photoRepository;
+        //private IAlbumRepository albumRepository;
+        //private IPhotoFileService photoFileService;
+        //private PhotoFrameApplication application;
+        //private IEnumerable<Photo> searchedPhotos; // リストビュー上のフォトのリスト
+
+        //private bool flagAsync;
+
 
         /// <summary>
         /// コンストラクタ
@@ -35,235 +49,300 @@ namespace PhotoFrameApp
         {
             InitializeComponent();
 
-            // 各テストごとにデータベースファイルを削除
-            // (35-42をコメントアウトしても動きます)
-            if (System.IO.File.Exists("_Photo.csv"))
-            {
-                System.IO.File.Delete("_Photo.csv");
-            }
-            if (System.IO.File.Exists("_Album.csv"))
-            {
-                System.IO.File.Delete("_Album.csv");
-            }
+            isFavorite_F_now = false;
+            isFavorite_RD_now = false;
+            filepath = "";
+            date_S = DateTime.Now;
+            date_E = DateTime.Now;
+            pullDownKeyword = new List<string>();
+            List<string> aaaa = new List<string>();
 
-            // メンバ変数初期化
-            RepositoryFactory repositoryFactory = new RepositoryFactory(PhotoFrame.Persistence.Type.Csv);
-            ServiceFactory serviceFactory = new ServiceFactory(); 
-            photoRepository = repositoryFactory.PhotoRepository;
-            albumRepository = repositoryFactory.AlbumRepository;
-            photoFileService = serviceFactory.PhotoFileService;
-            application = new PhotoFrameApplication(albumRepository, photoRepository, photoFileService);
-            searchedPhotos = new List<Photo>().AsEnumerable();
+            string[] aaa = { "a", "b", "aaaa" };
+            string[] bbb = { "test", "takemoto" };
+            a = new Photo(@"C:\研修用\Album1\Chrysanthemum.jpg", true, new DateTime(),aaa.ToList<string>());
+            b = new Photo(@"C:\研修用\Album1\Desert.jpg", false, new DateTime(),aaaa);
+            c = new Photo(@"C:\研修用\Album1\Hydrangeas.jpg", true, DateTime.Now, bbb.ToList());
 
-            flagAsync = false;
+            Photo[] photos = { a, b, c };
+            searchedPhotos =  photos.AsEnumerable<Photo>();
 
-            // 全アルバム名を取得し、アルバム変更リストをセット
-            IEnumerable<Album> allAlbums = albumRepository.Find((IQueryable<Album> albums) => albums);
+            //// 各テストごとにデータベースファイルを削除
+            //// (35-42をコメントアウトしても動きます)
+            //if (System.IO.File.Exists("_Photo.csv"))
+            //{
+            //    System.IO.File.Delete("_Photo.csv");
+            //}
+            //if (System.IO.File.Exists("_Album.csv"))
+            //{
+            //    System.IO.File.Delete("_Album.csv");
+            //}
 
-            if(allAlbums != null)
-            {
-                foreach (Album album in allAlbums)
-                {
-                    comboBox_ChangeAlbum.Items.Add(album.Name);
-                }
-            }
-            
-        }
+            //// メンバ変数初期化
+            //RepositoryFactory repositoryFactory = new RepositoryFactory(PhotoFrame.Persistence.Type.Csv);
+            //ServiceFactory serviceFactory = new ServiceFactory(); 
+            //photoRepository = repositoryFactory.PhotoRepository;
+            //albumRepository = repositoryFactory.AlbumRepository;
+            //photoFileService = serviceFactory.PhotoFileService;
+            //application = new PhotoFrameApplication(albumRepository, photoRepository, photoFileService);
+            //searchedPhotos = new List<Photo>().AsEnumerable();
 
-        /// <summary>
-        /// アルバム名でフォトを検索
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private async void button_Search_Click(object sender, EventArgs e)
-        {
-            if (!CheckFlag())
-            {
-                flagAsync = true;
-                
-                if (radioButton_AlbumName.Checked)
-                {
-                    this.searchedPhotos = await application.SearchAlbumAsync(textBox_Search.Text);
-                }
-                else if (radioButton_DirectoryName.Checked)
-                {
-                    this.searchedPhotos = await application.SearchDirectoryAsync(textBox_Search.Text);
-                }
-                
-                renewPhotoListView();
-                
-                flagAsync = false;
-            }
+            //flagAsync = false;
 
-            
-        }
+            //// 全アルバム名を取得し、アルバム変更リストをセット
+            //IEnumerable<Album> allAlbums = albumRepository.Find((IQueryable<Album> albums) => albums);
 
-        /// <summary>
-        /// アルバム新規作成
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private async void button_CreateAlbum_Click(object sender, EventArgs e)
-        {
-            if (!CheckFlag())
-            {
-                flagAsync = true;
-
-                string albumName = textBox_CreateAlbum.Text;
-                int result = await application.CreateAlbumAsync(albumName);
-
-                switch (result)
-                {
-                    case 0:
-                        comboBox_ChangeAlbum.Items.Add(albumName);
-                        break;
-                    case 1:
-                        MessageBox.Show("アルバム名が未入力です");
-                        break;
-                    case 2:
-                        MessageBox.Show("既存のアルバム名です");
-                        break;
-                    default:
-                        break;
-                }
-
-                flagAsync = false;
-            }
+            //if(allAlbums != null)
+            //{
+            //    foreach (Album album in allAlbums)
+            //    {
+            //        comboBox_ChangeAlbum.Items.Add(album.Name);
+            //    }
+            //}
 
         }
 
-        /// <summary>
-        /// お気に入り切り替え
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private async void button_ToggleFavorite_Click(object sender, EventArgs e)
-        {
-            if (!CheckFlag())
-            {
-                flagAsync = true;
+        ///// <summary>
+        ///// アルバム名でフォトを検索
+        ///// </summary>
+        ///// <param name="sender"></param>
+        ///// <param name="e"></param>
+        //private async void button_Search_Click(object sender, EventArgs e)
+        //{
+        //    if (!CheckFlag())
+        //    {
+        //        flagAsync = true;
 
-                List<int> listviewIndexList = new List<int>();
+        //        if (radioButton_AlbumName.Checked)
+        //        {
+        //            this.searchedPhotos = await application.SearchAlbumAsync(textBox_Search.Text);
+        //        }
+        //        else if (radioButton_DirectoryName.Checked)
+        //        {
+        //            this.searchedPhotos = await application.SearchDirectoryAsync(textBox_Search.Text);
+        //        }
 
-                for (int i = 0; i < listView_PhotoList.SelectedItems.Count; i++)
-                {
-                    listviewIndexList.Add(listView_PhotoList.SelectedItems[i].Index);
-                }
+        //        renewPhotoListView();
 
-                foreach (int index in listviewIndexList)
-                {
-                    Photo photo = await application.ToggleFavoriteAsync(searchedPhotos.ElementAt(index));
-
-                    renewPhotoListViewItem(index, photo);
-                }
-
-                flagAsync = false;
-            }
-
-        }
-
-        /// <summary>
-        /// 選択中のフォトの所属アルバムを変更
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private async void button_ChangeAlbum_Click(object sender, EventArgs e)
-        {
-            if (!CheckFlag())
-            {
-                flagAsync = true;
-
-                string newAlbumName = comboBox_ChangeAlbum.Text;
-                List<int> listviewIndexList = new List<int>();
-
-                for (int i = 0; i < listView_PhotoList.SelectedItems.Count; i++)
-                {
-                    listviewIndexList.Add(listView_PhotoList.SelectedItems[i].Index);
-                }
-
-                foreach (int index in listviewIndexList)
-                {
-                    Photo photo = await application.ChangeAlbumAsync(searchedPhotos.ElementAt(index), newAlbumName);
-
-                    renewPhotoListViewItem(index, photo);
-                }
-                
-                flagAsync = false;
-            }
-
-        }
-
-        /// <summary>
-        /// リストビュー上のフォトのスライドショーを実行
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void button_SlideShow_Click(object sender, EventArgs e)
-        {
-            if(this.searchedPhotos.Count() > 0)
-            {
-                SlideShow slideShowForm = new SlideShow(this.searchedPhotos);
-                slideShowForm.ShowDialog();
-            }
-            
-        }
-
-        /// <summary>
-        /// リストビュー1行分更新
-        /// </summary>
-        /// <param name="index"></param>
-        /// <param name="photo"></param>
-        private void renewPhotoListViewItem(int index, Photo photo)
-        {
-            string albumName, isFavorite;
-
-            if (photo.Album != null)
-            {
-                albumName = photo.Album.Name;
-            }
-            else
-            {
-                albumName = "";
-            }
+        //        flagAsync = false;
+        //    }
 
 
-            if (photo.IsFavorite)
-            {
-                isFavorite = "★";
-            }
-            else
-            {
-                isFavorite = "";
-            }
+        //}
 
-            listView_PhotoList.Items[index].SubItems[0].Text = photo.File.FilePath;
-            listView_PhotoList.Items[index].SubItems[1].Text = albumName;
-            listView_PhotoList.Items[index].SubItems[2].Text = isFavorite;
-        }
+        ///// <summary>
+        ///// アルバム新規作成
+        ///// </summary>
+        ///// <param name="sender"></param>
+        ///// <param name="e"></param>
+        //private async void button_CreateAlbum_Click(object sender, EventArgs e)
+        //{
+        //    if (!CheckFlag())
+        //    {
+        //        flagAsync = true;
+
+        //        string albumName = textBox_CreateAlbum.Text;
+        //        int result = await application.CreateAlbumAsync(albumName);
+
+        //        switch (result)
+        //        {
+        //            case 0:
+        //                comboBox_ChangeAlbum.Items.Add(albumName);
+        //                break;
+        //            case 1:
+        //                MessageBox.Show("アルバム名が未入力です");
+        //                break;
+        //            case 2:
+        //                MessageBox.Show("既存のアルバム名です");
+        //                break;
+        //            default:
+        //                break;
+        //        }
+
+        //        flagAsync = false;
+        //    }
+
+        //}
+
+        ///// <summary>
+        ///// お気に入り切り替え
+        ///// </summary>
+        ///// <param name="sender"></param>
+        ///// <param name="e"></param>
+        //private async void button_ToggleFavorite_Click(object sender, EventArgs e)
+        //{
+        //    if (!CheckFlag())
+        //    {
+        //        flagAsync = true;
+
+        //        List<int> listviewIndexList = new List<int>();
+
+        //        for (int i = 0; i < listView_PhotoList.SelectedItems.Count; i++)
+        //        {
+        //            listviewIndexList.Add(listView_PhotoList.SelectedItems[i].Index);
+        //        }
+
+        //        foreach (int index in listviewIndexList)
+        //        {
+        //            Photo photo = await application.ToggleFavoriteAsync(searchedPhotos.ElementAt(index));
+
+        //            renewPhotoListViewItem(index, photo);
+        //        }
+
+        //        flagAsync = false;
+        //    }
+
+        //}
+
+        ///// <summary>
+        ///// 選択中のフォトの所属アルバムを変更
+        ///// </summary>
+        ///// <param name="sender"></param>
+        ///// <param name="e"></param>
+        //private async void button_ChangeAlbum_Click(object sender, EventArgs e)
+        //{
+        //    if (!CheckFlag())
+        //    {
+        //        flagAsync = true;
+
+        //        string newAlbumName = comboBox_ChangeAlbum.Text;
+        //        List<int> listviewIndexList = new List<int>();
+
+        //        for (int i = 0; i < listView_PhotoList.SelectedItems.Count; i++)
+        //        {
+        //            listviewIndexList.Add(listView_PhotoList.SelectedItems[i].Index);
+        //        }
+
+        //        foreach (int index in listviewIndexList)
+        //        {
+        //            Photo photo = await application.ChangeAlbumAsync(searchedPhotos.ElementAt(index), newAlbumName);
+
+        //            renewPhotoListViewItem(index, photo);
+        //        }
+
+        //        flagAsync = false;
+        //    }
+
+        //}
+
+        ///// <summary>
+        ///// リストビュー上のフォトのスライドショーを実行
+        ///// </summary>
+        ///// <param name="sender"></param>
+        ///// <param name="e"></param>
+        //private void button_SlideShow_Click(object sender, EventArgs e)
+        //{
+        //    if(this.searchedPhotos.Count() > 0)
+        //    {
+        //        SlideShow slideShowForm = new SlideShow(this.searchedPhotos);
+        //        slideShowForm.ShowDialog();
+        //    }
+
+        //}
+
+        ///// <summary>
+        ///// リストビュー1行分更新
+        ///// </summary>
+        ///// <param name="index"></param>
+        ///// <param name="photo"></param>
+        //private void renewPhotoListViewItem(int index, Photo photo)
+        //{
+        //    string albumName, isFavorite;
+
+        //    if (photo.Album != null)
+        //    {
+        //        albumName = photo.Album.Name;
+        //    }
+        //    else
+        //    {
+        //        albumName = "";
+        //    }
+
+
+        //    if (photo.IsFavorite)
+        //    {
+        //        isFavorite = "★";
+        //    }
+        //    else
+        //    {
+        //        isFavorite = "";
+        //    }
+
+        //    listView_PhotoList.Items[index].SubItems[0].Text = photo.File.FilePath;
+        //    listView_PhotoList.Items[index].SubItems[1].Text = albumName;
+        //    listView_PhotoList.Items[index].SubItems[2].Text = isFavorite;
+        //}
+
+        ///// <summary>
+        ///// リストビューの更新
+        ///// </summary>
+        ///// <param name="photos"></param>
+        //private void renewPhotoListView()
+        //{
+        //    listView_PhotoList.Items.Clear();
+
+        //    if (this.searchedPhotos != null)
+        //    {
+        //        foreach (Photo photo in searchedPhotos)
+        //        {
+        //            string albumName, isFavorite;
+
+        //            if(photo.Album != null)
+        //            {
+        //                albumName = photo.Album.Name;
+        //            }
+        //            else
+        //            {
+        //                albumName = "";
+        //            }
+
+
+        //            if (photo.IsFavorite)
+        //            {
+        //                isFavorite = "★";
+        //            }
+        //            else
+        //            {
+        //                isFavorite = "";
+        //            }
+
+        //            string[] item = { photo.File.FilePath, albumName, isFavorite };
+        //            listView_PhotoList.Items.Add(new ListViewItem(item));
+
+        //        }
+        //    }
+        //}
+
+        ///// <summary>
+        ///// バックグラウンド処理中かの判定
+        ///// </summary>
+        ///// <param name="query"></param>
+        //private bool CheckFlag()
+        //{
+        //    if (!flagAsync)
+        //    {
+        //        return flagAsync;
+        //    }
+        //    else
+        //    {
+        //        MessageBox.Show("処理中です");
+        //        return flagAsync;
+        //    }
+        //}
 
         /// <summary>
         /// リストビューの更新
         /// </summary>
-        /// <param name="photos"></param>
         private void renewPhotoListView()
         {
-            listView_PhotoList.Items.Clear();
+            photoListView.Items.Clear();
+            DateTime nullDate = new DateTime();
 
             if (this.searchedPhotos != null)
             {
                 foreach (Photo photo in searchedPhotos)
                 {
-                    string albumName, isFavorite;
-
-                    if(photo.Album != null)
-                    {
-                        albumName = photo.Album.Name;
-                    }
-                    else
-                    {
-                        albumName = "";
-                    }
-
+                    string isFavorite;
+                    string dateTime;
 
                     if (photo.IsFavorite)
                     {
@@ -274,29 +353,222 @@ namespace PhotoFrameApp
                         isFavorite = "";
                     }
 
-                    string[] item = { photo.File.FilePath, albumName, isFavorite };
-                    listView_PhotoList.Items.Add(new ListViewItem(item));
+                    if(photo.Date == nullDate)
+                    {
+                        dateTime = "";
+                    }
+                    else
+                    {
+                        dateTime = photo.Date.ToString();
+                    }
 
+                    string[] item = { Path.GetFileName(photo.Filepath), isFavorite ,dateTime};
+                    photoListView.Items.Add(new ListViewItem(item));
+
+                    pullDownKeyword.AddRange(photo.Keywords);
+                }
+                pullDownKeyword = (from key in pullDownKeyword select key).Distinct().ToList();
+                foreach(string key in pullDownKeyword)
+                {
+                    selectKeyword_F.Items.Add(key);
                 }
             }
         }
 
+
         /// <summary>
-        /// バックグラウンド処理中かの判定
-        /// </summary>
-        /// <param name="query"></param>
-        private bool CheckFlag()
+            /// ファイルボタンを押したとき
+            /// </summary>
+            /// <param name="sender"></param>
+            /// <param name="e"></param>
+        private void fileIcon_Click(object sender, EventArgs e)
         {
-            if (!flagAsync)
+            //FolderBrowserDialogクラスのインスタンスを作成
+            FolderBrowserDialog fbd = new FolderBrowserDialog();
+
+            //ルートフォルダを指定する
+            //デフォルトでDesktop
+            fbd.RootFolder = Environment.SpecialFolder.Desktop;
+            //最初に選択するフォルダを指定する
+            //RootFolder以下にあるフォルダである必要がある
+            fbd.SelectedPath = @"C:\Windows";
+            //ユーザーが新しいフォルダを作成できるようにする
+            //デフォルトでTrue
+            fbd.ShowNewFolderButton = true;
+
+            //ダイアログを表示する
+            if (fbd.ShowDialog(this) == DialogResult.OK)
             {
-                return flagAsync;
+                //選択されたフォルダを表示する
+                filepath = fbd.SelectedPath;
+                filePathView.Text = (filepath);
+            }
+        }
+
+        /// <summary>
+        /// 日付指定ボタンのチェックが変更されたとき
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            if(dateCheckBox.Checked==true)
+            {
+                dateStart.Enabled = true;
+                dateEnd.Enabled = true;
             }
             else
             {
-                MessageBox.Show("処理中です");
-                return flagAsync;
+                dateStart.Enabled = false;
+                dateEnd.Enabled = false;
+            }
+        }
+
+        /// <summary>
+        /// 上のほうの星がクリックされたとき
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void isFavorite_F_Click(object sender, EventArgs e)
+        {
+            if(isFavorite_F_now==true)
+            {
+                isFavorite_F_now = false;
+                isFavorite_F.ForeColor = Color.Gray;
+            }
+            else
+            {
+                isFavorite_F_now = true;
+                isFavorite_F.ForeColor = Color.Yellow;
             }
         }
         
+        /// <summary>
+        /// 下のほうの星がクリックされたとき
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void isFavorite_RD_Click(object sender, EventArgs e)
+        {
+            if (isFavorite_RD_now == true)
+            {
+                isFavorite_RD_now = false;
+                isFavorite_RD.ForeColor = Color.Gray;
+            }
+            else
+            {
+                isFavorite_RD_now = true;
+                isFavorite_RD.ForeColor = Color.Yellow;
+            }
+        }
+
+        /// <summary>
+        /// 日付指定始まりを変更したとき
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void dateStart_ValueChanged(object sender, EventArgs e)
+        {
+            date_S = dateStart.Value;
+        }
+
+        /// <summary>
+        /// 日付指定終わりを変更したとき
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void dateEnd_ValueChanged(object sender, EventArgs e)
+        {
+            date_E = dateEnd.Value;
+
+        }
+
+        /// <summary>
+        /// 検索ボタン押したとき
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void searchButton_Click(object sender, EventArgs e)
+        {
+            //searchedFolda = SearchFolda(filepath);
+            renewPhotoListView();
+        }
+
+        /// <summary>
+        /// リストビューの行が選択されたとき
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void photoListView_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            //testlabel.Text = photoListView.SelectedItems.Count.ToString();
+            if(photoListView.SelectedItems.Count==0)
+            {
+
+            }
+            else if(photoListView.SelectedItems.Count == 1)
+            {
+
+                int selectNumber =photoListView.SelectedItems[0].Index;
+                Photo selectedPhoto = searchedPhotos.ElementAt(selectNumber);
+                photoPreview.ImageLocation = selectedPhoto.Filepath;
+                if (selectedPhoto.Keywords != null)
+                {
+                    photoKeyword.Text = string.Join(",", selectedPhoto.Keywords);
+                }
+                else
+                {
+                    photoKeyword.Text = "";
+                }
+            }
+            else
+            {
+                photoPreview.ImageLocation = @"C:\研修用\複数選択してるよ.png";
+            }
+            
+        }
+
+        /// <summary>
+        /// スライドショー呼び出し
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void slideShowButton_Click(object sender, EventArgs e)
+        {
+           // SlideShow slideShowForm = new SlideShow(searchedPhotos,application);
+           // slideShowForm.ShowDialog();
+        }
+
+        private void filterButton_Click(object sender, EventArgs e)
+        {
+            int result = dateEnd.Value.Date.CompareTo(dateStart.Value.Date);
+            if (result == 1)
+            {
+                //正常処理
+            }
+            else
+            {
+                MessageBox.Show("日付の設定が間違っています。左のボックスに古い日付を指定してください。");
+            }
+        }
+    }
+
+    /// <summary>
+    /// テスト用
+    /// </summary>
+    public class Photo
+    {
+        public string Filepath;
+        public bool IsFavorite;
+        public DateTime Date;
+        public List<string> Keywords = new List<string>();
+
+        public Photo(string a,bool b ,DateTime c,List<string> d)
+        {
+            Filepath = a;
+            IsFavorite = b;
+            Date = c;
+            Keywords = d;
+        }
     }
 }

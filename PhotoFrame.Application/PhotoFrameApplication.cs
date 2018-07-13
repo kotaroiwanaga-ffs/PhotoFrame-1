@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using PhotoFrame.Persistence;
 
 namespace PhotoFrame.Application
 {
@@ -15,6 +16,8 @@ namespace PhotoFrame.Application
     public class PhotoFrameApplication
     {
         private RepositoryMaster repositoryMaster;
+        private ServiceFactory ServiceFactory;
+        private IPhotoFileService photoFileService;
 
         private readonly SearchFolder searchFolder;
         private readonly Filter filter;
@@ -28,12 +31,15 @@ namespace PhotoFrame.Application
         private readonly GetAllAlbums getAllAlbums;
 
 
-        public PhotoFrameApplication(IAlbumRepository albumRepository, IPhotoRepository photoRepository, IPhotoFileService photoFileService)
+        public PhotoFrameApplication()
         {
-            this.repositoryMaster = new RepositoryMaster();
+            this.ServiceFactory = new ServiceFactory();
 
-            this.searchFolder = new SearchFolder(repositoryMaster);
-            this.filter = new Filter();
+            this.repositoryMaster = new RepositoryMaster();
+            this.photoFileService = ServiceFactory.PhotoFileService;
+
+            this.searchFolder = new SearchFolder(repositoryMaster, photoFileService);
+            this.filter = new Filter(repositoryMaster);
             this.addKeyword = new AddKeyword(repositoryMaster);
             this.deleteKeyword = new DeleteKeyword(repositoryMaster);
             this.toggleIsFavorite = new ToggleIsFavorite(repositoryMaster);
@@ -45,9 +51,9 @@ namespace PhotoFrame.Application
 
         }
 
-        public IEnumerable<Photo> SearchFolder(string filePath)
+        public IEnumerable<Photo> SearchFolder(string folderPath)
         {
-            return this.searchFolder.Execute(filePath);
+            return this.searchFolder.Execute(folderPath);
         }
 
         public IEnumerable<Photo> Filter(string keyword , bool isFavorite, DateTime firstDate, DateTime lastDate)
@@ -90,7 +96,7 @@ namespace PhotoFrame.Application
             return this.sortDateDescending.Execute(photos);
         }
 
-        public IEnumerable<Album> GetAlbums()
+        public IEnumerable<Album> GetAllAlbums()
         {
             return this.getAllAlbums.Execute();
         }

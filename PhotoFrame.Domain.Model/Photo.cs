@@ -49,14 +49,14 @@ namespace PhotoFrame.Domain.Model
             Album = album;
         }
 
-        public Photo(File file, DateTime date, IEnumerable<string> keywords, bool isFavorite = false)
+        public Photo(File file, DateTime date, IEnumerable<string> keywords = null, bool isFavorite = false)
         {
             this.File = file;
             this.Date = date;
             this.Keywords = new List<string>();
-            this.IsFavorite = IsFavorite;
+            this.IsFavorite = isFavorite;
 
-            if(keywords.Count() > 0)
+            if(keywords != null)
             {
                foreach(string keyword in keywords)
                 {
@@ -73,7 +73,7 @@ namespace PhotoFrame.Domain.Model
                 .Count();
 
             bool checkNewWord = !this.Keywords.Contains(keyword);
-            bool checkUsableWord = keyword != null && keyword != "" && spaceCount == keyword.Length;
+            bool checkUsableWord = keyword != null && keyword != "" && spaceCount != keyword.Length;
             bool checkLength = keyword.Length <= 10;
             bool checkCapacity = this.Keywords.Count < 5;
 

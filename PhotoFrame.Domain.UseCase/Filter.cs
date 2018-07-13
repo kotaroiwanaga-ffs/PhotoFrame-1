@@ -9,18 +9,41 @@ namespace PhotoFrame.Domain.UseCase
 {
     public class Filter
     {
+        private readonly RepositoryMaster repositoryMaster;
+
+        public Filter(RepositoryMaster repositoryMaster)
+        {
+            this.repositoryMaster = repositoryMaster;
+        }
+
         public IEnumerable<Photo> Execute(string keyword, bool isFavorite, DateTime firstDate, DateTime lastDate)
         {
-            Func<Photo, bool> query = ((photo) =>
+            DateTime defaultDate = new DateTime();
+
+            IEnumerable<Photo> photos = repositoryMaster.Filter((Photo photo) => true);
+
+            if(keyword != null && keyword != "")
             {
-                
-            });
+                photos = repositoryMaster.Filter(((Photo photo) => photo.Keywords.Contains(keyword)), photos);
+            }
 
+            if (isFavorite)
+            {
+                photos = repositoryMaster.Filter(((Photo photo) => photo.IsFavorite), photos);
+            }
 
-
-            List<Photo> photos = new List<Photo>();
-
-
+            if(firstDate != defaultDate && lastDate != defaultDate && firstDate <= lastDate)
+            {
+                photos = repositoryMaster.Filter(((Photo photo) => (photo.Date.Date >= firstDate.Date && photo.Date.Date <= lastDate.Date.Date)), photos);
+            }
+            else if(firstDate != defaultDate && lastDate == defaultDate)
+            {
+                photos = repositoryMaster.Filter(((Photo photo) => (photo.Date.Date >= firstDate.Date)), photos);
+            }
+            else if(firstDate == defaultDate && lastDate != defaultDate)
+            {
+                photos = repositoryMaster.Filter(((Photo photo) => (photo.Date.Date <= lastDate.Date)), photos);
+            }
 
             return photos;
         }

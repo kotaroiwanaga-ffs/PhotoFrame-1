@@ -10,13 +10,7 @@ namespace PhotoFrame.Domain.UseCase
 {
     public class SearchAlbum
     {
-        //private readonly IPhotoRepository photoRepository;
         private readonly RepositoryMaster repositoryMaster;
-
-        //public SearchAlbum(IPhotoRepository photoRepository)
-        //{
-        //    this.photoRepository = photoRepository;
-        //}
 
         public SearchAlbum(RepositoryMaster repositoryMaster)
         {
@@ -26,16 +20,21 @@ namespace PhotoFrame.Domain.UseCase
         public IEnumerable<Photo> Execute(string albumName)
         {
             List<Photo> photos = new List<Photo>();
+            IEnumerable<string> pathlist = repositoryMaster.FindSlideShow(Album.Create(albumName));
 
+            foreach(string path in pathlist)
+            {
+                Func<IQueryable<Photo>, Photo> query = ((allPhotos) =>
+                {
+                    return allPhotos
+                        .Where(p => p.File.FilePath == path)
+                        .FirstOrDefault();
+                });
 
-
+                photos.Add(repositoryMaster.FindPhoto(query));
+            }
 
             return photos;
         }
-
-        //public async Task<IEnumerable<Photo>> ExecuteAsync(string albumName)
-        //{
-        //    return await Task.Run(() => photoRepository.Find(photos => (from p in photos where p.Album != null && p.Album.Name == albumName select p).ToList().AsQueryable()));
-        //}
     }
 }
