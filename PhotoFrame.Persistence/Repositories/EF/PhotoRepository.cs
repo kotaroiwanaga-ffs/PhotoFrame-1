@@ -5,7 +5,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using PhotoFrame.Persistence.Repositories.EF;
-using System.Data.Entity;
 
 namespace PhotoFrame.Persistence.EF
 {
@@ -14,9 +13,6 @@ namespace PhotoFrame.Persistence.EF
     /// </summary>
     class PhotoRepository : IPhotoRepository
     {
-        System.Data.Entity.SqlServer.SqlProviderServices instance =
-            System.Data.Entity.SqlServer.SqlProviderServices.Instance;
-
         public IEnumerable<Photo> Find()
         {
             using (TeamBEntities database = new TeamBEntities())
@@ -65,23 +61,31 @@ namespace PhotoFrame.Persistence.EF
                 {
                     if (Exists(photo))
                     {
-                        foreach(var pho in database.PHOTO_TABLE)
+                        SaveFavorite(photo);
+                        SaveKeywords(photo);
+                    }
+                    else
+                    {
+                        var photodata = new PHOTO_TABLE
                         {
-                            if(pho.FILEPATH == photo.File.FilePath)
-                            {
-                                pho.ISFAVORITE = photo.IsFavorite;
-                                pho.TAKEDATE = photo.Date.ToString();
-                            }
-                        }
-                        foreach(var keyword in photo.Keywords)
+                            FILEPATH = photo.File.FilePath,
+                            ISFAVORITE = photo.IsFavorite,
+                            TAKEDATE = photo.Date.ToString()
+                        };
+                        database.PHOTO_TABLE.Add(photodata);
+
+                        foreach (var keyword in photo.Keywords)
                         {
-                            var key = new KEYWORD_TABLE
+                            var keyworddata = new KEYWORD_TABLE
                             {
-                                FILEPATH = photo.File.FilePath.ToString(),
+                                FILEPATH = photo.File.FilePath,
                                 KEYWORD = keyword
                             };
+                            database.KEYWORD_TABLE.Add(keyworddata);
                         }
                     }
+                    transaction.Commit();
+                    database.SaveChanges();
                 }
                 catch
                 {
@@ -91,20 +95,16 @@ namespace PhotoFrame.Persistence.EF
             return photo;
         }
 
-        private void AddKeyword(Photo photo, string keyword)
+        private void SaveFavorite(Photo photo)
         {
             using (TeamBEntities database = new TeamBEntities())
             using (var transaction = database.Database.BeginTransaction())
             {
                 try
                 {
-                    var key = new KEYWORD_TABLE
-                    {
-                        FILEPATH = photo.File.FilePath,
-                        KEYWORD = keyword
-                    };
-                    database.KEYWORD_TABLE.Add(key);
-                    
+                    var photodata = database.PHOTO_TABLE.Find(photo.File.FilePath);
+                    photodata.ISFAVORITE = photo.IsFavorite;
+
                     transaction.Commit();
                     database.SaveChanges();
                 }
@@ -115,18 +115,19 @@ namespace PhotoFrame.Persistence.EF
             }
         }
 
-        private void DeleteKeyword(Photo photo, string keyword)
+        private void SaveKeywords(Photo photo)
         {
             using (TeamBEntities database = new TeamBEntities())
             using (var transaction = database.Database.BeginTransaction())
             {
                 try
                 {
-
+                    transaction.Commit();
+                    database.SaveChanges();
                 }
                 catch
                 {
-
+                    transaction.Rollback();
                 }
             }
         }
@@ -135,7 +136,7 @@ namespace PhotoFrame.Persistence.EF
         {
             foreach (var pho in Find())
             {
-                if (pho.File == photo.File) return true;
+                if (pho.File.FilePath == photo.File.FilePath) return true;
             }
 
             return false;
