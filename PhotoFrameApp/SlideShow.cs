@@ -228,6 +228,6 @@ namespace PhotoFrameApp
 
         }
 
-        
+       
     }
 }
