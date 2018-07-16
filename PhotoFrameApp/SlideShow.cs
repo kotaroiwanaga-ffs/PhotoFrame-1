@@ -36,6 +36,8 @@ namespace PhotoFrameApp
 
             timer_SlideShow.Interval = 3000;
 
+            button_Back.Enabled = false;
+
             //アルバムリストの一時的な初期値の設定
             Album album1 = new Album("abc", "test1", "test説明");
             Album album2 = new Album("def", "test2", "test1説明");
@@ -141,10 +143,18 @@ namespace PhotoFrameApp
         /// <param name="e"></param>
         private void button_StartSlideShow_Click(object sender, EventArgs e)
         {
+            timer_SlideShow.Start();
             button_StartSlideShow.Enabled = false;
             button_Pause_SlideShow.Enabled = true;
             button_StopSlideShow.Enabled = true;
-            timer_SlideShow.Start();
+
+            radioButton_ListViewSlideShow.Enabled = false;
+            radioButton_AlbumSlideShow.Enabled = false;
+            comboBox_AlbumName.Enabled = false;
+            textBox_SaveAlbumName.Enabled = false;
+            button_SaveAlbumName.Enabled = false;
+            button_Next.Enabled = false;
+            button_Back.Enabled = false;
         }
 
         /// <summary>
@@ -158,6 +168,31 @@ namespace PhotoFrameApp
             button_StartSlideShow.Enabled = true;
             button_Pause_SlideShow.Enabled = false;
             button_StopSlideShow.Enabled = true;
+
+            radioButton_ListViewSlideShow.Enabled =true;
+            radioButton_AlbumSlideShow.Enabled = true;
+            comboBox_AlbumName.Enabled = true;
+            textBox_SaveAlbumName.Enabled = true;
+            button_SaveAlbumName.Enabled = true;
+            button_Next.Enabled = true;
+            button_Back.Enabled = true;
+
+            if (slideindex == 0)
+            {
+                button_Back.Enabled = false;
+                button_Next.Enabled = true;
+            }
+            else if(slideindex == this.slideshow_list.Count()-1)
+            {
+                button_Back.Enabled = true;
+                button_Next.Enabled = false;
+            }
+            else
+            {
+                button_Back.Enabled = true;
+                button_Next.Enabled = true;
+
+            }
         }
 
         /// <summary>
@@ -172,6 +207,15 @@ namespace PhotoFrameApp
             button_StartSlideShow.Enabled = true;
             button_Pause_SlideShow.Enabled = true;
             button_StopSlideShow.Enabled = false;
+
+            radioButton_ListViewSlideShow.Enabled = true;
+            radioButton_AlbumSlideShow.Enabled = true;
+            comboBox_AlbumName.Enabled = true;
+            textBox_SaveAlbumName.Enabled = true;
+            button_SaveAlbumName.Enabled = true;
+            button_Next.Enabled = true;
+            button_Back.Enabled = true;
+
         }
 
         /// <summary>
@@ -216,6 +260,20 @@ namespace PhotoFrameApp
             if (slideindex >= slideshow_list.Count())
             {
                 slideindex = 0;
+
+                timer_SlideShow.Stop();
+                button_StartSlideShow.Enabled = true;
+                button_Pause_SlideShow.Enabled = false;
+                button_StopSlideShow.Enabled = true;
+
+                radioButton_ListViewSlideShow.Enabled = true;
+                radioButton_AlbumSlideShow.Enabled = true;
+                comboBox_AlbumName.Enabled = true;
+                textBox_SaveAlbumName.Enabled = true;
+                button_SaveAlbumName.Enabled = true;
+                button_Next.Enabled = true;
+                button_Back.Enabled = true;
+
             }
 
             pictureBox_SlideShow.ImageLocation = this.slideshow_list.ElementAt(slideindex).File.FilePath;
