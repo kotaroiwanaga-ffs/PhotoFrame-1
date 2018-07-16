@@ -152,7 +152,7 @@
             this.button_StartSlideShow.Location = new System.Drawing.Point(728, 3);
             this.button_StartSlideShow.Margin = new System.Windows.Forms.Padding(17, 3, 3, 3);
             this.button_StartSlideShow.Name = "button_StartSlideShow";
-            this.button_StartSlideShow.Size = new System.Drawing.Size(109, 100);
+            this.button_StartSlideShow.Size = new System.Drawing.Size(109, 120);
             this.button_StartSlideShow.TabIndex = 5;
             this.button_StartSlideShow.Text = "▶";
             this.button_StartSlideShow.UseVisualStyleBackColor = true;
@@ -164,7 +164,7 @@
             this.button_Pause_SlideShow.Font = new System.Drawing.Font("MS UI Gothic", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.button_Pause_SlideShow.Location = new System.Drawing.Point(585, 3);
             this.button_Pause_SlideShow.Name = "button_Pause_SlideShow";
-            this.button_Pause_SlideShow.Size = new System.Drawing.Size(123, 100);
+            this.button_Pause_SlideShow.Size = new System.Drawing.Size(123, 120);
             this.button_Pause_SlideShow.TabIndex = 4;
             this.button_Pause_SlideShow.Text = "||";
             this.button_Pause_SlideShow.UseVisualStyleBackColor = true;
@@ -176,7 +176,7 @@
             this.button_StopSlideShow.Location = new System.Drawing.Point(456, 3);
             this.button_StopSlideShow.Margin = new System.Windows.Forms.Padding(3, 3, 17, 3);
             this.button_StopSlideShow.Name = "button_StopSlideShow";
-            this.button_StopSlideShow.Size = new System.Drawing.Size(109, 100);
+            this.button_StopSlideShow.Size = new System.Drawing.Size(109, 120);
             this.button_StopSlideShow.TabIndex = 3;
             this.button_StopSlideShow.UseVisualStyleBackColor = true;
             this.button_StopSlideShow.Click += new System.EventHandler(this.button_Stop_Click);
@@ -185,9 +185,9 @@
             // 
             this.button_Back.Dock = System.Windows.Forms.DockStyle.Fill;
             this.button_Back.Font = new System.Drawing.Font("MS UI Gothic", 50F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.button_Back.Location = new System.Drawing.Point(3, 204);
+            this.button_Back.Location = new System.Drawing.Point(3, 196);
             this.button_Back.Name = "button_Back";
-            this.button_Back.Size = new System.Drawing.Size(114, 127);
+            this.button_Back.Size = new System.Drawing.Size(114, 122);
             this.button_Back.TabIndex = 1;
             this.button_Back.Text = "◀";
             this.button_Back.UseVisualStyleBackColor = true;
@@ -200,7 +200,7 @@
             this.pictureBox_SlideShow.ImageLocation = "";
             this.pictureBox_SlideShow.Location = new System.Drawing.Point(133, 3);
             this.pictureBox_SlideShow.Name = "pictureBox_SlideShow";
-            this.pictureBox_SlideShow.Size = new System.Drawing.Size(1035, 563);
+            this.pictureBox_SlideShow.Size = new System.Drawing.Size(1035, 539);
             this.pictureBox_SlideShow.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox_SlideShow.TabIndex = 0;
             this.pictureBox_SlideShow.TabStop = false;
@@ -214,9 +214,9 @@
             // 
             this.button_Next.Dock = System.Windows.Forms.DockStyle.Fill;
             this.button_Next.Font = new System.Drawing.Font("MS UI Gothic", 50F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.button_Next.Location = new System.Drawing.Point(3, 211);
+            this.button_Next.Location = new System.Drawing.Point(3, 202);
             this.button_Next.Name = "button_Next";
-            this.button_Next.Size = new System.Drawing.Size(115, 121);
+            this.button_Next.Size = new System.Drawing.Size(115, 115);
             this.button_Next.TabIndex = 2;
             this.button_Next.Text = "▶";
             this.button_Next.UseVisualStyleBackColor = true;
@@ -342,8 +342,8 @@
             this.tableLayoutPanel3.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 2;
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 79.47659F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20.52342F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 76.1708F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 23.8292F));
             this.tableLayoutPanel3.Size = new System.Drawing.Size(1312, 726);
             this.tableLayoutPanel3.TabIndex = 1;
             // 
@@ -358,14 +358,14 @@
             this.tableLayoutPanel4.Controls.Add(this.tableLayoutPanel12, 0, 1);
             this.tableLayoutPanel4.Controls.Add(this.tabControl1, 0, 0);
             this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel4.Location = new System.Drawing.Point(5, 581);
+            this.tableLayoutPanel4.Location = new System.Drawing.Point(5, 557);
             this.tableLayoutPanel4.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
             this.tableLayoutPanel4.Name = "tableLayoutPanel4";
             this.tableLayoutPanel4.RowCount = 3;
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 80F));
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
-            this.tableLayoutPanel4.Size = new System.Drawing.Size(1302, 141);
+            this.tableLayoutPanel4.Size = new System.Drawing.Size(1302, 165);
             this.tableLayoutPanel4.TabIndex = 0;
             // 
             // tableLayoutPanel12
@@ -380,11 +380,11 @@
             this.tableLayoutPanel12.Controls.Add(this.button_StartSlideShow, 3, 0);
             this.tableLayoutPanel12.Controls.Add(this.button_StopSlideShow, 1, 0);
             this.tableLayoutPanel12.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel12.Location = new System.Drawing.Point(3, 17);
+            this.tableLayoutPanel12.Location = new System.Drawing.Point(3, 19);
             this.tableLayoutPanel12.Name = "tableLayoutPanel12";
             this.tableLayoutPanel12.RowCount = 1;
             this.tableLayoutPanel12.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel12.Size = new System.Drawing.Size(1296, 106);
+            this.tableLayoutPanel12.Size = new System.Drawing.Size(1296, 126);
             this.tableLayoutPanel12.TabIndex = 0;
             // 
             // tabControl1
@@ -394,7 +394,7 @@
             this.tabControl1.Location = new System.Drawing.Point(3, 3);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(8, 8);
+            this.tabControl1.Size = new System.Drawing.Size(8, 10);
             this.tabControl1.TabIndex = 1;
             // 
             // tabPage1
@@ -432,7 +432,7 @@
             this.tableLayoutPanel5.Name = "tableLayoutPanel5";
             this.tableLayoutPanel5.RowCount = 1;
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel5.Size = new System.Drawing.Size(1302, 569);
+            this.tableLayoutPanel5.Size = new System.Drawing.Size(1302, 545);
             this.tableLayoutPanel5.TabIndex = 1;
             // 
             // tableLayoutPanel10
@@ -448,7 +448,7 @@
             this.tableLayoutPanel10.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 35.84337F));
             this.tableLayoutPanel10.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 23.79518F));
             this.tableLayoutPanel10.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 40F));
-            this.tableLayoutPanel10.Size = new System.Drawing.Size(120, 561);
+            this.tableLayoutPanel10.Size = new System.Drawing.Size(120, 537);
             this.tableLayoutPanel10.TabIndex = 3;
             // 
             // tableLayoutPanel11
@@ -464,7 +464,7 @@
             this.tableLayoutPanel11.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 37.04819F));
             this.tableLayoutPanel11.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 22.59036F));
             this.tableLayoutPanel11.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 40F));
-            this.tableLayoutPanel11.Size = new System.Drawing.Size(121, 561);
+            this.tableLayoutPanel11.Size = new System.Drawing.Size(121, 537);
             this.tableLayoutPanel11.TabIndex = 4;
             // 
             // splitContainer1

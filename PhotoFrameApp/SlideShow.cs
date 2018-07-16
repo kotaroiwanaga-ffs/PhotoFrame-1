@@ -55,12 +55,6 @@ namespace PhotoFrameApp
 
         }
 
-        private void splitContainer1_SplitterMoved(object sender, SplitterEventArgs e)
-        {
-
-        }
-
-
         /// <summary>
         /// 「保存済みのアルバム」のラジオボタンが変化したら
         /// </summary>
@@ -71,13 +65,14 @@ namespace PhotoFrameApp
             this.slideindex = 0;
 
             if (radioButton_AlbumSlideShow.Checked == true)
-            {
+            {//「保存済みのアルバム」のラジオボタンのチェックが入ったとき
                 comboBox_AlbumName.Enabled = true;
+                radioButton_ListViewSlideShow.Checked = false;
             }
-            else
-            {
-                comboBox_AlbumName.Enabled = false;
-            }
+            //else
+            //{//「リストビューの」ラジオボタンのチェックが入ったとき
+            //        comboBox_AlbumName.Enabled = false;
+            //}
         }
 
 
@@ -89,16 +84,17 @@ namespace PhotoFrameApp
         private void radioButton_ListViewSlideShow_CheckedChanged(object sender, EventArgs e)
         {
             this.slideindex = 0;
-            if (radioButton_AlbumSlideShow.Checked == true)
-            {//「保存済みのアルバム」のラジオボタンのチェックが入っているとき
-                comboBox_AlbumName.Enabled = true;
-
-            }
-            else
-            {//「リストビューのラジオボタン」のチェックが入っているとき
+            if (radioButton_ListViewSlideShow.Checked == true)
+            {//「リストビューの」ラジオボタンのチェックが入ったとき
                 this.slideshow_list = this.photo_listview;
                 comboBox_AlbumName.Enabled = false;
+                radioButton_AlbumSlideShow.Checked = false;
             }
+            //else
+            //{//「保存済みのアルバム」のラジオボタンのチェックが入ったとき
+            //    comboBox_AlbumName.Enabled = true;
+            //    radioButton_AlbumSlideShow.Checked=
+            //}
         }
 
         /// <summary>
@@ -137,7 +133,6 @@ namespace PhotoFrameApp
             }
 
         }
-
 
         /// <summary>
         /// 再生ボタンが押されたとき
