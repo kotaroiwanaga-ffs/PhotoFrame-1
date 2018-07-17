@@ -10,26 +10,31 @@ namespace PhotoFrame.Domain.UseCase
 {
     public class SearchAlbum
     {
-        private readonly IPhotoRepository photoRepository;
+        private readonly RepositoryMaster repositoryMaster;
 
-        public SearchAlbum(IPhotoRepository photoRepository)
+        public SearchAlbum(RepositoryMaster repositoryMaster)
         {
-            this.photoRepository = photoRepository;
+            this.repositoryMaster = repositoryMaster;
         }
 
-        /// <summary>
-        /// 指定した名前のアルバムに属するフォトのリストを返す
-        /// </summary>
-        /// <param name="albumName"></param>
-        /// <returns></returns>
         public IEnumerable<Photo> Execute(string albumName)
         {
-            return photoRepository.Find(photos => (from p in photos where p.Album.Name == albumName select p).ToList().AsQueryable());
-        }
+            List<Photo> photos = new List<Photo>();
+            IEnumerable<string> pathlist = repositoryMaster.FindSlideShow(Album.Create(albumName));
 
-        public async Task<IEnumerable<Photo>> ExecuteAsync(string albumName)
-        {
-            return await Task.Run(() => photoRepository.Find(photos => (from p in photos where p.Album != null && p.Album.Name == albumName select p).ToList().AsQueryable()));
+            foreach(string path in pathlist)
+            {
+                Func<IQueryable<Photo>, Photo> query = ((allPhotos) =>
+                {
+                    return allPhotos
+                        .Where(p => p.File.FilePath == path)
+                        .FirstOrDefault();
+                });
+
+                photos.Add(repositoryMaster.FindPhoto(query));
+            }
+
+            return photos;
         }
     }
 }

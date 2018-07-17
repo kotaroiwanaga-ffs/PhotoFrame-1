@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using PhotoFrame.Persistence;
 
 namespace PhotoFrame.Application
 {
@@ -14,77 +15,148 @@ namespace PhotoFrame.Application
     // TODO: 仮実装
     public class PhotoFrameApplication
     {
-        private readonly CreateAlbum createAlbum;
+        private RepositoryMaster repositoryMaster;
+        private ServiceFactory ServiceFactory;
+        private IPhotoFileService photoFileService;
+
+        private readonly SearchFolder searchFolder;
+        private readonly Filter filter;
+        private readonly AddKeyword addKeyword;
+        private readonly DeleteKeyword deleteKeyword;
+        private readonly ToggleIsFavorite toggleIsFavorite;
+        private readonly AddAlbum addAlbum;
         private readonly SearchAlbum searchAlbum;
-        private readonly SearchDirectory searchDirectory;
-        private readonly ToggleFavorite toggleFavorite;
-        private readonly ChangeAlbum changeAlbum;
+        private readonly SortDateAscending sortDateAscending;
+        private readonly SortDateDescending sortDateDescending;
+        private readonly GetAllAlbums getAllAlbums;
 
-        public PhotoFrameApplication(IAlbumRepository albumRepository, IPhotoRepository photoRepository, IPhotoFileService photoFileService)
+
+        public PhotoFrameApplication()
         {
-            this.createAlbum = new CreateAlbum(albumRepository);
-            this.searchAlbum = new SearchAlbum(photoRepository);
-            this.searchDirectory = new SearchDirectory(photoRepository, photoFileService);
-            this.toggleFavorite = new ToggleFavorite(photoRepository);
-            this.changeAlbum = new ChangeAlbum(albumRepository, photoRepository);
+            this.ServiceFactory = new ServiceFactory();
+
+            this.repositoryMaster = new RepositoryMaster();
+            this.photoFileService = ServiceFactory.PhotoFileService;
+
+            this.searchFolder = new SearchFolder(repositoryMaster, photoFileService);
+            this.filter = new Filter(repositoryMaster);
+            this.addKeyword = new AddKeyword(repositoryMaster);
+            this.deleteKeyword = new DeleteKeyword(repositoryMaster);
+            this.toggleIsFavorite = new ToggleIsFavorite(repositoryMaster);
+            this.addAlbum = new AddAlbum(repositoryMaster);
+            this.searchAlbum = new SearchAlbum(repositoryMaster);
+            this.sortDateAscending = new SortDateAscending();
+            this.sortDateDescending = new SortDateDescending();
+            this.getAllAlbums = new GetAllAlbums(repositoryMaster);
+
         }
 
-        public int CreateAlbum(string albumName)
+        public IEnumerable<Photo> SearchFolder(string filePath)
         {
-            return createAlbum.Execute(albumName);
+            return this.searchFolder.Execute(filePath);
         }
 
-        public async Task<int> CreateAlbumAsync(string albumName)
+        public IEnumerable<Photo> Filter(string keyword , bool isFavorite, DateTime firstDate, DateTime lastDate)
         {
-            return await createAlbum.ExecuteAsync(albumName);
+            return this.filter.Execute(keyword, isFavorite, firstDate, lastDate);
         }
 
+        public bool AddKeyword(string keyword, IEnumerable<Photo> photos)
+        {
+            return this.addKeyword.Execute(keyword, photos);
+        }
 
+        public bool DeleteKeyword(string keyword, IEnumerable<Photo> photos)
+        {
+            return this.deleteKeyword.Execute(keyword, photos);
+        }
+
+        public IEnumerable<Photo> ToggleIsFavorite(IEnumerable<Photo> photos)
+        {
+            return this.toggleIsFavorite.Execute(photos);
+        }
+
+        public bool AddAlbum(string albumName, IEnumerable<Photo> photos)
+        {
+            return this.addAlbum.Execute(albumName, photos);
+        }
 
         public IEnumerable<Photo> SearchAlbum(string albumName)
         {
-            return searchAlbum.Execute(albumName);
+            return this.searchAlbum.Execute(albumName);
         }
 
-        public async Task<IEnumerable<Photo>> SearchAlbumAsync(string albumName)
+        public IEnumerable<Photo> SortDateAscending(IEnumerable<Photo> photos)
         {
-            return await searchAlbum.ExecuteAsync(albumName);
+            return this.sortDateAscending.Execute(photos);
         }
 
-
-
-        public IEnumerable<Photo> SearchDirectory(string directoryName)
+        public IEnumerable<Photo> SortDateDescending(IEnumerable<Photo> photos)
         {
-            return searchDirectory.Execute(directoryName);
+            return this.sortDateDescending.Execute(photos);
         }
 
-        public async Task<IEnumerable<Photo>> SearchDirectoryAsync(string directoryName)
+        public IEnumerable<Album> GetAllAlbums()
         {
-            return await searchDirectory.ExecuteAsync(directoryName);
+            return this.getAllAlbums.Execute();
         }
 
+        //public int CreateAlbum(string albumName)
+        //{
+        //    return createAlbum.Execute(albumName);
+        //}
 
-
-        public Photo ToggleFavorite(Photo photo)
-        {
-            return toggleFavorite.Execute(photo);
-        }
-
-        public async Task<Photo> ToggleFavoriteAsync(Photo photo)
-        {
-            return await toggleFavorite.ExecuteAsync(photo);
-        }
+        //public async Task<int> CreateAlbumAsync(string albumName)
+        //{
+        //    return await createAlbum.ExecuteAsync(albumName);
+        //}
 
 
 
-        public Photo ChangeAlbum(Photo photo, string newAlbumName)
-        {
-            return changeAlbum.Execute(photo, newAlbumName);
-        }
+        //public IEnumerable<Photo> SearchAlbum(string albumName)
+        //{
+        //    return searchAlbum.Execute(albumName);
+        //}
 
-        public async Task<Photo> ChangeAlbumAsync(Photo photo, string newAlbumName)
-        {
-            return await changeAlbum.ExecuteAsync(photo, newAlbumName);
-        }
+        //public async Task<IEnumerable<Photo>> SearchAlbumAsync(string albumName)
+        //{
+        //    return await searchAlbum.ExecuteAsync(albumName);
+        //}
+
+
+
+        //public IEnumerable<Photo> SearchDirectory(string directoryName)
+        //{
+        //    return searchDirectory.Execute(directoryName);
+        //}
+
+        //public async Task<IEnumerable<Photo>> SearchDirectoryAsync(string directoryName)
+        //{
+        //    return await searchDirectory.ExecuteAsync(directoryName);
+        //}
+
+
+
+        //public Photo ToggleFavorite(Photo photo)
+        //{
+        //    return toggleFavorite.Execute(photo);
+        //}
+
+        //public async Task<Photo> ToggleFavoriteAsync(Photo photo)
+        //{
+        //    return await toggleFavorite.ExecuteAsync(photo);
+        //}
+
+
+
+        //public Photo ChangeAlbum(Photo photo, string newAlbumName)
+        //{
+        //    return changeAlbum.Execute(photo, newAlbumName);
+        //}
+
+        //public async Task<Photo> ChangeAlbumAsync(Photo photo, string newAlbumName)
+        //{
+        //    return await changeAlbum.ExecuteAsync(photo, newAlbumName);
+        //}
     }
 }
