@@ -38,8 +38,7 @@ namespace PhotoFrameApp
         Photo a;
         Photo b;
         Photo c;
-        Photo d;
-        Photo e;
+
 
 
         /// <summary>
