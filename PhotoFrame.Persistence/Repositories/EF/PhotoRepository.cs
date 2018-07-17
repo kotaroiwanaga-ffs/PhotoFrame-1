@@ -163,12 +163,15 @@ namespace PhotoFrame.Persistence.EF
 
         public bool Exists(Photo photo)
         {
-            foreach (var pho in Find())
+            if (photo.File.FilePath != null && photo.File.FilePath != "")
             {
-                if (pho.File.FilePath == photo.File.FilePath) return true;
-            }
-
-            return false;
+                foreach (var pho in Find())
+                {
+                    if (pho.File.FilePath == photo.File.FilePath) return true;
+                }
+                return false;
+            }      
+            else return false;
         }
 
         public bool ExistsBy(string id)

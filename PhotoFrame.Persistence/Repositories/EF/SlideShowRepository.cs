@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using PhotoFrame.Persistence.Repositories.EF;
 
 namespace PhotoFrame.Persistence.Repositories.EF
 {
@@ -14,15 +13,16 @@ namespace PhotoFrame.Persistence.Repositories.EF
         {
             using (TeamBEntities database = new TeamBEntities())
             {
+                List<string> photos = new List<string>();
+
                 var phototable = database.ALBUM_TABLE.Find(album.Name).PHOTO_TABLE;
 
-                List<string> photos = new List<string>();
-                foreach(var photo in phototable)
+                foreach (var photo in phototable)
                 {
                     photos.Add(photo.FILEPATH);
                 }
                 return photos;
-            }          
+            }    
         }
 
         public void Store(Album album, Photo photo)
@@ -42,9 +42,9 @@ namespace PhotoFrame.Persistence.Repositories.EF
                 catch
                 {
                     transaction.Rollback();
+                    throw new Exception();
                 }
             }
-
         }
     }
 }

@@ -29,26 +29,27 @@ namespace PhotoFrame.Persistence.EF
 
         public Album Store(Album album)
         {
-            using (TeamBEntities database = new TeamBEntities())
-            using (var transaction = database.Database.BeginTransaction())
+            if (!Exists(album))
             {
-                try
+                using (TeamBEntities database = new TeamBEntities())
+                using (var transaction = database.Database.BeginTransaction())
                 {
-                    var saveAlbum = new ALBUM_TABLE
+                    try
                     {
-                        NAME = album.Name
-                    };
+                        var saveAlbum = new ALBUM_TABLE
+                        {
+                            NAME = album.Name
+                        };
 
-                    if (!Exists(album))
-                    {
                         database.ALBUM_TABLE.Add(saveAlbum);
+
+                        transaction.Commit();
+                        database.SaveChanges();
                     }
-                    transaction.Commit();
-                    database.SaveChanges();
-                }
-                catch
-                {
-                    transaction.Rollback();
+                    catch
+                    {
+                        transaction.Rollback();
+                    }
                 }
             }
             return album;
@@ -58,11 +59,15 @@ namespace PhotoFrame.Persistence.EF
         {
             using (TeamBEntities database = new TeamBEntities())
             {
-                foreach(var data in database.ALBUM_TABLE)
+                if (album.Name != null && album.Name != "")
                 {
-                    if (data.NAME == album.Name) return true;
+                    foreach (var data in database.ALBUM_TABLE)
+                    {
+                        if (data.NAME == album.Name) return true;
+                    }
+                    return false;
                 }
-                return false;
+                else return false;
             }
         }
 
