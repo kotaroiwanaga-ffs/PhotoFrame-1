@@ -31,20 +31,20 @@ namespace PhotoFrame.Application.Tests
         [TestMethod()]
         public void SearchFolderTest()
         {
-            List<Photo> photolist01 = new List<Photo>();
-            List<Photo> photolist02 = new List<Photo>();
+            //List<Photo> photolist01 = new List<Photo>();
+            //List<Photo> photolist02 = new List<Photo>();
 
             //空文字を入力
-            Assert.AreEqual("", application.SearchFolder("").ElementAt(0));
+            Assert.IsTrue( application.SearchFolder("").Count()==0);
 
             //写真が存在するとき
-            Assert.AreEqual(3, application.SearchFolder(@"C:\研修用\Album1").Count());
+            Assert.IsTrue(application.SearchFolder(@"C:\研修用\Album1").Count() == 3);
 
             //写真が存在しないとき
-            Assert.AreEqual("", application.SearchFolder(@"C:\研修用\Album2").ElementAt(0));
+            Assert.IsTrue(application.SearchFolder(@"C:\研修用\Album2").Count() == 0);
 
             //保存済みのファイルを含むフォルダ
-            
+            Assert.IsTrue(application.SearchFolder(@"C:\研修用\Album2").Count() == 3);
 
         }
 
@@ -106,7 +106,9 @@ namespace PhotoFrame.Application.Tests
         [TestMethod()]
         public void GetAllAlbumsTest()
         {
-            Assert.Fail();
+            var albumlist = application.GetAllAlbums();
+
+            if(albumlist.Count
         }
     }
 }

@@ -12,10 +12,35 @@ namespace PhotoFrame.Persistence.EF
     /// </summary>
     class PhotoRepository : IPhotoRepository
     {
+        private List<Photo> dbPhotos;
+
+
+        public PhotoRepository()
+        {
+            this.dbPhotos = new List<Photo>();
+            string[] array1 = new string[] { "a", "b", "c" };
+            dbPhotos.Add(new Photo(new File(@"C:\研修用\Album1\Chrysanthemum.jpg"), new DateTime(), array1.ToList<string>(), true));
+            dbPhotos.Add(new Photo(new File(@"C:\研修用\Album1\Desert.jpg"), new DateTime(), array1.ToList<string>(), true));
+            dbPhotos.Add(new Photo(new File(@"C:\研修用\Album1\Hydrangeas.jpg"), new DateTime(), array1.ToList<string>(), false));
+
+
+
+        }
+
         public bool Exists(Photo entity)
         {
-            // TODO: DBプログラミング講座で実装
-            throw new NotImplementedException();
+            List<Photo> list = (from p in this.dbPhotos where entity.File.FilePath == p.File.FilePath select p).ToList();
+
+            if (list.Count() == 0)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+
+
         }
 
         public bool ExistsBy(string id)
@@ -26,14 +51,14 @@ namespace PhotoFrame.Persistence.EF
 
         public IEnumerable<Photo> Find(Func<IQueryable<Photo>, IQueryable<Photo>> query)
         {
-            // TODO: DBプログラミング講座で実装
-            throw new NotImplementedException();
+            return query(this.dbPhotos.AsQueryable()).AsEnumerable();
+
         }
 
         public Photo Find(Func<IQueryable<Photo>, Photo> query)
         {
-            // TODO: DBプログラミング講座で実装
-            throw new NotImplementedException();
+            return query(this.dbPhotos.AsQueryable());
+
         }
 
         public Photo FindBy(string id)
@@ -44,8 +69,7 @@ namespace PhotoFrame.Persistence.EF
 
         public Photo Store(Photo entity)
         {
-            // TODO: DBプログラミング講座で実装
-            throw new NotImplementedException();
+            return entity;
         }
 
         public void StoreIfNotExists(IEnumerable<Photo> photos)
