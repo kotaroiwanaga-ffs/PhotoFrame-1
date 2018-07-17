@@ -316,7 +316,7 @@ namespace PhotoFrameApp
             searchedPhotos = application.SearchFolder(filepath);
             if (searchedPhotos.Count() == 0)
             {
-                MessageBox.Show("指定したフォルダには画像がありませんでした。");
+                MessageBox.Show("指定したフォルダには画像がありませんでした。またはアクセス権がありませんでした。");
             }
             else
             {
@@ -334,7 +334,7 @@ namespace PhotoFrameApp
             //リストビューの行が何行選択されているかで場合分け
             if (photoListView.SelectedItems.Count == 0)
             {
-
+                //０枚のときは処理なし
             }
             else if (photoListView.SelectedItems.Count == 1)
             {
@@ -396,41 +396,55 @@ namespace PhotoFrameApp
             string filterKeyword;
             DateTime filterDateS;
             DateTime filterDateE;
-
-            //キーワードが選択されているか
-            if (selectKeyword_F.SelectedItem == null)
+            //画像があるかどうか
+            if (searchedPhotos.Count() == 0)
             {
-                filterKeyword = null;
-            }
-            else
-            {
-                filterKeyword = selectKeyword_F.SelectedItem.ToString();
-            }
-
-            //日付指定をフィルタに使うかどうか
-            if (dateCheckBox.Checked == true)
-            {
-                //日付指定が正しく行われているか
-                int result = dateEnd.Value.Date.CompareTo(dateStart.Value.Date);
-                if (result == 1)
+                //キーワードが選択されているか
+                if (selectKeyword_F.SelectedItem == null)
                 {
-                    filterDateS = dateStart.Value.Date;
-                    filterDateE = dateEnd.Value.Date;
-                    searchedPhotos = application.Filter(filterKeyword, isFavorite_F_now, filterDateS, filterDateE);
-                    renewPhotoListView();
+                    filterKeyword = null;
                 }
                 else
                 {
-                    //日付間違ってるって教える
-                    MessageBox.Show("日付の設定が間違っています。左のボックスに古い日付を指定してください。");
+                    filterKeyword = selectKeyword_F.SelectedItem.ToString();
+                }
+
+                //日付指定をフィルタに使うかどうか
+                if (dateCheckBox.Checked == true)
+                {
+                    int result = dateEnd.Value.Date.CompareTo(dateStart.Value.Date);
+                    //日付指定が正しく行われているか
+                    if (result == 1)
+                    {
+                        filterDateS = dateStart.Value.Date;
+                        filterDateE = dateEnd.Value.Date;
+                        searchedPhotos = application.Filter(filterKeyword, isFavorite_F_now, filterDateS, filterDateE);
+                        renewPhotoListView();
+                    }
+                    else
+                    {
+                        MessageBox.Show("日付の設定が間違っています。左のボックスに古い日付を指定してください。");
+                    }
+                }
+                else
+                {
+                    filterDateS = new DateTime();
+                    filterDateE = new DateTime();
+                    //フィルタ条件がすべてない場合、今までのフィルタを解除
+                    if (isFavorite_F_now == false && filterKeyword == null)
+                    {
+                        searchedPhotos = application.SearchFolder(filepath);
+                    }
+                    else
+                    {
+                        searchedPhotos = application.Filter(filterKeyword, isFavorite_F_now, filterDateS, filterDateE);
+                    }
+                    renewPhotoListView();
                 }
             }
             else
             {
-                filterDateS = new DateTime();
-                filterDateE = new DateTime();
-                searchedPhotos = application.Filter(filterKeyword, isFavorite_F_now, filterDateS, filterDateE);
-                renewPhotoListView();
+                MessageBox.Show("フィルタする対象画像がありません。");
             }
         }
 
@@ -441,9 +455,10 @@ namespace PhotoFrameApp
         /// <param name="e"></param>
         private void photoListView_ColumnClick(object sender, ColumnClickEventArgs e)
         {
-            //撮影日時を押したときだけ
+            //撮影日時の文字を押したときだけ
             if (e.Column == 2)
             {
+                //昇順降順を切り替え
                 if (sortUpDown == true)
                 {
                     sortUpDown = false;
