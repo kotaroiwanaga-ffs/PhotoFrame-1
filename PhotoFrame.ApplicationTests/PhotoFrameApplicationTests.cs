@@ -31,7 +31,12 @@ namespace PhotoFrame.Application.Tests
         [TestMethod()]
         public void SearchFolderTest()
         {
-            photos = application.SearchFolder("Album2");
+            Assert.AreEqual("", application.SearchFolder(""));
+            Assert.
+
+            //Assert.AreEqual(photos)
+            Assert.AreEqual(photos.ElementAt(2).File.FilePath, @"Album2\Tulips.jpg");
+
 
             Assert.IsTrue(photos.Count() == 3);
             Assert.AreEqual(photos.ElementAt(2).File.FilePath, @"Album2\Tulips.jpg");
