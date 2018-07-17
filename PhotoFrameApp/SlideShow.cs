@@ -19,10 +19,10 @@ namespace PhotoFrameApp
         private IEnumerable<PhotoFrame.Domain.Model.Photo> slideshow_list;//スライドショーを行う写真リスト
 
         private IEnumerable<Album> albumlist;
-        private PhotoFrameApplication application;
+        private PhotoFrameApplicationTest application;
         private int slideindex;
 
-        public SlideShow(IEnumerable<PhotoFrame.Domain.Model.Photo> photolist, PhotoFrameApplication application )
+        public SlideShow(IEnumerable<PhotoFrame.Domain.Model.Photo> photolist, PhotoFrameApplicationTest application )
         {
             InitializeComponent();
 
@@ -38,17 +38,6 @@ namespace PhotoFrameApp
 
             button_Back.Enabled = false;
 
-            //アルバムリストの一時的な初期値の設定
-            Album album1 = new Album("abc", "test1", "test説明");
-            Album album2 = new Album("def", "test2", "test1説明");
-            Album album3 = new Album("ghi", "test3", "test2説明");
-
-            List<Album> list = new List<Album>();
-            list.Add(album1);
-            list.Add(album2);
-            list.Add(album3);
-
-            this.albumlist = list;
 
             foreach (var albums in this.albumlist)
             {
@@ -58,7 +47,7 @@ namespace PhotoFrameApp
         }
 
         /// <summary>
-        /// 「保存済みのアルバム」のラジオボタンが変化したら
+        /// 「保存済みのアルバム」のラジオボタンが変化したら//
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -71,10 +60,6 @@ namespace PhotoFrameApp
                 comboBox_AlbumName.Enabled = true;
                 radioButton_ListViewSlideShow.Checked = false;
             }
-            //else
-            //{//「リストビューの」ラジオボタンのチェックが入ったとき
-            //        comboBox_AlbumName.Enabled = false;
-            //}
         }
 
 
@@ -101,7 +86,6 @@ namespace PhotoFrameApp
         /// <param name="e"></param>
         private void comboBox_AlbumName_SelectedIndexChanged(object sender, EventArgs e)
         {
-            ///lリストを初期化する必要はある？？　
             this.slideshow_list = application.SearchAlbum(comboBox_AlbumName.Text);
         }
 
@@ -120,7 +104,7 @@ namespace PhotoFrameApp
             if (saveSuccess ==true)
             {
                 MessageBox.Show($"{savaName}というアルバム名で保存しました。");
-                comboBox_AlbumName.Items.Add(savaName);
+                comboBox_AlbumName.Items.Insert(0, savaName);
 
             }
             else
@@ -290,16 +274,21 @@ namespace PhotoFrameApp
         /// <param name="e"></param>
         private void timer_SlideShow_Tick(object sender, EventArgs e)
         {
-            slideindex++;
+            if (slideindex < slideshow_list.Count() - 1)
+            {
+                slideindex++;
+                pictureBox_SlideShow.ImageLocation = this.slideshow_list.ElementAt(slideindex).File.FilePath;
+            }
 
-            if (slideindex >= slideshow_list.Count())
+
+            if (slideindex == slideshow_list.Count()-1)
             {
                 slideindex = 0;
 
                 timer_SlideShow.Stop();
                 button_StartSlideShow.Enabled = true;
                 button_Pause_SlideShow.Enabled = false;
-                button_StopSlideShow.Enabled = true;
+                button_StopSlideShow.Enabled = false;
 
                 radioButton_ListViewSlideShow.Enabled = true;
                 radioButton_AlbumSlideShow.Enabled = true;
@@ -311,11 +300,6 @@ namespace PhotoFrameApp
 
             }
 
-            pictureBox_SlideShow.ImageLocation = this.slideshow_list.ElementAt(slideindex).File.FilePath;
-
-
         }
-
-       
     }
 }

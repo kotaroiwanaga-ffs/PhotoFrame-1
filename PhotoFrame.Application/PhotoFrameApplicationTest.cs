@@ -126,12 +126,25 @@ namespace PhotoFrame.Application
 
         public bool AddAlbum(string albumName, IEnumerable<Photo> photos)
         {
-            return this.addAlbum.Execute(albumName, photos);
+            return true;
         }
 
         public IEnumerable<Photo> SearchAlbum(string albumName)
         {
-            return this.searchAlbum.Execute(albumName);
+            Photo a;
+            Photo b;
+            Photo c;
+            List<string> aaaa = new List<string>();
+            string[] aaa = { "a", "b", "aaaa" };
+            string[] bbb = { "test", "takemoto" };
+            DateTime date_E = DateTime.Now;
+
+            a = new Photo(new PhotoFrame.Domain.Model.File(@"C:\研修用\Album1\Chrysanthemum.jpg"), new DateTime(), aaa, true);
+            b = new Photo(new PhotoFrame.Domain.Model.File(@"C:\研修用\Album1\Desert.jpg"), date_E, aaaa, false);
+            c = new Photo(new PhotoFrame.Domain.Model.File(@"C:\研修用\Album1\Hydrangeas.jpg"), date_E, bbb.ToList(), false);
+            Photo[] photosa = { a, b, c };
+            return photosa.AsEnumerable<Photo>();
+
         }
 
         public IEnumerable<Photo> SortDateAscending(IEnumerable<Photo> photos)
@@ -146,7 +159,16 @@ namespace PhotoFrame.Application
 
         public IEnumerable<Album> GetAllAlbums()
         {
-            return this.getAllAlbums.Execute();
+            Album album1 = new Album("abc", "test1", "test説明");
+            Album album2 = new Album("def", "test2", "test1説明");
+            Album album3 = new Album("ghi", "test3", "test2説明");
+
+            List<Album> list = new List<Album>();
+            list.Add(album1);
+            list.Add(album2);
+            list.Add(album3);
+
+            return list;
         }
 
         //public int CreateAlbum(string albumName)
