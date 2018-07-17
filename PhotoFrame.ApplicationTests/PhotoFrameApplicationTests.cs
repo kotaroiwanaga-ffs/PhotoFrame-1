@@ -31,16 +31,21 @@ namespace PhotoFrame.Application.Tests
         [TestMethod()]
         public void SearchFolderTest()
         {
-            Assert.AreEqual("", application.SearchFolder(""));
-            //Assert.
+            List<Photo> photolist01 = new List<Photo>();
+            List<Photo> photolist02 = new List<Photo>();
 
-            //Assert.AreEqual(photos)
-            //Assert.AreEqual(photos.ElementAt(2).File.FilePath, @"Album2\Tulips.jpg");
+            //空文字を入力
+            Assert.AreEqual("", application.SearchFolder("").ElementAt(0));
 
+            //写真が存在するとき
+            Assert.AreEqual(3, application.SearchFolder(@"C:\研修用\Album1").Count());
 
-            //Assert.IsTrue(photos.Count() == 3);
-            //Assert.AreEqual(photos.ElementAt(2).File.FilePath, @"Album2\Tulips.jpg");
-            //Assert.AreEqual(photos.ElementAt(2).Date, new DateTime());
+            //写真が存在しないとき
+            Assert.AreEqual("", application.SearchFolder(@"C:\研修用\Album2").ElementAt(0));
+
+            //保存済みのファイルを含むフォルダ
+            
+
         }
 
         [TestMethod()]

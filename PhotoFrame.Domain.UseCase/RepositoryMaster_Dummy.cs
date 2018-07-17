@@ -26,7 +26,7 @@ namespace PhotoFrame.Domain.UseCase
 
 
             string[] array1 = new string []{"a", "b", "c" };
-            dbPhotos.Add(new Photo( new File(@"C:\研修用\Album1\Chrysanthemum.jpg"), new DateTime(), array1.ToList<string>(),true ));
+            dbPhotos.Add(new Photo(new File(@"C:\研修用\Album1\Chrysanthemum.jpg"), new DateTime(), array1.ToList<string>(),true ));
             dbPhotos.Add(new Photo(new File(@"C:\研修用\Album1\Desert.jpg"), new DateTime(), array1.ToList<string>(), true));
             dbPhotos.Add(new Photo(new File(@"C:\研修用\Album1\Hydrangeas.jpg"), new DateTime(), array1.ToList<string>(), false));
 
