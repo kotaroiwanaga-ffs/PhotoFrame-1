@@ -60,9 +60,27 @@ namespace PhotoFrameApp
             pullDownKeyword = new List<string>();
 
             selectNumber = -1;
-            Photo selectedPhoto = null;
+         
             sortUpDown = false;
             inputKeyword = null;
+
+
+            //テスト用
+            List<string> aaaa = new List<string>();
+
+            var file1 = new PhotoFrame.Domain.Model.File(@"C:\研修用\Album1\Chrysanthemum.jpg");
+
+            string[] aaa = { "a", "b", "aaaa" };
+            string[] bbb = { "test", "takemoto" };
+            a = new Photo(new PhotoFrame.Domain.Model.File(@"C:\GW写真\キャプチャ.PNG"), new DateTime(), aaa.ToList<string>());
+            b = new Photo(new PhotoFrame.Domain.Model.File(@"C:\GW写真\キャプチャ1.PNG"), new DateTime(), aaaa);
+            c = new Photo(new PhotoFrame.Domain.Model.File(@"C:\GW写真\キャプチャ2.PNG"), new DateTime(), bbb.ToList());
+            d = new Photo(new PhotoFrame.Domain.Model.File(@"C:\GW写真\キャプチャ3.PNG"), new DateTime(), aaaa);
+            e = new Photo(new PhotoFrame.Domain.Model.File(@"C:\GW写真\キャプチャ4.PNG"), new DateTime(), bbb.ToList());
+
+
+            Photo[] photos = { a, b, c, d, e };
+            searchedPhotos = photos.AsEnumerable<Photo>();
 
         }
 
@@ -73,6 +91,7 @@ namespace PhotoFrameApp
         {
             photoListView.Items.Clear();
             DateTime nullDate = new DateTime();
+
             if (this.searchedPhotos != null)
             {
                 foreach (Photo photo in searchedPhotos)
