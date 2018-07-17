@@ -81,58 +81,41 @@ namespace PhotoFrame.Application
             a = new Photo(new PhotoFrame.Domain.Model.File(@"C:\研修用\Album1\Chrysanthemum.jpg"), new DateTime(), aaa, true);
             b = new Photo(new PhotoFrame.Domain.Model.File(@"C:\研修用\Album1\Desert.jpg"), date_E, aaaa, false);
             c = new Photo(new PhotoFrame.Domain.Model.File(@"C:\研修用\Album1\Hydrangeas.jpg"), date_E, bbb.ToList(), false);
-            Photo[] photos = { a, b};
-            return photos.AsEnumerable<Photo>();
+            Photo[] photosaa = { a, b};
+            return photosaa.AsEnumerable<Photo>();
         }
 
         public bool AddKeyword(string keyword, IEnumerable<Photo> photos)
         {
-            Photo a;
-            Photo b;
-            Photo c;
-            List<string> aaaa = new List<string>();
-            string[] aaa = { "a", "b", "aaaa" };
-            string[] bbb = { "test", "takemoto","new!" };
-            DateTime date_E = DateTime.Now;
-
-            a = new Photo(new PhotoFrame.Domain.Model.File(@"C:\研修用\Album1\Chrysanthemum.jpg"), new DateTime(), aaa, true);
-            b = new Photo(new PhotoFrame.Domain.Model.File(@"C:\研修用\Album1\Desert.jpg"), date_E, aaaa, false);
-            c = new Photo(new PhotoFrame.Domain.Model.File(@"C:\研修用\Album1\Hydrangeas.jpg"), date_E, bbb.ToList(), false);
-            Photo[] photosa = { a, b, c };
+            foreach(Photo photo in photos)
+            {
+                photo.AddKeyword(keyword);
+            }
             return true;
         }
 
         public bool DeleteKeyword(string keyword, IEnumerable<Photo> photos)
         {
-            Photo a;
-            Photo b;
-            Photo c;
-            List<string> aaaa = new List<string>();
-            string[] aaa = { "a", "b", "aaaa" };
-            string[] bbb = { "test", };
-            DateTime date_E = DateTime.Now;
-
-            a = new Photo(new PhotoFrame.Domain.Model.File(@"C:\研修用\Album1\Chrysanthemum.jpg"), new DateTime(), aaa, true);
-            b = new Photo(new PhotoFrame.Domain.Model.File(@"C:\研修用\Album1\Desert.jpg"), date_E, aaaa, false);
-            c = new Photo(new PhotoFrame.Domain.Model.File(@"C:\研修用\Album1\Hydrangeas.jpg"), date_E, bbb.ToList(), false);
-            Photo[] photosa = { a, b, c };
+            foreach (Photo photo in photos)
+            {
+                photo.DeleteKeyword(keyword);
+            }
             return true;
         }
 
         public IEnumerable<Photo> ToggleIsFavorite(IEnumerable<Photo> photos)
         {
-            Photo a;
-            Photo b;
-            Photo c;
-            List<string> aaaa = new List<string>();
-            string[] aaa = { "a", "b", "aaaa" };
-            string[] bbb = { "test", };
-            DateTime date_E = DateTime.Now;
-
-            a = new Photo(new PhotoFrame.Domain.Model.File(@"C:\研修用\Album1\Chrysanthemum.jpg"), new DateTime(), aaa, true);
-            b = new Photo(new PhotoFrame.Domain.Model.File(@"C:\研修用\Album1\Desert.jpg"), date_E, aaaa, false);
-            c = new Photo(new PhotoFrame.Domain.Model.File(@"C:\研修用\Album1\Hydrangeas.jpg"), date_E, bbb.ToList(), true);
-            Photo[] photosa = { a, b, c };
+            foreach (Photo photo in photos)
+            {
+                if(photo.IsFavorite)
+                {
+                    photo.MarkAsUnFavorite();
+                }
+                else
+                {
+                    photo.MarkAsFavorite();
+                }
+            }
             return photos.AsEnumerable<Photo>();
         }
 
@@ -148,36 +131,12 @@ namespace PhotoFrame.Application
 
         public IEnumerable<Photo> SortDateAscending(IEnumerable<Photo> photos)
         {
-            Photo a;
-            Photo b;
-            Photo c;
-            List<string> aaaa = new List<string>();
-            string[] aaa = { "a", "b", "aaaa" };
-            string[] bbb = { "test", "takemoto" };
-            DateTime date_E = DateTime.Now;
-
-            a = new Photo(new PhotoFrame.Domain.Model.File(@"C:\研修用\Album1\Chrysanthemum.jpg"), new DateTime(), aaa, true);
-            b = new Photo(new PhotoFrame.Domain.Model.File(@"C:\研修用\Album1\Desert.jpg"), date_E, aaaa, false);
-            c = new Photo(new PhotoFrame.Domain.Model.File(@"C:\研修用\Album1\Hydrangeas.jpg"), date_E, bbb.ToList(), false);
-            Photo[] photosa = {b, c ,a };
-            return photosa.AsEnumerable<Photo>();
+            return photos.OrderBy(p => p.Date);
         }
 
         public IEnumerable<Photo> SortDateDescending(IEnumerable<Photo> photos)
         {
-            Photo a;
-            Photo b;
-            Photo c;
-            List<string> aaaa = new List<string>();
-            string[] aaa = { "a", "b", "aaaa" };
-            string[] bbb = { "test", "takemoto" };
-            DateTime date_E = DateTime.Now;
-
-            a = new Photo(new PhotoFrame.Domain.Model.File(@"C:\研修用\Album1\Chrysanthemum.jpg"), new DateTime(), aaa, true);
-            b = new Photo(new PhotoFrame.Domain.Model.File(@"C:\研修用\Album1\Desert.jpg"), date_E, aaaa, false);
-            c = new Photo(new PhotoFrame.Domain.Model.File(@"C:\研修用\Album1\Hydrangeas.jpg"), date_E, bbb.ToList(), false);
-            Photo[] photosa = { a,b,c };
-            return photosa.AsEnumerable<Photo>();
+            return photos.OrderByDescending(p => p.Date);
         }
 
         public IEnumerable<Album> GetAllAlbums()

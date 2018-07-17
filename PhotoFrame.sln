@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 15.0.27703.2000
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{6767C90D-A58B-4381-8EF9-82B727FC4D62}"
+	ProjectSection(SolutionItems) = preProject
+		PhotoFrame.Application\PhotoFrameApplicationTest.cs = PhotoFrame.Application\PhotoFrameApplicationTest.cs
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{F6F3D735-D590-4199-A782-A80C75E1BDFA}"
 EndProject
