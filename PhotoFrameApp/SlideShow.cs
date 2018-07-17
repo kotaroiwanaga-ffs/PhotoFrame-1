@@ -47,7 +47,7 @@ namespace PhotoFrameApp
         }
 
         /// <summary>
-        /// 「保存済みのアルバム」のラジオボタンが変化したら
+        /// 「保存済みのアルバム」のラジオボタンが変化したら//
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
