@@ -79,11 +79,11 @@ namespace PhotoFrameApp
 
             string[] aaa = { "a", "b", "aaaa" };
             string[] bbb = { "test", "takemoto" };
-            a = new Photo(new PhotoFrame.Domain.Model.File(@"C:\Users\naoki\Pictures\壁紙\1024x768x6e6deda322edccc18d84a21.jpg"), new DateTime(), aaa.ToList<string>());
-            b = new Photo(new PhotoFrame.Domain.Model.File(@"C:\Users\naoki\Pictures\壁紙\1024x768x9371882dcce45ee625a0ce0.jpg"), new DateTime(), aaaa);
-            c = new Photo(new PhotoFrame.Domain.Model.File(@"C:\Users\naoki\Pictures\壁紙\1280x1024xf793737a4ac66fc9a8cc8d.jpg"), new DateTime(), bbb.ToList());
-            d = new Photo(new PhotoFrame.Domain.Model.File(@"C:\Users\naoki\Pictures\壁紙\1400x1050xf0db7de545958867bcb564.jpg"), new DateTime(), aaaa);
-            e = new Photo(new PhotoFrame.Domain.Model.File(@"C:\Users\naoki\Pictures\壁紙\1600x1200xd64ecfb90eb890faf58700.jpg"), new DateTime(), bbb.ToList());
+            a = new Photo(new PhotoFrame.Domain.Model.File(@"C:\GW写真\キャプチャ.PNG"), new DateTime(), aaa.ToList<string>());
+            b = new Photo(new PhotoFrame.Domain.Model.File(@"C:\GW写真\キャプチャ1.PNG"), new DateTime(), aaaa);
+            c = new Photo(new PhotoFrame.Domain.Model.File(@"C:\GW写真\キャプチャ2.PNG"), new DateTime(), bbb.ToList());
+            d = new Photo(new PhotoFrame.Domain.Model.File(@"C:\GW写真\キャプチャ3.PNG"), new DateTime(), aaaa);
+            e = new Photo(new PhotoFrame.Domain.Model.File(@"C:\GW写真\キャプチャ4.PNG"), new DateTime(), bbb.ToList());
 
 
             Photo[] photos = { a, b, c, d, e };

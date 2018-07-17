@@ -92,11 +92,6 @@ namespace PhotoFrameApp
                 comboBox_AlbumName.Enabled = false;
                 radioButton_AlbumSlideShow.Checked = false;
             }
-            //else
-            //{//「保存済みのアルバム」のラジオボタンのチェックが入ったとき
-            //    comboBox_AlbumName.Enabled = true;
-            //    radioButton_AlbumSlideShow.Checked=
-            //}
         }
 
         /// <summary>
@@ -216,6 +211,12 @@ namespace PhotoFrameApp
             button_Next.Enabled = true;
             button_Back.Enabled = true;
 
+            button_Back.Enabled = false;
+            button_Next.Enabled = true;
+
+            pictureBox_SlideShow.ImageLocation = this.slideshow_list.ElementAt(slideindex).File.FilePath;
+
+
         }
 
         /// <summary>
@@ -232,6 +233,23 @@ namespace PhotoFrameApp
                 pictureBox_SlideShow.ImageLocation = this.slideshow_list.ElementAt(slideindex).File.FilePath;
 
             }
+
+            if (slideindex == 0)
+            {
+                button_Back.Enabled = false;
+                button_Next.Enabled = true;
+            }
+            else if (slideindex == this.slideshow_list.Count() - 1)
+            {
+                button_Back.Enabled = true;
+                button_Next.Enabled = false;
+            }
+            else
+            {
+                button_Back.Enabled = true;
+                button_Next.Enabled = true;
+
+            }
         }
 
         /// <summary>
@@ -245,6 +263,23 @@ namespace PhotoFrameApp
             {
                 slideindex++;
                 pictureBox_SlideShow.ImageLocation = this.slideshow_list.ElementAt(slideindex).File.FilePath;
+            }
+
+            if (slideindex == 0)
+            {
+                button_Back.Enabled = false;
+                button_Next.Enabled = true;
+            }
+            else if (slideindex == this.slideshow_list.Count() - 1)
+            {
+                button_Back.Enabled = true;
+                button_Next.Enabled = false;
+            }
+            else
+            {
+                button_Back.Enabled = true;
+                button_Next.Enabled = true;
+
             }
         }
 
