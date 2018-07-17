@@ -30,7 +30,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhotoFrame.PersistenceTests
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhotoFrameApp", "PhotoFrameApp\PhotoFrameApp.csproj", "{32E837CF-0149-4010-8E3E-7B19F1BD69E1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhotoFrame.ApplicationTests", "PhotoFrame.ApplicationTests\PhotoFrame.ApplicationTests.csproj", "{3B9030D6-26C9-4969-932D-217EDC8E8598}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhotoFrame.ApplicationTests1", "PhotoFrame.ApplicationTests1\PhotoFrame.ApplicationTests1.csproj", "{87F15411-D539-42F7-AE2D-A74C9BFFC191}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -70,10 +70,10 @@ Global
 		{32E837CF-0149-4010-8E3E-7B19F1BD69E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{32E837CF-0149-4010-8E3E-7B19F1BD69E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{32E837CF-0149-4010-8E3E-7B19F1BD69E1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3B9030D6-26C9-4969-932D-217EDC8E8598}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3B9030D6-26C9-4969-932D-217EDC8E8598}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3B9030D6-26C9-4969-932D-217EDC8E8598}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3B9030D6-26C9-4969-932D-217EDC8E8598}.Release|Any CPU.Build.0 = Release|Any CPU
+		{87F15411-D539-42F7-AE2D-A74C9BFFC191}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{87F15411-D539-42F7-AE2D-A74C9BFFC191}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{87F15411-D539-42F7-AE2D-A74C9BFFC191}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{87F15411-D539-42F7-AE2D-A74C9BFFC191}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
