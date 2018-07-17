@@ -114,9 +114,5 @@ namespace PhotoFrame.Domain.UseCase
         }
     
 
-        // Dummy Method /////////////////////////////////////////////////////
-
-
-
     }
 }
