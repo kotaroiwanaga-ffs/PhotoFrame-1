@@ -38,6 +38,8 @@ namespace PhotoFrameApp
         Photo a;
         Photo b;
         Photo c;
+        Photo d;
+        Photo e;
 
 
 
@@ -65,22 +67,22 @@ namespace PhotoFrameApp
             inputKeyword = null;
 
 
-            //テスト用
-            List<string> aaaa = new List<string>();
+            ////テスト用
+            //List<string> aaaa = new List<string>();
 
-            var file1 = new PhotoFrame.Domain.Model.File(@"C:\研修用\Album1\Chrysanthemum.jpg");
+            //var file1 = new PhotoFrame.Domain.Model.File(@"C:\研修用\Album1\Chrysanthemum.jpg");
 
-            string[] aaa = { "a", "b", "aaaa" };
-            string[] bbb = { "test", "takemoto" };
-            a = new Photo(new PhotoFrame.Domain.Model.File(@"C:\GW写真\キャプチャ.PNG"), new DateTime(), aaa.ToList<string>());
-            b = new Photo(new PhotoFrame.Domain.Model.File(@"C:\GW写真\キャプチャ1.PNG"), new DateTime(), aaaa);
-            c = new Photo(new PhotoFrame.Domain.Model.File(@"C:\GW写真\キャプチャ2.PNG"), new DateTime(), bbb.ToList());
-            d = new Photo(new PhotoFrame.Domain.Model.File(@"C:\GW写真\キャプチャ3.PNG"), new DateTime(), aaaa);
-            e = new Photo(new PhotoFrame.Domain.Model.File(@"C:\GW写真\キャプチャ4.PNG"), new DateTime(), bbb.ToList());
+            //string[] aaa = { "a", "b", "aaaa" };
+            //string[] bbb = { "test", "takemoto" };
+            //a = new Photo(new PhotoFrame.Domain.Model.File(@"C:\GW写真\キャプチャ.PNG"), new DateTime(), aaa.ToList<string>());
+            //b = new Photo(new PhotoFrame.Domain.Model.File(@"C:\GW写真\キャプチャ1.PNG"), new DateTime(), aaaa);
+            //c = new Photo(new PhotoFrame.Domain.Model.File(@"C:\GW写真\キャプチャ2.PNG"), new DateTime(), bbb.ToList());
+            //d = new Photo(new PhotoFrame.Domain.Model.File(@"C:\GW写真\キャプチャ3.PNG"), new DateTime(), aaaa);
+            //e = new Photo(new PhotoFrame.Domain.Model.File(@"C:\GW写真\キャプチャ4.PNG"), new DateTime(), bbb.ToList());
 
 
-            Photo[] photos = { a, b, c, d, e };
-            searchedPhotos = photos.AsEnumerable<Photo>();
+            //Photo[] photos = { a, b, c, d, e };
+            //searchedPhotos = photos.AsEnumerable<Photo>();
 
         }
 
@@ -334,8 +336,8 @@ namespace PhotoFrameApp
 
             //スライドショーを開く
 
-            //SlideShow slideShowForm = new SlideShow(searchedPhotos, application);
-           // slideShowForm.ShowDialog();
+            SlideShow slideShowForm = new SlideShow(searchedPhotos, application);
+            slideShowForm.ShowDialog();
         }
 
         /// <summary>
