@@ -104,7 +104,7 @@ namespace PhotoFrameApp
             if (saveSuccess ==true)
             {
                 MessageBox.Show($"{savaName}というアルバム名で保存しました。");
-                comboBox_AlbumName.Items.Add(savaName);
+                comboBox_AlbumName.Items.Insert(0, savaName);
 
             }
             else
