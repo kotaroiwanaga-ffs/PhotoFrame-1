@@ -27,19 +27,14 @@ namespace PhotoFrameApp
         private DateTime date_E;
         private List<string> pullDownKeyword;
         private int selectNumber;
+        private List<int> selectNumbers;
         private Photo selectedPhoto;
         private IEnumerable<Photo> searchedPhotos;
         private bool sortUpDown;
-        private List<string> inputKeyword;
+       // private List<string> inputKeyword;
 
         //private PhotoFrameApplication application;
         private PhotoFrameApplicationTest application;
-
-        Photo a;
-        Photo b;
-        Photo c;
-
-
 
         /// <summary>
         /// コンストラクタ
@@ -62,30 +57,12 @@ namespace PhotoFrameApp
             selectNumber = -1;
          
             sortUpDown = false;
-            inputKeyword = null;
-
-
-            //テスト用
-            List<string> aaaa = new List<string>();
-
-            var file1 = new PhotoFrame.Domain.Model.File(@"C:\研修用\Album1\Chrysanthemum.jpg");
-
-            string[] aaa = { "a", "b", "aaaa" };
-            string[] bbb = { "test", "takemoto" };
-            a = new Photo(new PhotoFrame.Domain.Model.File(@"C:\GW写真\キャプチャ.PNG"), new DateTime(), aaa.ToList<string>());
-            b = new Photo(new PhotoFrame.Domain.Model.File(@"C:\GW写真\キャプチャ1.PNG"), new DateTime(), aaaa);
-            c = new Photo(new PhotoFrame.Domain.Model.File(@"C:\GW写真\キャプチャ2.PNG"), new DateTime(), bbb.ToList());
-            d = new Photo(new PhotoFrame.Domain.Model.File(@"C:\GW写真\キャプチャ3.PNG"), new DateTime(), aaaa);
-            e = new Photo(new PhotoFrame.Domain.Model.File(@"C:\GW写真\キャプチャ4.PNG"), new DateTime(), bbb.ToList());
-
-
-            Photo[] photos = { a, b, c, d, e };
-            searchedPhotos = photos.AsEnumerable<Photo>();
+            //inputKeyword = null;
 
         }
 
         /// <summary>
-        /// リストビューの更新
+        /// リストビュー全行更新
         /// </summary>
         private void renewPhotoListView()
         {
@@ -94,6 +71,7 @@ namespace PhotoFrameApp
 
             if (this.searchedPhotos != null)
             {
+                pullDownKeyword = new List<string>();
                 foreach (Photo photo in searchedPhotos)
                 {
                     string isFavorite;
@@ -123,14 +101,64 @@ namespace PhotoFrameApp
 
                     pullDownKeyword.AddRange(photo.Keywords);
                 }
+                renewPullDownKeyword();
+            }
+        }
 
-                //キーワード選択のところの選択肢表示
-                pullDownKeyword = (from key in pullDownKeyword select key).Distinct().ToList();
-                foreach (string key in pullDownKeyword)
-                {
-                    selectKeyword_F.Items.Add(key);
-                    selectKeyword_RD.Items.Add(key);
-                }
+        /// <summary>
+        /// リストビュー１行更新
+        /// </summary>
+        /// <param name="index"></param>
+        /// <param name="photo"></param>
+        private void renewPhotoListViewItem(int index, Photo photo)
+        {
+            DateTime nullDate = new DateTime();
+            string isFavorite;
+            string dateTime;
+
+            if (photo.IsFavorite)
+            {
+                isFavorite = "★";
+            }
+            else
+            {
+                isFavorite = "";
+            }
+
+            //DateTimeが初期値なら表示しない
+            if (photo.Date == nullDate)
+            {
+                dateTime = "";
+            }
+            else
+            {
+                dateTime = photo.Date.ToString();
+            }
+
+            photoListView.Items[index].SubItems[0].Text = Path.GetFileName(photo.File.FilePath);
+            photoListView.Items[index].SubItems[1].Text = isFavorite;
+            photoListView.Items[index].SubItems[2].Text = dateTime;
+
+            pullDownKeyword = new List<string>();
+            foreach (Photo pho in searchedPhotos)
+            {
+                pullDownKeyword.AddRange(pho.Keywords);
+            }
+            renewPullDownKeyword();
+        }
+
+        /// <summary>
+        /// キーワードのプルダウンの中身を更新
+        /// </summary>
+        private void renewPullDownKeyword()
+        {
+            selectKeyword_F.Items.Clear();
+            selectKeyword_RD.Items.Clear();
+            pullDownKeyword = (from key in pullDownKeyword select key).Distinct().ToList();
+            foreach (string key in pullDownKeyword)
+            {
+                selectKeyword_F.Items.Add(key);
+                selectKeyword_RD.Items.Add(key);
             }
         }
 
@@ -233,18 +261,25 @@ namespace PhotoFrameApp
                 selectedPhoto = searchedPhotos.ElementAt(selectNumber);
                 List<Photo> tmpPhotos = new List<Photo>();
                 tmpPhotos.Add(selectedPhoto);
-                searchedPhotos = application.ToggleIsFavorite(tmpPhotos.AsEnumerable());
-                renewPhotoListView();
+                application.ToggleIsFavorite(tmpPhotos.AsEnumerable());
+                renewPhotoListViewItem(selectNumber, selectedPhoto);
             }
             else
             {
+                selectNumbers = new List<int>();
                 List<Photo> selectedPhotos = new List<Photo>();
                 for (int i = 0; i < photoListView.SelectedItems.Count; i++)
                 {
-                    selectedPhotos.Add(searchedPhotos.ElementAt(photoListView.SelectedItems[i].Index));
+                    selectNumber = photoListView.SelectedItems[i].Index;
+                    selectedPhotos.Add(searchedPhotos.ElementAt(selectNumber));
+                    selectNumbers.Add(selectNumber);
+
                 }
-                searchedPhotos = application.ToggleIsFavorite(selectedPhotos.AsEnumerable());
-                renewPhotoListView();
+                application.ToggleIsFavorite(selectedPhotos.AsEnumerable());
+                foreach(int renewNumber in selectNumbers)
+                {
+                    renewPhotoListViewItem(renewNumber, searchedPhotos.ElementAt(renewNumber));
+                }
             }
         }
 
@@ -315,11 +350,24 @@ namespace PhotoFrameApp
                 {
                     photoKeyword.Text = "";
                 }
+
+                isFavorite_RD_now = selectedPhoto.IsFavorite;
+                if (isFavorite_RD_now == true)
+                {
+                    isFavorite_RD.ForeColor = Color.Yellow;
+                }
+                else
+                {
+                    isFavorite_RD.ForeColor = Color.Gray;
+                }
             }
             else
             {
                 //２枚以上のときの処理
                 photoPreview.ImageLocation = @"C:\研修用\複数選択してるよ.png";
+                photoKeyword.Text = "";
+                isFavorite_RD_now = false;
+                isFavorite_RD.ForeColor = Color.Gray;
             }
 
         }
@@ -368,7 +416,7 @@ namespace PhotoFrameApp
                 {
                     filterDateS = dateStart.Value.Date;
                     filterDateE = dateEnd.Value.Date;
-                    application.Filter(filterKeyword, isFavorite_F_now, filterDateS, filterDateE);
+                    searchedPhotos = application.Filter(filterKeyword, isFavorite_F_now, filterDateS, filterDateE);
                     renewPhotoListView();
                 }
                 else
@@ -381,7 +429,7 @@ namespace PhotoFrameApp
             {
                 filterDateS = new DateTime();
                 filterDateE = new DateTime();
-                application.Filter(filterKeyword, isFavorite_F_now, filterDateS, filterDateE);
+                searchedPhotos = application.Filter(filterKeyword, isFavorite_F_now, filterDateS, filterDateE);
                 renewPhotoListView();
             }
         }
@@ -406,6 +454,7 @@ namespace PhotoFrameApp
                     sortUpDown = true;
                     searchedPhotos = application.SortDateDescending(searchedPhotos);
                 }
+                renewPhotoListView();
             }
             else
             {
@@ -427,14 +476,23 @@ namespace PhotoFrameApp
             }
             else if (photoListView.SelectedItems.Count == 1)
             {
-                //参照を渡しているのでrenewすると表示が変わる
+                //参照を渡しているのでsearchedPhotoを更新すると全部変わる
                 selectNumber = photoListView.SelectedItems[0].Index;
                 selectedPhoto = searchedPhotos.ElementAt(selectNumber);
                 List<Photo> tmpPhotos = new List<Photo>();
                 tmpPhotos.Add(selectedPhoto);
+                //AddKeywordが成功するかどうか
                 if (application.AddKeyword(selectKeyword_RD.Text, tmpPhotos))
                 {
-                    renewPhotoListView();
+                    renewPhotoListViewItem(selectNumber, selectedPhoto);
+                    if (selectedPhoto.Keywords != null)
+                    {
+                        photoKeyword.Text = string.Join(",", tmpPhotos[0].Keywords);
+                    }
+                    else
+                    {
+                        photoKeyword.Text = "";
+                    }
                 }
                 else
                 {
@@ -480,7 +538,15 @@ namespace PhotoFrameApp
                 tmpPhotos.Add(selectedPhoto);
                 if (application.DeleteKeyword(selectKeyword_RD.Text, tmpPhotos))
                 {
-                    renewPhotoListView();
+                    renewPhotoListViewItem(selectNumber, selectedPhoto);
+                    if (selectedPhoto.Keywords != null)
+                    {
+                        photoKeyword.Text = string.Join(",", selectedPhoto.Keywords);
+                    }
+                    else
+                    {
+                        photoKeyword.Text = "";
+                    }
                 }
                 else
                 {
