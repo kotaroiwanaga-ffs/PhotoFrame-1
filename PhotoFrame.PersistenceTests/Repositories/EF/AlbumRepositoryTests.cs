@@ -34,7 +34,7 @@ namespace PhotoFrame.Persistence.EF.Tests
             Album album1 = new Album("", "AlbumTest1", "");
             albumRepository.Store(album1);
             var result = albumRepository.Exists(album1);
-            Assert.AreEqual(result, true);
+            Assert.IsTrue(result);
         }
 
         [TestMethod()]
@@ -42,27 +42,27 @@ namespace PhotoFrame.Persistence.EF.Tests
         {
             Album album2 = new Album("", "AlbumTest2", "");
             var result = albumRepository.Exists(album2);
-            Assert.AreEqual(result, false);
+            Assert.IsTrue(result);
         }
 
         [TestMethod()]
         public void アルバム名が空文字の場合保存しないこと()
         {
-            Album album6 = new Album("", "", "");
-            albumRepository.Store(album6);
-            var result = albumRepository.Exists(album6);
-            Assert.AreEqual(result, false);
+            Album album3 = new Album("", "", "");
+            albumRepository.Store(album3);
+            var result = albumRepository.Exists(album3);
+            Assert.IsFalse(result);
         }
 
         [TestMethod()]
-        public void 保存したすべてのアルバムを見つけ出すこと()
+        public void 保存したすべてのアルバムを見つけ出せること()
         {
-            Album album3 = new Album("", "AlbumTest3", "");
+            Album album1 = new Album("", "AlbumTest1", "");
+            Album album2 = new Album("", "AlbumTest2", "");
             Album album4 = new Album("", "AlbumTest4", "");
-            Album album5 = new Album("", "AlbumTest5", "");
-            albumRepository.Store(album3);
+            albumRepository.Store(album1);
+            albumRepository.Store(album2);
             albumRepository.Store(album4);
-            albumRepository.Store(album5);
             var result = albumRepository.Find();
             Assert.AreEqual(result.Count(), 3);
         }
