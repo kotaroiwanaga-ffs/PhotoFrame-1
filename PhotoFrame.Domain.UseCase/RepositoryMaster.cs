@@ -18,7 +18,7 @@ namespace PhotoFrame.Domain.UseCase
 
         public RepositoryMaster()
         {
-            RepositoryFactory repositoryFactory = new RepositoryFactory(PhotoFrame.Persistence.Type.Csv);
+            RepositoryFactory repositoryFactory = new RepositoryFactory(PhotoFrame.Persistence.Type.EF);
             photoRepository = repositoryFactory.PhotoRepository;
             albumRepository = repositoryFactory.AlbumRepository;
             //slideShowRepository = new SlideShowRepository();
