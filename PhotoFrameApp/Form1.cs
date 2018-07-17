@@ -31,7 +31,6 @@ namespace PhotoFrameApp
         private Photo selectedPhoto;
         private IEnumerable<Photo> searchedPhotos;
         private bool sortUpDown;
-       // private List<string> inputKeyword;
 
         //private PhotoFrameApplication application;
         private PhotoFrameApplicationTest application;
@@ -42,10 +41,7 @@ namespace PhotoFrameApp
         public Form1()
         {
             InitializeComponent();
-
-            //var application = new PhotoFrameApplication();
             application = new PhotoFrameApplicationTest();
-            // this.application = application;
 
             isFavorite_F_now = false;
             isFavorite_RD_now = false;
@@ -53,12 +49,9 @@ namespace PhotoFrameApp
             date_S = DateTime.Now;
             date_E = DateTime.Now;
             pullDownKeyword = new List<string>();
-
-            selectNumber = -1;
-         
+            selectNumber = -1;       
             sortUpDown = false;
 
-            //inputKeyword = null;
 
 
         }
@@ -493,7 +486,6 @@ namespace PhotoFrameApp
             }
             else if (photoListView.SelectedItems.Count == 1)
             {
-                //参照を渡しているのでsearchedPhotoを更新すると全部変わる
                 selectNumber = photoListView.SelectedItems[0].Index;
                 selectedPhoto = searchedPhotos.ElementAt(selectNumber);
                 List<Photo> tmpPhotos = new List<Photo>();
@@ -502,6 +494,7 @@ namespace PhotoFrameApp
                 if (application.AddKeyword(selectKeyword_RD.Text, tmpPhotos))
                 {
                     renewPhotoListViewItem(selectNumber, selectedPhoto);
+                    //キーワードが複数ある場合は「,」をつけて分割
                     if (selectedPhoto.Keywords != null)
                     {
                         photoKeyword.Text = string.Join(",", tmpPhotos[0].Keywords);
@@ -523,6 +516,7 @@ namespace PhotoFrameApp
                 {
                     selectedPhotos.Add(searchedPhotos.ElementAt(photoListView.SelectedItems[i].Index));
                 }
+                //AddKeywordが成功するかどうか
                 if (application.AddKeyword(selectKeyword_RD.Text, selectedPhotos.AsEnumerable()))
                 {
                     renewPhotoListView();
@@ -548,14 +542,15 @@ namespace PhotoFrameApp
             }
             else if (photoListView.SelectedItems.Count == 1)
             {
-                //参照を渡しているのでrenewすると表示が変わる
                 selectNumber = photoListView.SelectedItems[0].Index;
                 selectedPhoto = searchedPhotos.ElementAt(selectNumber);
                 List<Photo> tmpPhotos = new List<Photo>();
                 tmpPhotos.Add(selectedPhoto);
+                //DeleteKeywordが成功したかどうか
                 if (application.DeleteKeyword(selectKeyword_RD.Text, tmpPhotos))
                 {
                     renewPhotoListViewItem(selectNumber, selectedPhoto);
+                    //キーワードが複数ある場合は「,」をつけて分割
                     if (selectedPhoto.Keywords != null)
                     {
                         photoKeyword.Text = string.Join(",", selectedPhoto.Keywords);
@@ -577,6 +572,7 @@ namespace PhotoFrameApp
                 {
                     selectedPhotos.Add(searchedPhotos.ElementAt(photoListView.SelectedItems[i].Index));
                 }
+                //DalateKeywordが成功するかどうか
                 if (application.DeleteKeyword(selectKeyword_RD.Text, selectedPhotos.AsEnumerable()))
                 {
                     renewPhotoListView();
