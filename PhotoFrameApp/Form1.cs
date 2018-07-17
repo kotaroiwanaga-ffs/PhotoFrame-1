@@ -362,8 +362,6 @@ namespace PhotoFrameApp
             photoListView.Items.Clear();
             DateTime nullDate = new DateTime();
 
-
-
             if (this.searchedPhotos != null)
             {
                 foreach (Photo photo in searchedPhotos)
