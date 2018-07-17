@@ -57,7 +57,9 @@ namespace PhotoFrameApp
             selectNumber = -1;
          
             sortUpDown = false;
+
             //inputKeyword = null;
+
 
         }
 
@@ -382,8 +384,8 @@ namespace PhotoFrameApp
 
             //スライドショーを開く
 
-            //SlideShow slideShowForm = new SlideShow(searchedPhotos, application);
-           // slideShowForm.ShowDialog();
+            SlideShow slideShowForm = new SlideShow(searchedPhotos, application);
+            slideShowForm.ShowDialog();
         }
 
         /// <summary>
