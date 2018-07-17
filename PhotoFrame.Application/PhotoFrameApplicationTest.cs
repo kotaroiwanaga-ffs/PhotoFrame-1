@@ -105,15 +105,20 @@ namespace PhotoFrame.Application
 
         public IEnumerable<Photo> ToggleIsFavorite(IEnumerable<Photo> photos)
         {
-            foreach (Photo photo in photos)
+            var unFavoritePhotos = photos.Where(p => p.IsFavorite == false).ToList();
+
+            if (unFavoritePhotos.Count() > 0)
             {
-                if(photo.IsFavorite)
-                {
-                    photo.MarkAsUnFavorite();
-                }
-                else
+                foreach (Photo photo in unFavoritePhotos)
                 {
                     photo.MarkAsFavorite();
+                }
+            }
+            else
+            {
+                foreach (Photo photo in photos)
+                {
+                    photo.MarkAsUnFavorite();
                 }
             }
             return photos.AsEnumerable<Photo>();
