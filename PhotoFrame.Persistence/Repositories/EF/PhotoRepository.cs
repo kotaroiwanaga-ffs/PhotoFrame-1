@@ -12,10 +12,38 @@ namespace PhotoFrame.Persistence.EF
     /// </summary>
     class PhotoRepository : IPhotoRepository
     {
+        private List<Photo> dbPhotos;
+
+        public PhotoRepository()
+        {
+            this.dbPhotos = new List<Photo>();
+            // SearchFolderTest
+            //dbPhotos.Add(new Photo(new File(@"Album3\Lighthouse.jpg"), new DateTime()));
+            //dbPhotos.Add(new Photo(new File(@"Album3\Penguins.jpg"), new DateTime()));
+            //dbPhotos.Add(new Photo(new File(@"Album3\Tulips.jpg"), new DateTime()));
+
+            // AddKeywordTest1,2,3
+            //dbPhotos.Add(new Photo(new File(@"Album1\Chrysanthemum.jpg"), new DateTime(), new string[] { "a" }));
+            //dbPhotos.Add(new Photo(new File(@"Album1\Desert.jpg"), new DateTime(), new string[] { "a", "b" }));
+
+            // AddKeywordTest4,5,6
+            dbPhotos.Add(new Photo(new File(@"Album1\Chrysanthemum.jpg"), new DateTime(), new string[] { "a" }));
+            dbPhotos.Add(new Photo(new File(@"Album1\Desert.jpg"), new DateTime(), new string[] { "a", "b", "c", "d", "e" }));
+
+        }
+
         public bool Exists(Photo entity)
         {
-            // TODO: DBプログラミング講座で実装
-            throw new NotImplementedException();
+            List<Photo> list = (from p in this.dbPhotos where entity.File.FilePath == p.File.FilePath select p).ToList();
+
+            if (list.Count() == 0)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
         }
 
         public bool ExistsBy(string id)
@@ -26,14 +54,12 @@ namespace PhotoFrame.Persistence.EF
 
         public IEnumerable<Photo> Find(Func<IQueryable<Photo>, IQueryable<Photo>> query)
         {
-            // TODO: DBプログラミング講座で実装
-            throw new NotImplementedException();
+            return query(this.dbPhotos.AsQueryable()).AsEnumerable();
         }
 
         public Photo Find(Func<IQueryable<Photo>, Photo> query)
         {
-            // TODO: DBプログラミング講座で実装
-            throw new NotImplementedException();
+            return query(this.dbPhotos.AsQueryable());
         }
 
         public Photo FindBy(string id)
@@ -44,8 +70,7 @@ namespace PhotoFrame.Persistence.EF
 
         public Photo Store(Photo entity)
         {
-            // TODO: DBプログラミング講座で実装
-            throw new NotImplementedException();
+            return entity;
         }
 
         public void StoreIfNotExists(IEnumerable<Photo> photos)
