@@ -322,8 +322,6 @@ namespace PhotoFrameApp
             comboBox_AlbumName.Enabled = true;
             textBox_SaveAlbumName.Enabled = true;
             button_SaveAlbumName.Enabled = true;
-            button_Next.Enabled = true;
-            button_Back.Enabled = true;
 
             button_Back.Enabled = false;
             button_Next.Enabled = true;
@@ -350,6 +348,7 @@ namespace PhotoFrameApp
                 button_Next.Enabled = true;
                 button_Pause_SlideShow.Enabled = false;
                 button_StopSlideShow.Enabled = false;
+                button_StartSlideShow.Enabled = true;
             }
             else if (slideindex == this.slideshow_list.Count() - 1)
             {
@@ -367,7 +366,7 @@ namespace PhotoFrameApp
 
                 button_Pause_SlideShow.Enabled = false;
                 button_StopSlideShow.Enabled = true;
-
+                button_StartSlideShow.Enabled = true;
 
             }
 
