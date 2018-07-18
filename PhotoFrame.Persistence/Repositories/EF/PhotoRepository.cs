@@ -19,9 +19,9 @@ namespace PhotoFrame.Persistence.EF
         {
             this.dbPhotos = new List<Photo>();
             string[] array1 = new string[] { "a", "b", "c" };
-            dbPhotos.Add(new Photo(new File(@"C:\研修用\Album1\Chrysanthemum.jpg"), new DateTime(), array1.ToList<string>(), true));
-            dbPhotos.Add(new Photo(new File(@"C:\研修用\Album1\Desert.jpg"), new DateTime(), array1.ToList<string>(), true));
-            dbPhotos.Add(new Photo(new File(@"C:\研修用\Album1\Hydrangeas.jpg"), new DateTime(), array1.ToList<string>(), false));
+            dbPhotos.Add(new Photo(new File(@"C:\研修用\Album1\Chrysanthemum.jpg"), new DateTime(2018,7,18), array1.ToList<string>(), true));
+            dbPhotos.Add(new Photo(new File(@"C:\研修用\Album1\Desert.jpg"), new DateTime(2018, 7, 19), array1.ToList<string>(), true));
+            dbPhotos.Add(new Photo(new File(@"C:\研修用\Album1\Hydrangeas.jpg"), new DateTime(2018, 7, 20), array1.ToList<string>(), false));
 
 
 

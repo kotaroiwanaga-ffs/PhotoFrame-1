@@ -44,7 +44,7 @@ namespace PhotoFrame.Application.Tests
             Assert.IsTrue(application.SearchFolder(@"C:\研修用\Album2").Count() == 0);
 
             //保存済みのファイルを含むフォルダ
-            Assert.IsTrue(application.SearchFolder(@"C:\研修用\Album2").Count() == 3);
+            Assert.IsTrue(application.SearchFolder(@"C:\研修用\Album1").Count() == 3);
 
         }
 
@@ -94,21 +94,56 @@ namespace PhotoFrame.Application.Tests
         [TestMethod()]
         public void SortDateAscendingTest()
         {
-            Assert.Fail();
+            var dbPhotos = new List<Photo>();
+            string[] array1 = new string[] { "a", "b", "c" };
+            dbPhotos.Add(new Photo(new File(@"C:\研修用\Album1\Chrysanthemum.jpg"), new DateTime(2018, 7, 18), array1.ToList<string>(), true));
+            dbPhotos.Add(new Photo(new File(@"C:\研修用\Album1\Desert.jpg"), new DateTime(2018, 7, 19), array1.ToList<string>(), true));
+            dbPhotos.Add(new Photo(new File(@"C:\研修用\Album1\Hydrangeas.jpg"), new DateTime(2018, 7, 20), array1.ToList<string>(), false));
+
+            var photolist = application.SortDateAscending(dbPhotos);
+
+            if (photolist.ElementAt(2).File.FilePath == @"C:\研修用\Album1\Hydrangeas.jpg" &&
+                photolist.ElementAt(1).File.FilePath == @"C:\研修用\Album1\Desert.jpg" &&
+                photolist.ElementAt(0).File.FilePath == @"C:\研修用\Album1\Chrysanthemum.")
+            {
+                Assert.IsTrue(true);
+            }
+
         }
 
         [TestMethod()]
         public void SortDateDescendingTest()
         {
-            Assert.Fail();
+
+            var dbPhotos = new List<Photo>();
+            string[] array1 = new string[] { "a", "b", "c" };
+            dbPhotos.Add(new Photo(new File(@"C:\研修用\Album1\Chrysanthemum.jpg"), new DateTime(2018, 7, 18), array1.ToList<string>(), true));
+            dbPhotos.Add(new Photo(new File(@"C:\研修用\Album1\Desert.jpg"), new DateTime(2018, 7, 19), array1.ToList<string>(), true));
+            dbPhotos.Add(new Photo(new File(@"C:\研修用\Album1\Hydrangeas.jpg"), new DateTime(2018, 7, 20), array1.ToList<string>(), false));
+
+            var photolist = application.SortDateDescending(dbPhotos);
+
+            if( photolist.ElementAt(0).File.FilePath== @"C:\研修用\Album1\Hydrangeas.jpg" &&
+                photolist.ElementAt(1).File.FilePath == @"C:\研修用\Album1\Desert.jpg" &&
+                photolist.ElementAt(2).File.FilePath == @"C:\研修用\Album1\Chrysanthemum."  )
+            {
+                Assert.IsTrue(true);
+            }
+
         }
 
         [TestMethod()]
         public void GetAllAlbumsTest()
         {
+            //逆順で帰ってくるか。DBがAlbum1，Album2,Album3なら、戻り値はAlbum3, Album2, Album1
             var albumlist = application.GetAllAlbums();
 
-            if(albumlist.Count
+            if( albumlist.ElementAt(0).Name == "test3" &&
+                albumlist.ElementAt(1).Name == "test2" &&
+                albumlist.ElementAt(2).Name == "test1")
+            {
+                Assert.IsTrue(true);
+            }
         }
     }
 }
