@@ -123,9 +123,7 @@ namespace PhotoFrameApp
         /// <param name="e"></param>
         private void button_SaveAlbumName_Click(object sender, EventArgs e)
         {
-            string savaName = textBox_SaveAlbumName.Text;
-            //var list = (from p in this.albumlist where p.Name == savaName select p).ToList();
-
+            string savaName = textBox_SaveAlbumName.Text.Trim();
 
             if (this.slideshow_list.Count() ==0)
             {
