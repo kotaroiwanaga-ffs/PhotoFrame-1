@@ -26,22 +26,33 @@ namespace PhotoFrameApp
         {
             InitializeComponent();
 
+            this.application = application;
             this.photo_listview = photolist;
             this.slideshow_list = photolist;
             
-            this.application = application;
             this.albumlist = application.GetAllAlbums();
             this.slideindex = 0;
-            pictureBox_SlideShow.ImageLocation = this.slideshow_list.ElementAt(slideindex).File.FilePath;
-
             timer_SlideShow.Interval = 3000;
 
             button_Back.Enabled = false;
 
-
             foreach (var albums in this.albumlist)
             {
                 comboBox_AlbumName.Items.Add(albums.Name);
+            }
+
+            if (this.photo_listview != null)
+            {
+                pictureBox_SlideShow.ImageLocation = this.slideshow_list.ElementAt(slideindex).File.FilePath;
+            }
+            else
+            {
+                button_Next.Enabled = false;
+                button_Back.Enabled = false;
+                radioButton_ListViewSlideShow.Enabled = false;
+                radioButton_ListViewSlideShow.Checked = false;
+                radioButton_AlbumSlideShow.Checked = true;
+                pictureBox_SlideShow.ImageLocation = @"C:\研修用\写真がなし.png";
             }
 
         }
@@ -70,11 +81,12 @@ namespace PhotoFrameApp
         /// <param name="e"></param>
         private void radioButton_ListViewSlideShow_CheckedChanged(object sender, EventArgs e)
         {
-            this.slideindex = 0;
+            
 
             //「リストビューの」ラジオボタンのチェックが入ったとき
-            if (radioButton_ListViewSlideShow.Checked == true)
+            if (radioButton_ListViewSlideShow.Checked == true && this.photo_listview != null)
             {
+                this.slideindex = 0;
                 this.slideshow_list = this.photo_listview;
                 comboBox_AlbumName.Enabled = false;
                 radioButton_AlbumSlideShow.Checked = false;
@@ -108,24 +120,37 @@ namespace PhotoFrameApp
             string savaName = textBox_SaveAlbumName.Text;
             //var list = (from p in this.albumlist where p.Name == savaName select p).ToList();
 
-            bool saveSuccess = application.AddAlbum(savaName, this.slideshow_list);
 
-            if(savaName == "")
+            if (this.photo_listview  == null)
             {
-                MessageBox.Show("アルバム名を入力してください。");
+                MessageBox.Show("リストビューに写真がありません。");
             }
-
-            else if (saveSuccess ==true)
+            else
             {
-                MessageBox.Show($"{savaName}というアルバム名で保存しました。");
-                comboBox_AlbumName.Items.Insert(0, savaName);
+                if (savaName == "")
+                {
+                    MessageBox.Show("アルバム名を入力してください。");
 
-            }
-            else if(saveSuccess ==false)
-            {
-                MessageBox.Show("すでに保存されているアルバム名です。");
+                }
+                else
+                {
+                    bool saveSuccess = application.AddAlbum(savaName, this.slideshow_list);
+                    if (saveSuccess == true)
+                    {
+                        MessageBox.Show($"{savaName}というアルバム名で保存しました。");
+                        comboBox_AlbumName.Items.Insert(0, savaName);
 
+                    }
+                    else if (saveSuccess == false)
+                    {
+                        MessageBox.Show("すでに保存されているアルバム名です。");
+
+                    }
+
+                }
             }
+            
+            
 
         }
 
@@ -282,7 +307,10 @@ namespace PhotoFrameApp
             button_Pause_SlideShow.Enabled = false;
             button_StopSlideShow.Enabled = false;
 
-            radioButton_ListViewSlideShow.Enabled = true;
+            if (this.photo_listview != null)
+            {
+                radioButton_ListViewSlideShow.Enabled = true;
+            }
             radioButton_AlbumSlideShow.Enabled = true;
             comboBox_AlbumName.Enabled = true;
             textBox_SaveAlbumName.Enabled = true;
@@ -295,7 +323,16 @@ namespace PhotoFrameApp
 
 
             //最初の画像をセット
-            pictureBox_SlideShow.ImageLocation = this.slideshow_list.ElementAt(slideindex).File.FilePath;
+
+            if (this.slideshow_list != null)
+            {
+                pictureBox_SlideShow.ImageLocation = this.slideshow_list.ElementAt(slideindex).File.FilePath;
+            }
+            else
+            {
+                pictureBox_SlideShow.ImageLocation = @"C:\研修用\写真がなし.png";
+
+            }
         }
 
         private void ScreenTransition()
