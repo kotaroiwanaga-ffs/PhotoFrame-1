@@ -29,7 +29,7 @@ namespace PhotoFrame.Persistence.EF
 
         public Album Store(Album album)
         {
-            if (!Exists(album))
+            if (!Exists(album) && album.Name != null && album.Name != "")
             {
                 using (TeamBEntities database = new TeamBEntities())
                 using (var transaction = database.Database.BeginTransaction())

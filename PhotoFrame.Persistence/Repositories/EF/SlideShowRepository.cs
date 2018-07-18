@@ -19,11 +19,14 @@ namespace PhotoFrame.Persistence.Repositories.EF
             {
                 List<string> photos = new List<string>();
 
-                var phototable = database.ALBUM_TABLE.Find(album.Name).PHOTO_TABLE;
-
-                foreach (var photo in phototable)
+                if (albumRepository.Exists(album))
                 {
-                    photos.Add(photo.FILEPATH);
+                    var phototable = database.ALBUM_TABLE.Find(album.Name).PHOTO_TABLE;
+
+                    foreach (var photo in phototable)
+                    {
+                        photos.Add(photo.FILEPATH);
+                    }
                 }
                 return photos;
             }    

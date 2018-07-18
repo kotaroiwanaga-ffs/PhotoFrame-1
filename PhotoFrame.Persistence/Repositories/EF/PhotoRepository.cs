@@ -21,9 +21,10 @@ namespace PhotoFrame.Persistence.EF
 
                 foreach (var photodata in database.PHOTO_TABLE)
                 {
-                    File file = new File(photodata.FILEPATH);
-                    bool isfavorite = Convert.ToBoolean(photodata.ISFAVORITE);
-                    DateTime date = DateTime.Parse(photodata.TAKEDATE);
+                    bool isfavorite = false;
+                    if(photodata.ISFAVORITE != null) isfavorite = Convert.ToBoolean(photodata.ISFAVORITE);
+                    DateTime date = new DateTime();
+                    if(photodata.TAKEDATE != null) date = DateTime.Parse(photodata.TAKEDATE);
 
                     List<string> keywords = new List<string>();
                     foreach(var keyword in database.KEYWORD_TABLE)
@@ -34,6 +35,7 @@ namespace PhotoFrame.Persistence.EF
                         }
                     }
 
+                    File file = new File(photodata.FILEPATH);
                     Photo photo = new Photo(file, date, keywords, isfavorite);
                     photolist.Add(photo);
                 }
@@ -54,42 +56,45 @@ namespace PhotoFrame.Persistence.EF
 
         public Photo Store(Photo photo)
         {
-            using (TeamBEntities database = new TeamBEntities())
-            using(var transaction = database.Database.BeginTransaction())
+            if (photo.File.FilePath != null && photo.File.FilePath != "")
             {
-                try
+                using (TeamBEntities database = new TeamBEntities())
+                using (var transaction = database.Database.BeginTransaction())
                 {
-                    if (Exists(photo))
+                    try
                     {
-                        SaveFavorite(photo);
-                        SaveKeywords(photo);
-                    }
-                    else
-                    {
-                        var photodata = new PHOTO_TABLE
+                        if (Exists(photo))
                         {
-                            FILEPATH = photo.File.FilePath,
-                            ISFAVORITE = photo.IsFavorite,
-                            TAKEDATE = photo.Date.ToString()
-                        };
-                        database.PHOTO_TABLE.Add(photodata);
-
-                        foreach (var keyword in photo.Keywords)
+                            SaveFavorite(photo);
+                            SaveKeywords(photo);
+                        }
+                        else
                         {
-                            var keyworddata = new KEYWORD_TABLE
+                            var photodata = new PHOTO_TABLE
                             {
                                 FILEPATH = photo.File.FilePath,
-                                KEYWORD = keyword
+                                ISFAVORITE = photo.IsFavorite,
+                                TAKEDATE = photo.Date.ToString()
                             };
-                            database.KEYWORD_TABLE.Add(keyworddata);
+                            database.PHOTO_TABLE.Add(photodata);
+
+                            foreach (var keyword in photo.Keywords)
+                            {
+                                var keyworddata = new KEYWORD_TABLE
+                                {
+                                    FILEPATH = photo.File.FilePath,
+                                    KEYWORD = keyword
+                                };
+                                database.KEYWORD_TABLE.Add(keyworddata);
+                            }
                         }
+                        transaction.Commit();
+                        database.SaveChanges();
                     }
-                    transaction.Commit();
-                    database.SaveChanges();
-                }
-                catch
-                {
-                    transaction.Rollback();
+                    catch
+                    {
+                        transaction.Rollback();
+                    }
                 }
             }
             return photo;
