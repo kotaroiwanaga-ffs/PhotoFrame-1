@@ -8,77 +8,73 @@ using System.Threading.Tasks;
 
 namespace PhotoFrame.Application.Tests
 {
-    [TestClass]
+    [TestClass()]
     public class PhotoFrameApplicationTests
     {
-
-        [TestMethod]
+        [TestMethod()]
         public void PhotoFrameApplicationTest()
         {
             Assert.Fail();
         }
 
-        [TestMethod]
+        [TestMethod()]
         public void SearchFolderTest()
         {
-
             Assert.Fail();
         }
 
-        [TestMethod]
+        [TestMethod()]
         public void FilterTest()
         {
             Assert.Fail();
         }
 
-        [TestMethod]
+        [TestMethod()]
         public void AddKeywordTest()
         {
             Assert.Fail();
         }
 
-        [TestMethod]
+        [TestMethod()]
         public void DeleteKeywordTest()
         {
             Assert.Fail();
         }
 
-        [TestMethod]
+        [TestMethod()]
         public void ToggleIsFavoriteTest()
         {
             Assert.Fail();
         }
 
-        [TestMethod]
+        [TestMethod()]
         public void AddAlbumTest()
         {
             Assert.Fail();
         }
 
-        [TestMethod]
+        [TestMethod()]
         public void SearchAlbumTest()
         {
             Assert.Fail();
         }
 
-        [TestMethod]
+        [TestMethod()]
         public void SortDateAscendingTest()
         {
             Assert.Fail();
         }
 
-        [TestMethod]
+        [TestMethod()]
         public void SortDateDescendingTest()
         {
             Assert.Fail();
         }
 
-        [TestMethod]
+        [TestMethod()]
         public void GetAllAlbumsTest()
         {
             Assert.Fail();
         }
-
-    
     }
 }
