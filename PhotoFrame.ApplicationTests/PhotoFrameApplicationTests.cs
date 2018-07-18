@@ -108,9 +108,6 @@ namespace PhotoFrame.Application.Tests
         }
 
 
-
-
-
         [TestMethod()]
         public void DeleteKeywordTest()
         {
