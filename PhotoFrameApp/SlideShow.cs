@@ -41,7 +41,7 @@ namespace PhotoFrameApp
                 comboBox_AlbumName.Items.Add(albums.Name);
             }
             
-            if (this.photo_listview != null)
+            if (this.photo_listview.Count() >0)
             {
                 pictureBox_SlideShow.ImageLocation = this.slideshow_list.ElementAt(slideindex).File.FilePath;
             }
@@ -49,6 +49,7 @@ namespace PhotoFrameApp
             {
                 button_Next.Enabled = false;
                 button_Back.Enabled = false;
+                button_StartSlideShow.Enabled = false;
                 radioButton_ListViewSlideShow.Enabled = false;
                 radioButton_ListViewSlideShow.Checked = false;
                 radioButton_AlbumSlideShow.Checked = true;
@@ -64,7 +65,7 @@ namespace PhotoFrameApp
         /// <param name="e"></param>
         private void radioButton_AlbumSlideShow_CheckedChanged(object sender, EventArgs e)
         {
-            this.slideindex = 0;
+            //this.slideindex = 0;
 
             if (radioButton_AlbumSlideShow.Checked == true)
             {//「保存済みのアルバム」のラジオボタンのチェックが入ったとき
@@ -84,13 +85,12 @@ namespace PhotoFrameApp
             
 
             //「リストビューの」ラジオボタンのチェックが入ったとき
-            if (radioButton_ListViewSlideShow.Checked == true && this.photo_listview != null)
+            if (radioButton_ListViewSlideShow.Checked == true )
             {
                 this.slideindex = 0;
                 this.slideshow_list = this.photo_listview;
                 comboBox_AlbumName.Enabled = false;
                 radioButton_AlbumSlideShow.Checked = false;
-                //pictureBox_SlideShow.ImageLocation = this.slideshow_list.ElementAt(slideindex).File.FilePath;
 
                 Stop();
 
@@ -104,9 +104,15 @@ namespace PhotoFrameApp
         /// <param name="e"></param>
         private void comboBox_AlbumName_SelectedIndexChanged(object sender, EventArgs e)
         {
+            this.slideindex = 0;
             this.slideshow_list = application.SearchAlbum(comboBox_AlbumName.Text);
             pictureBox_SlideShow.ImageLocation = this.slideshow_list.ElementAt(slideindex).File.FilePath;
             Stop();
+            
+            if(this.photo_listview.Count()==0)
+            {
+                radioButton_ListViewSlideShow.Enabled = false;
+            }
 
         }
 
@@ -121,7 +127,7 @@ namespace PhotoFrameApp
             //var list = (from p in this.albumlist where p.Name == savaName select p).ToList();
 
 
-            if (this.photo_listview  == null)
+            if (this.slideshow_list.Count() ==0)
             {
                 MessageBox.Show("リストビューに写真がありません。");
             }
@@ -269,7 +275,10 @@ namespace PhotoFrameApp
             button_Pause_SlideShow.Enabled = false;
             button_StopSlideShow.Enabled = true;
 
-            radioButton_ListViewSlideShow.Enabled = true;
+            if (this.photo_listview.Count() != 0)
+            {
+                radioButton_ListViewSlideShow.Enabled = true;
+            }
             radioButton_AlbumSlideShow.Enabled = true;
             comboBox_AlbumName.Enabled = true;
             textBox_SaveAlbumName.Enabled = true;
@@ -307,7 +316,7 @@ namespace PhotoFrameApp
             button_Pause_SlideShow.Enabled = false;
             button_StopSlideShow.Enabled = false;
 
-            if (this.photo_listview != null)
+            if (this.photo_listview.Count() != 0)
             {
                 radioButton_ListViewSlideShow.Enabled = true;
             }
@@ -324,7 +333,7 @@ namespace PhotoFrameApp
 
             //最初の画像をセット
 
-            if (this.slideshow_list != null)
+            if (this.slideshow_list.Count() !=0)
             {
                 pictureBox_SlideShow.ImageLocation = this.slideshow_list.ElementAt(slideindex).File.FilePath;
             }
@@ -348,6 +357,7 @@ namespace PhotoFrameApp
             {
                 button_Back.Enabled = true;
                 button_Next.Enabled = false;
+                button_StartSlideShow.Enabled = false;
                 button_Pause_SlideShow.Enabled = false;
                 button_StopSlideShow.Enabled = true;
 
