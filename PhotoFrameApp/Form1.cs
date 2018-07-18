@@ -23,24 +23,17 @@ namespace PhotoFrameApp
         private bool isFavorite_F_now;
         private bool isFavorite_RD_now;
         private string filepath;
-        private DateTime date_S;
-        private DateTime date_E;
         private List<string> pullDownKeyword;
         private int selectNumber;
+        private List<int> selectNumbers;
         private Photo selectedPhoto;
         private IEnumerable<Photo> searchedPhotos;
         private bool sortUpDown;
-        private List<string> inputKeyword;
+        private　DateTime? dateTime_S;
+        private DateTime? dateTime_E;
 
         //private PhotoFrameApplication application;
         private PhotoFrameApplicationTest application;
-
-        Photo a;
-        Photo b;
-        Photo c;
-        Photo d;
-        Photo e;
-
 
         /// <summary>
         /// コンストラクタ
@@ -48,34 +41,157 @@ namespace PhotoFrameApp
         public Form1()
         {
             InitializeComponent();
-
-            //var application = new PhotoFrameApplication();
             application = new PhotoFrameApplicationTest();
-            // this.application = application;
-
+            searchedPhotos = new List<Photo>().AsEnumerable();
             isFavorite_F_now = false;
             isFavorite_RD_now = false;
             filepath = "";
-            date_S = DateTime.Now;
-            date_E = DateTime.Now;
             pullDownKeyword = new List<string>();
-
-            selectNumber = -1;
-            Photo selectedPhoto = null;
+            selectNumber = -1;       
             sortUpDown = false;
-            inputKeyword = null;
 
+            //DateTimePickerの非表示に用いる
+            this.dateStart.ValueChanged += new System.EventHandler(this.dateStart_ValueChanged);
+            this.dateStart.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dateStart_KeyDown);
+            this.dateStart.MouseDown += new System.Windows.Forms.MouseEventHandler(this.dateStart_MouseDown);
+            this.dateEnd.ValueChanged += new System.EventHandler(this.dateEnd_ValueChanged);
+            this.dateEnd.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dateEnd_KeyDown);
+            this.dateEnd.MouseDown += new System.Windows.Forms.MouseEventHandler(this.dateEnd_MouseDown);
+            dateTime_S = null;
+            dateTime_E = null;
+            setDateTimePickerS(dateTime_S);
+            setDateTimePickerE(dateTime_E);
         }
 
         /// <summary>
-        /// リストビューの更新
+        /// dateStartのnullか値があるかで表示処理
+        /// </summary>
+        /// <param name="datetime"></param>
+        private void setDateTimePickerS(DateTime? datetime)
+        {
+            //DateTimeの値がnullなら非表示
+            if (datetime == null)
+            {
+                dateStart.Format = DateTimePickerFormat.Custom;
+                dateStart.CustomFormat = " ";
+            }
+            else
+            {
+                dateStart.Format = DateTimePickerFormat.Long;
+                dateStart.Value = (DateTime)datetime;
+            }
+        }
+
+        /// <summary>
+        /// dateStartの表示を消す処理
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void dateStart_KeyDown(object sender, KeyEventArgs e)
+        {
+            //DeleteキーBackSpaceキーが押されたら、dateTimeにnullを設定してdateTimePickerを非表示に
+            if (e.KeyData == Keys.Delete || e.KeyData == Keys.Back)
+            {
+                dateTime_S = null;
+                setDateTimePickerS(dateTime_S);
+            }
+        }
+
+        /// <summary>
+        /// dateStartの値が変更されたら表示する
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void dateStart_ValueChanged(object sender, EventArgs e)
+        {
+            dateTime_S = dateStart.Value;
+            setDateTimePickerS(dateTime_S);
+        }
+
+        /// <summary>
+        /// dateStartで←と→をクリックすると消えてしまうカレンダーダイアログをもう一度表示させる
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void dateStart_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Y < 0 || e.Y > dateStart.Height)
+            {
+                //［↓］キーを送信して、カレンダーをプルダウンさせる
+                SendKeys.SendWait("%{DOWN}");
+            }
+        }
+
+        /// <summary>
+        /// dateEndのnullか値があるかで表示処理
+        /// </summary>
+        /// <param name="datetime"></param>
+        private void setDateTimePickerE(DateTime? datetime)
+        {
+            //DateTimeの値がnullかどうか
+            if (datetime == null)
+            {
+                dateEnd.Format = DateTimePickerFormat.Custom;
+                dateEnd.CustomFormat = " ";
+            }
+            else
+            {
+                dateEnd.Format = DateTimePickerFormat.Long;
+                dateEnd.Value = (DateTime)datetime;
+            }
+        }
+
+        /// <summary>
+        /// dateEndrの表示を消す処理
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void dateEnd_KeyDown(object sender, KeyEventArgs e)
+        {
+            //DeleteキーBackSpaceキーが押されたら、dateTimeにnullを設定してdateTimePickerを非表示に
+            if (e.KeyData == Keys.Delete || e.KeyData == Keys.Back)
+            {
+                dateTime_E = null;
+                setDateTimePickerE(dateTime_E);
+            }
+        }
+
+        /// <summary>
+        /// dateEndの値が変更されたら表示する
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void dateEnd_ValueChanged(object sender, EventArgs e)
+        {
+            dateTime_E = dateEnd.Value;
+            setDateTimePickerE(dateTime_E);
+        }
+
+        /// <summary>
+        /// dateEndで←と→をクリックすると消えてしまうカレンダーダイアログをもう一度表示させる
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void dateEnd_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Y < 0 || e.Y > dateEnd.Height)
+            {
+                //［↓］キーを送信して、カレンダーをプルダウンさせる
+                SendKeys.SendWait("%{DOWN}");
+            }
+        }
+
+        /// <summary>
+        /// リストビュー全行更新
         /// </summary>
         private void renewPhotoListView()
         {
             photoListView.Items.Clear();
             DateTime nullDate = new DateTime();
+
             if (this.searchedPhotos != null)
             {
+                pullDownKeyword = new List<string>();
                 foreach (Photo photo in searchedPhotos)
                 {
                     string isFavorite;
@@ -105,15 +221,66 @@ namespace PhotoFrameApp
 
                     pullDownKeyword.AddRange(photo.Keywords);
                 }
-
-                //キーワード選択のところの選択肢表示
-                pullDownKeyword = (from key in pullDownKeyword select key).Distinct().ToList();
-                foreach (string key in pullDownKeyword)
-                {
-                    selectKeyword_F.Items.Add(key);
-                    selectKeyword_RD.Items.Add(key);
-                }
+                renewPullDownKeyword();
             }
+        }
+
+        /// <summary>
+        /// リストビュー１行更新
+        /// </summary>
+        /// <param name="index"></param>
+        /// <param name="photo"></param>
+        private void renewPhotoListViewItem(int index, Photo photo)
+        {
+            DateTime nullDate = new DateTime();
+            string isFavorite;
+            string dateTime;
+
+            if (photo.IsFavorite)
+            {
+                isFavorite = "★";
+            }
+            else
+            {
+                isFavorite = "";
+            }
+
+            //DateTimeが初期値なら表示しない
+            if (photo.Date == nullDate)
+            {
+                dateTime = "";
+            }
+            else
+            {
+                dateTime = photo.Date.ToString();
+            }
+
+            photoListView.Items[index].SubItems[0].Text = Path.GetFileName(photo.File.FilePath);
+            photoListView.Items[index].SubItems[1].Text = isFavorite;
+            photoListView.Items[index].SubItems[2].Text = dateTime;
+
+            pullDownKeyword = new List<string>();
+            foreach (Photo pho in searchedPhotos)
+            {
+                pullDownKeyword.AddRange(pho.Keywords);
+            }
+            renewPullDownKeyword();
+        }
+
+        /// <summary>
+        /// キーワードのプルダウンの中身を更新
+        /// </summary>
+        private void renewPullDownKeyword()
+        {
+            selectKeyword_F.Items.Clear();
+            selectKeyword_RD.Items.Clear();
+            pullDownKeyword = (from key in pullDownKeyword select key).Distinct().ToList();
+            foreach (string key in pullDownKeyword)
+            {
+                selectKeyword_F.Items.Add(key);
+                selectKeyword_RD.Items.Add(key);
+            }
+            selectKeyword_F.Items.Insert(0, "");
         }
 
         /// <summary>
@@ -180,7 +347,7 @@ namespace PhotoFrameApp
             else
             {
                 isFavorite_F_now = true;
-                isFavorite_F.ForeColor = Color.Yellow;
+                isFavorite_F.ForeColor = Color.Orange;
             }
         }
 
@@ -200,7 +367,7 @@ namespace PhotoFrameApp
             else
             {
                 isFavorite_RD_now = true;
-                isFavorite_RD.ForeColor = Color.Yellow;
+                isFavorite_RD.ForeColor = Color.Orange;
             }
 
             //何個選択されているかで場合分けして、リストを更新する
@@ -215,41 +382,26 @@ namespace PhotoFrameApp
                 selectedPhoto = searchedPhotos.ElementAt(selectNumber);
                 List<Photo> tmpPhotos = new List<Photo>();
                 tmpPhotos.Add(selectedPhoto);
-                searchedPhotos = application.ToggleIsFavorite(tmpPhotos.AsEnumerable());
-                renewPhotoListView();
+                application.ToggleIsFavorite(tmpPhotos.AsEnumerable());
+                renewPhotoListViewItem(selectNumber, selectedPhoto);
             }
             else
             {
+                selectNumbers = new List<int>();
                 List<Photo> selectedPhotos = new List<Photo>();
                 for (int i = 0; i < photoListView.SelectedItems.Count; i++)
                 {
-                    selectedPhotos.Add(searchedPhotos.ElementAt(photoListView.SelectedItems[i].Index));
+                    selectNumber = photoListView.SelectedItems[i].Index;
+                    selectedPhotos.Add(searchedPhotos.ElementAt(selectNumber));
+                    selectNumbers.Add(selectNumber);
+
                 }
-                searchedPhotos = application.ToggleIsFavorite(selectedPhotos.AsEnumerable());
-                renewPhotoListView();
+                application.ToggleIsFavorite(selectedPhotos.AsEnumerable());
+                foreach(int renewNumber in selectNumbers)
+                {
+                    renewPhotoListViewItem(renewNumber, searchedPhotos.ElementAt(renewNumber));
+                }
             }
-        }
-
-        /// <summary>
-        /// 日付指定始まりを変更したとき
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void dateStart_ValueChanged(object sender, EventArgs e)
-        {
-            //日付始まりを設定
-            date_S = dateStart.Value;
-        }
-
-        /// <summary>
-        /// 日付指定終わりを変更したとき
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void dateEnd_ValueChanged(object sender, EventArgs e)
-        {
-            //日付終わりを設定
-            date_E = dateEnd.Value;
         }
 
         /// <summary>
@@ -263,7 +415,7 @@ namespace PhotoFrameApp
             searchedPhotos = application.SearchFolder(filepath);
             if (searchedPhotos.Count() == 0)
             {
-                MessageBox.Show("指定したフォルダには画像がありませんでした。");
+                MessageBox.Show("検索することができませんでした。");
             }
             else
             {
@@ -281,7 +433,7 @@ namespace PhotoFrameApp
             //リストビューの行が何行選択されているかで場合分け
             if (photoListView.SelectedItems.Count == 0)
             {
-
+                //０枚のときは処理なし
             }
             else if (photoListView.SelectedItems.Count == 1)
             {
@@ -297,11 +449,24 @@ namespace PhotoFrameApp
                 {
                     photoKeyword.Text = "";
                 }
+
+                isFavorite_RD_now = selectedPhoto.IsFavorite;
+                if (isFavorite_RD_now == true)
+                {
+                    isFavorite_RD.ForeColor = Color.Orange;
+                }
+                else
+                {
+                    isFavorite_RD.ForeColor = Color.Gray;
+                }
             }
             else
             {
                 //２枚以上のときの処理
-                photoPreview.ImageLocation = @"C:\研修用\複数選択してるよ.png";
+                photoPreview.ImageLocation = @"C:\研修用\複数選択しています.png";
+                photoKeyword.Text = "";
+                isFavorite_RD_now = false;
+                isFavorite_RD.ForeColor = Color.Gray;
             }
 
         }
@@ -313,11 +478,8 @@ namespace PhotoFrameApp
         /// <param name="e"></param>
         private void slideShowButton_Click(object sender, EventArgs e)
         {
-
-            //スライドショーを開く
-
-            //SlideShow slideShowForm = new SlideShow(searchedPhotos, application);
-           // slideShowForm.ShowDialog();
+            SlideShow slideShowForm = new SlideShow(searchedPhotos, application);
+            slideShowForm.ShowDialog();
         }
 
         /// <summary>
@@ -330,41 +492,80 @@ namespace PhotoFrameApp
             string filterKeyword;
             DateTime filterDateS;
             DateTime filterDateE;
-
-            //キーワードが選択されているか
-            if (selectKeyword_F.SelectedItem == null)
+            //画像があるかどうか
+            if (searchedPhotos.Count() == 0)
             {
-                filterKeyword = null;
+                MessageBox.Show("フィルタする対象画像がありません。");
             }
             else
             {
-                filterKeyword = selectKeyword_F.SelectedItem.ToString();
-            }
-
-            //日付指定をフィルタに使うかどうか
-            if (dateCheckBox.Checked == true)
-            {
-                //日付指定が正しく行われているか
-                int result = dateEnd.Value.Date.CompareTo(dateStart.Value.Date);
-                if (result == 1)
+                //キーワードが選択されているか
+                if (selectKeyword_F.SelectedItem == null)
                 {
-                    filterDateS = dateStart.Value.Date;
-                    filterDateE = dateEnd.Value.Date;
-                    application.Filter(filterKeyword, isFavorite_F_now, filterDateS, filterDateE);
-                    renewPhotoListView();
+                    filterKeyword = null;
                 }
                 else
                 {
-                    //日付間違ってるって教える
-                    MessageBox.Show("日付の設定が間違っています。左のボックスに古い日付を指定してください。");
+                    filterKeyword = selectKeyword_F.SelectedItem.ToString();
                 }
-            }
-            else
-            {
-                filterDateS = new DateTime();
-                filterDateE = new DateTime();
-                application.Filter(filterKeyword, isFavorite_F_now, filterDateS, filterDateE);
-                renewPhotoListView();
+
+                //日付指定をフィルタに使うかどうか
+                if (dateCheckBox.Checked == true)
+                {
+                    //DateTimePickerの値がnullの場合DateTimeの初期値を使う
+                    if(dateTime_S == null)
+                    {
+                        filterDateS = new DateTime();
+                    }
+                    else
+                    {
+                        filterDateS = (DateTime)dateTime_S;
+                    }
+                    //DateTimePickerの値がnullの場合DateTimeの初期値を使う
+                    if (dateTime_E == null)
+                    {
+                        filterDateE = new DateTime();
+                    }
+                    else
+                    {
+                        filterDateE = (DateTime)dateTime_E;
+                    }
+                    //日付指定が正しく行われているか（終＞始：１、終＝始：０、終＜始：－１）
+                    if (filterDateE.CompareTo(filterDateS) >= 0)
+                    {
+                        searchedPhotos = application.Filter(filterKeyword, isFavorite_F_now, filterDateS, filterDateE);
+                        renewPhotoListView();
+                        photoPreview.ImageLocation = @"C:\研修用\写真が選択されていません.png";
+                        if(searchedPhotos.Count() == 0)
+                        {
+                            MessageBox.Show("フィルタの条件に合致する画像はありませんでした。");
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("日付の設定が間違っています。左のボックスに古い日付を指定してください。");
+                    }
+                }
+                else
+                {
+                    filterDateS = new DateTime();
+                    filterDateE = new DateTime();
+                    //フィルタ条件がすべてない場合、今までのフィルタを解除
+                    if (isFavorite_F_now == false && filterKeyword == null)
+                    {
+                        searchedPhotos = application.SearchFolder(filepath);
+                    }
+                    else
+                    {
+                        searchedPhotos = application.Filter(filterKeyword, isFavorite_F_now, filterDateS, filterDateE);
+                        if (searchedPhotos.Count() == 0)
+                        {
+                            MessageBox.Show("フィルタの条件に合致する画像はありませんでした。");
+                        }
+                    }
+                    renewPhotoListView();
+                    photoPreview.ImageLocation = @"C:\研修用\写真が選択されていません.png";
+                }
             }
         }
 
@@ -375,9 +576,10 @@ namespace PhotoFrameApp
         /// <param name="e"></param>
         private void photoListView_ColumnClick(object sender, ColumnClickEventArgs e)
         {
-            //撮影日時を押したときだけ
+            //撮影日時の文字を押したときだけ
             if (e.Column == 2)
             {
+                //昇順降順を切り替え
                 if (sortUpDown == true)
                 {
                     sortUpDown = false;
@@ -388,6 +590,7 @@ namespace PhotoFrameApp
                     sortUpDown = true;
                     searchedPhotos = application.SortDateDescending(searchedPhotos);
                 }
+                renewPhotoListView();
             }
             else
             {
@@ -409,14 +612,23 @@ namespace PhotoFrameApp
             }
             else if (photoListView.SelectedItems.Count == 1)
             {
-                //参照を渡しているのでrenewすると表示が変わる
                 selectNumber = photoListView.SelectedItems[0].Index;
                 selectedPhoto = searchedPhotos.ElementAt(selectNumber);
                 List<Photo> tmpPhotos = new List<Photo>();
                 tmpPhotos.Add(selectedPhoto);
+                //AddKeywordが成功するかどうか
                 if (application.AddKeyword(selectKeyword_RD.Text, tmpPhotos))
                 {
-                    renewPhotoListView();
+                    renewPhotoListViewItem(selectNumber, selectedPhoto);
+                    //キーワードが複数ある場合は「,」をつけて分割
+                    if (selectedPhoto.Keywords != null)
+                    {
+                        photoKeyword.Text = string.Join(",", tmpPhotos[0].Keywords);
+                    }
+                    else
+                    {
+                        photoKeyword.Text = "";
+                    }
                 }
                 else
                 {
@@ -430,6 +642,7 @@ namespace PhotoFrameApp
                 {
                     selectedPhotos.Add(searchedPhotos.ElementAt(photoListView.SelectedItems[i].Index));
                 }
+                //AddKeywordが成功するかどうか
                 if (application.AddKeyword(selectKeyword_RD.Text, selectedPhotos.AsEnumerable()))
                 {
                     renewPhotoListView();
@@ -455,14 +668,23 @@ namespace PhotoFrameApp
             }
             else if (photoListView.SelectedItems.Count == 1)
             {
-                //参照を渡しているのでrenewすると表示が変わる
                 selectNumber = photoListView.SelectedItems[0].Index;
                 selectedPhoto = searchedPhotos.ElementAt(selectNumber);
                 List<Photo> tmpPhotos = new List<Photo>();
                 tmpPhotos.Add(selectedPhoto);
+                //DeleteKeywordが成功したかどうか
                 if (application.DeleteKeyword(selectKeyword_RD.Text, tmpPhotos))
                 {
-                    renewPhotoListView();
+                    renewPhotoListViewItem(selectNumber, selectedPhoto);
+                    //キーワードが複数ある場合は「,」をつけて分割
+                    if (selectedPhoto.Keywords != null)
+                    {
+                        photoKeyword.Text = string.Join(",", selectedPhoto.Keywords);
+                    }
+                    else
+                    {
+                        photoKeyword.Text = "";
+                    }
                 }
                 else
                 {
@@ -476,6 +698,7 @@ namespace PhotoFrameApp
                 {
                     selectedPhotos.Add(searchedPhotos.ElementAt(photoListView.SelectedItems[i].Index));
                 }
+                //DalateKeywordが成功するかどうか
                 if (application.DeleteKeyword(selectKeyword_RD.Text, selectedPhotos.AsEnumerable()))
                 {
                     renewPhotoListView();
@@ -487,5 +710,4 @@ namespace PhotoFrameApp
             }
         }
     }
-
 }

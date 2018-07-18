@@ -19,64 +19,58 @@ namespace PhotoFrameApp
         private IEnumerable<PhotoFrame.Domain.Model.Photo> slideshow_list;//スライドショーを行う写真リスト
 
         private IEnumerable<Album> albumlist;
-        private PhotoFrameApplication application;
+        private PhotoFrameApplicationTest application;
         private int slideindex;
 
-        public SlideShow(IEnumerable<PhotoFrame.Domain.Model.Photo> photolist, PhotoFrameApplication application )
+        public SlideShow(IEnumerable<PhotoFrame.Domain.Model.Photo> photolist, PhotoFrameApplicationTest application )
         {
             InitializeComponent();
 
+            this.application = application;
             this.photo_listview = photolist;
             this.slideshow_list = photolist;
             
-            this.application = application;
             this.albumlist = application.GetAllAlbums();
             this.slideindex = 0;
-            pictureBox_SlideShow.ImageLocation = this.slideshow_list.ElementAt(slideindex).File.FilePath;
-
             timer_SlideShow.Interval = 3000;
 
-            //アルバムリストの一時的な初期値の設定
-            Album album1 = new Album("abc", "test1", "test説明");
-            Album album2 = new Album("def", "test2", "test1説明");
-            Album album3 = new Album("ghi", "test3", "test2説明");
-
-            List<Album> list = new List<Album>();
-            list.Add(album1);
-            list.Add(album2);
-            list.Add(album3);
-
-            this.albumlist = list;
+            button_Back.Enabled = false;
 
             foreach (var albums in this.albumlist)
             {
                 comboBox_AlbumName.Items.Add(albums.Name);
             }
+            
+            if (this.photo_listview.Count() >0)
+            {
+                pictureBox_SlideShow.ImageLocation = this.slideshow_list.ElementAt(slideindex).File.FilePath;
+            }
+            else
+            {
+                button_Next.Enabled = false;
+                button_Back.Enabled = false;
+                button_StartSlideShow.Enabled = false;
+                radioButton_ListViewSlideShow.Enabled = false;
+                radioButton_ListViewSlideShow.Checked = false;
+                radioButton_AlbumSlideShow.Checked = true;
+                pictureBox_SlideShow.ImageLocation = @"C:\研修用\写真がなし.png";
+            }
 
         }
-
-        private void splitContainer1_SplitterMoved(object sender, SplitterEventArgs e)
-        {
-
-        }
-
 
         /// <summary>
-        /// 「保存済みのアルバム」のラジオボタンが変化したら
+        /// 「保存済みのアルバム」のラジオボタンが変化したら//
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void radioButton_AlbumSlideShow_CheckedChanged(object sender, EventArgs e)
         {
-            this.slideindex = 0;
+            //this.slideindex = 0;
 
             if (radioButton_AlbumSlideShow.Checked == true)
-            {
+            {//「保存済みのアルバム」のラジオボタンのチェックが入ったとき
                 comboBox_AlbumName.Enabled = true;
-            }
-            else
-            {
-                comboBox_AlbumName.Enabled = false;
+                radioButton_ListViewSlideShow.Checked = false;
             }
         }
 
@@ -88,16 +82,18 @@ namespace PhotoFrameApp
         /// <param name="e"></param>
         private void radioButton_ListViewSlideShow_CheckedChanged(object sender, EventArgs e)
         {
-            this.slideindex = 0;
-            if (radioButton_AlbumSlideShow.Checked == true)
-            {//「保存済みのアルバム」のラジオボタンのチェックが入っているとき
-                comboBox_AlbumName.Enabled = true;
+            
 
-            }
-            else
-            {//「リストビューのラジオボタン」のチェックが入っているとき
+            //「リストビューの」ラジオボタンのチェックが入ったとき
+            if (radioButton_ListViewSlideShow.Checked == true )
+            {
+                this.slideindex = 0;
                 this.slideshow_list = this.photo_listview;
                 comboBox_AlbumName.Enabled = false;
+                radioButton_AlbumSlideShow.Checked = false;
+
+                Stop();
+
             }
         }
 
@@ -108,8 +104,16 @@ namespace PhotoFrameApp
         /// <param name="e"></param>
         private void comboBox_AlbumName_SelectedIndexChanged(object sender, EventArgs e)
         {
-            ///lリストを初期化する必要はある？？　
+            this.slideindex = 0;
             this.slideshow_list = application.SearchAlbum(comboBox_AlbumName.Text);
+            pictureBox_SlideShow.ImageLocation = this.slideshow_list.ElementAt(slideindex).File.FilePath;
+            Stop();
+            
+            if(this.photo_listview.Count()==0)
+            {
+                radioButton_ListViewSlideShow.Enabled = false;
+            }
+
         }
 
         /// <summary>
@@ -119,25 +123,40 @@ namespace PhotoFrameApp
         /// <param name="e"></param>
         private void button_SaveAlbumName_Click(object sender, EventArgs e)
         {
-            string savaName = textBox_SaveAlbumName.Text;
-            //var list = (from p in this.albumlist where p.Name == savaName select p).ToList();
+            string savaName = textBox_SaveAlbumName.Text.Trim();
 
-            bool saveSuccess = application.AddAlbum(savaName, this.slideshow_list);
-
-            if (saveSuccess ==true)
+            if (this.slideshow_list.Count() ==0)
             {
-                MessageBox.Show($"{savaName}というアルバム名で保存しました。");
-                comboBox_AlbumName.Items.Add(savaName);
-
+                MessageBox.Show("リストビューに写真がありません。");
             }
             else
             {
-                MessageBox.Show("すでに保存されているアルバム名です。");
+                if (savaName == "")
+                {
+                    MessageBox.Show("アルバム名を入力してください。");
 
+                }
+                else
+                {
+                    bool saveSuccess = application.AddAlbum(savaName, this.slideshow_list);
+                    if (saveSuccess == true)
+                    {
+                        MessageBox.Show($"{savaName}というアルバム名で保存しました。");
+                        comboBox_AlbumName.Items.Insert(0, savaName);
+
+                    }
+                    else if (saveSuccess == false)
+                    {
+                        MessageBox.Show("すでに保存されているアルバム名です。");
+
+                    }
+
+                }
             }
+            
+            
 
         }
-
 
         /// <summary>
         /// 再生ボタンが押されたとき
@@ -146,10 +165,7 @@ namespace PhotoFrameApp
         /// <param name="e"></param>
         private void button_StartSlideShow_Click(object sender, EventArgs e)
         {
-            button_StartSlideShow.Enabled = false;
-            button_Pause_SlideShow.Enabled = true;
-            button_StopSlideShow.Enabled = true;
-            timer_SlideShow.Start();
+            Play();
         }
 
         /// <summary>
@@ -159,10 +175,7 @@ namespace PhotoFrameApp
         /// <param name="e"></param>
         private void button_Pause_Click(object sender, EventArgs e)
         {
-            timer_SlideShow.Stop();
-            button_StartSlideShow.Enabled = true;
-            button_Pause_SlideShow.Enabled = false;
-            button_StopSlideShow.Enabled = true;
+            Pause();
         }
 
         /// <summary>
@@ -172,11 +185,7 @@ namespace PhotoFrameApp
         /// <param name="e"></param>
         private void button_Stop_Click(object sender, EventArgs e)
         {
-            timer_SlideShow.Stop();
-            slideindex = 0;
-            button_StartSlideShow.Enabled = true;
-            button_Pause_SlideShow.Enabled = true;
-            button_StopSlideShow.Enabled = false;
+            Stop();
         }
 
         /// <summary>
@@ -193,6 +202,9 @@ namespace PhotoFrameApp
                 pictureBox_SlideShow.ImageLocation = this.slideshow_list.ElementAt(slideindex).File.FilePath;
 
             }
+
+            ScreenTransition();
+
         }
 
         /// <summary>
@@ -207,27 +219,157 @@ namespace PhotoFrameApp
                 slideindex++;
                 pictureBox_SlideShow.ImageLocation = this.slideshow_list.ElementAt(slideindex).File.FilePath;
             }
+
+            ScreenTransition();
+
         }
 
         /// <summary>
-        /// スライドショーを行う。
+        /// スライドショー再生中の挙動
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void timer_SlideShow_Tick(object sender, EventArgs e)
         {
-            slideindex++;
-
-            if (slideindex >= slideshow_list.Count())
+            if (slideindex < slideshow_list.Count()-1)
             {
-                slideindex = 0;
+                slideindex++;
+                pictureBox_SlideShow.ImageLocation = this.slideshow_list.ElementAt(slideindex).File.FilePath;
             }
+            else
+            {
+                Stop();
 
-            pictureBox_SlideShow.ImageLocation = this.slideshow_list.ElementAt(slideindex).File.FilePath;
-
+            }
 
         }
 
-        
+        /// <summary>
+        /// スライドショーを再生状態にする
+        /// </summary>
+        private void Play()
+        {
+            timer_SlideShow.Start();
+            button_StartSlideShow.Enabled = false;
+            button_Pause_SlideShow.Enabled = true;
+            button_StopSlideShow.Enabled = true;
+
+            radioButton_ListViewSlideShow.Enabled = false;
+            radioButton_AlbumSlideShow.Enabled = false;
+            comboBox_AlbumName.Enabled = false;
+            textBox_SaveAlbumName.Enabled = false;
+            button_SaveAlbumName.Enabled = false;
+            button_Next.Enabled = false;
+            button_Back.Enabled = false;
+        }
+
+        /// <summary>
+        /// スライドショーを一時停止する 
+        /// </summary>
+        private void Pause()
+        {
+            timer_SlideShow.Stop();
+            button_StartSlideShow.Enabled = true;
+            button_Pause_SlideShow.Enabled = false;
+            button_StopSlideShow.Enabled = true;
+
+            if (this.photo_listview.Count() != 0)
+            {
+                radioButton_ListViewSlideShow.Enabled = true;
+            }
+            radioButton_AlbumSlideShow.Enabled = true;
+            comboBox_AlbumName.Enabled = true;
+            textBox_SaveAlbumName.Enabled = true;
+            button_SaveAlbumName.Enabled = true;
+            button_Next.Enabled = true;
+            button_Back.Enabled = true;
+
+            if (slideindex == 0)
+            {
+                button_Back.Enabled = false;
+                button_Next.Enabled = true;
+            }
+            else if (slideindex == this.slideshow_list.Count() - 1)
+            {
+                button_Back.Enabled = true;
+                button_Next.Enabled = false;
+            }
+            else
+            {
+                button_Back.Enabled = true;
+                button_Next.Enabled = true;
+
+            }
+        }
+
+        /// <summary>
+        /// スライドショーを停止する
+        /// </summary>
+        private void Stop()
+        {
+
+            slideindex = 0;
+            timer_SlideShow.Stop();
+            button_StartSlideShow.Enabled = true;
+            button_Pause_SlideShow.Enabled = false;
+            button_StopSlideShow.Enabled = false;
+
+            if (this.photo_listview.Count() != 0)
+            {
+                radioButton_ListViewSlideShow.Enabled = true;
+            }
+            radioButton_AlbumSlideShow.Enabled = true;
+            comboBox_AlbumName.Enabled = true;
+            textBox_SaveAlbumName.Enabled = true;
+            button_SaveAlbumName.Enabled = true;
+
+            button_Back.Enabled = false;
+            button_Next.Enabled = true;
+
+
+            //最初の画像をセット
+
+            if (this.slideshow_list.Count() !=0)
+            {
+                pictureBox_SlideShow.ImageLocation = this.slideshow_list.ElementAt(slideindex).File.FilePath;
+            }
+            else
+            {
+                pictureBox_SlideShow.ImageLocation = @"C:\研修用\写真がなし.png";
+
+            }
+        }
+
+        private void ScreenTransition()
+        {
+            if (slideindex == 0)
+            {
+                button_Back.Enabled = false;
+                button_Next.Enabled = true;
+                button_Pause_SlideShow.Enabled = false;
+                button_StopSlideShow.Enabled = false;
+                button_StartSlideShow.Enabled = true;
+            }
+            else if (slideindex == this.slideshow_list.Count() - 1)
+            {
+                button_Back.Enabled = true;
+                button_Next.Enabled = false;
+                button_StartSlideShow.Enabled = false;
+                button_Pause_SlideShow.Enabled = false;
+                button_StopSlideShow.Enabled = true;
+
+            }
+            else
+            {
+                button_Back.Enabled = true;
+                button_Next.Enabled = true;
+
+                button_Pause_SlideShow.Enabled = false;
+                button_StopSlideShow.Enabled = true;
+                button_StartSlideShow.Enabled = true;
+
+            }
+
+        }
     }
 }

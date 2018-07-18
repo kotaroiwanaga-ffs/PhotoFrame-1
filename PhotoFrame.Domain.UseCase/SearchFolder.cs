@@ -22,10 +22,10 @@ namespace PhotoFrame.Domain.UseCase
             this.photoFileService = photoFileService;
         }
 
-        public IEnumerable<Photo> Execute(string filePath)
+        public IEnumerable<Photo> Execute(string folderPath)
         {
             List<Photo> photos = new List<Photo>();
-            IEnumerable<File> files = photoFileService.FindAllPhotoFilesFromDirectory(filePath);
+            IEnumerable<File> files = photoFileService.FindAllPhotoFilesFromDirectory(folderPath);
 
 
             foreach(File file in files)
@@ -37,8 +37,7 @@ namespace PhotoFrame.Domain.UseCase
                         .FirstOrDefault();
                 });
 
-                //Photo hitPhoto = repositoryMaster.FindPhoto(query);
-                Photo hitPhoto = null;
+                Photo hitPhoto = repositoryMaster.FindPhoto(query);
 
                 if(hitPhoto != null)
                 {
