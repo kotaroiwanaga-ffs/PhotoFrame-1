@@ -193,23 +193,6 @@ namespace PhotoFrameApp
 
             ScreenTransition();
 
-            //if (slideindex == 0)
-            //{
-            //    button_Back.Enabled = false;
-            //    button_Next.Enabled = true;
-            //}
-            //else if (slideindex == this.slideshow_list.Count() - 1)
-            //{
-            //    button_Back.Enabled = true;
-            //    button_Next.Enabled = false;
-            //}
-            //else
-            //{
-            //    button_Back.Enabled = true;
-            //    button_Next.Enabled = true;
-            //    Pause();
-
-            //}
         }
 
         /// <summary>
