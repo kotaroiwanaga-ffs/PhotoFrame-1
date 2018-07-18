@@ -11,6 +11,8 @@
     <AssemblyName>PhotoFrame.Persistence</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -32,17 +34,17 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -55,7 +57,32 @@
     <Compile Include="Repositories\Csv\PhotoRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\EF\AlbumRepository.cs" />
+    <Compile Include="Repositories\EF\ALBUM_TABLE.cs">
+      <DependentUpon>TeamB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\EF\KEYWORD_TABLE.cs">
+      <DependentUpon>TeamB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Repositories\EF\PhotoRepository.cs" />
+    <Compile Include="Repositories\EF\PHOTO_TABLE.cs">
+      <DependentUpon>TeamB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\EF\SlideShowRepository.cs" />
+    <Compile Include="Repositories\EF\TeamB.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TeamB.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\EF\TeamB.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TeamB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\EF\TeamB.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TeamB.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Repositories\IRepositoryFactory.cs" />
     <Compile Include="Repositories\RepositoryFactory.cs" />
     <Compile Include="Services\IServiceFactory.cs" />
@@ -69,7 +96,30 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.Config" />
     <None Include="packages.config" />
+    <EntityDeploy Include="Repositories\EF\TeamB.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>TeamB.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Repositories\EF\TeamB.edmx.diagram">
+      <DependentUpon>TeamB.edmx</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Repositories\EF\TeamB.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>TeamB.edmx</DependentUpon>
+      <LastGenOutput>TeamB.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Repositories\EF\TeamB.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>TeamB.edmx</DependentUpon>
+      <LastGenOutput>TeamB.cs</LastGenOutput>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

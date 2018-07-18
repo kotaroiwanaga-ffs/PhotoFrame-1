@@ -4,18 +4,71 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using PhotoFrame.Persistence.Repositories.EF;
 
 namespace PhotoFrame.Persistence.EF
 {
     /// <summary>
     /// <see cref="IAlbumRepository">の実装クラス
     /// </summary>
-    class AlbumRepository : IAlbumRepository
+    public class AlbumRepository : IAlbumRepository
     {
-        public bool Exists(Album entity)
+        public IEnumerable<Album> Find()
         {
-            // TODO: DBプログラミング講座で実装
-            throw new NotImplementedException();
+            using (TeamBEntities database = new TeamBEntities())
+            {
+                List<Album> allAlbum = new List<Album>();
+                foreach(var data in database.ALBUM_TABLE)
+                {
+                    Album album = Album.Create(data.NAME);
+                    allAlbum.Add(album);
+                }
+                return allAlbum;
+            }
+        }
+
+        public Album Store(Album album)
+        {
+            if (!Exists(album) && album.Name != null && album.Name != "")
+            {
+                using (TeamBEntities database = new TeamBEntities())
+                using (var transaction = database.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        var saveAlbum = new ALBUM_TABLE
+                        {
+                            NAME = album.Name
+                        };
+
+                        database.ALBUM_TABLE.Add(saveAlbum);
+
+                        transaction.Commit();
+                        database.SaveChanges();
+                    }
+                    catch
+                    {
+                        transaction.Rollback();
+                    }
+                }
+            }
+            return album;
+        }
+
+        public bool Exists(Album album)
+        {
+            using (TeamBEntities database = new TeamBEntities())
+            {
+                if (album.Name != null && album.Name != "")
+                {
+                    foreach (var data in database.ALBUM_TABLE)
+                    {
+                        if (data.NAME == album.Name) return true;
+                    }
+                    return false;
+                }
+                else return false;
+            }
         }
 
         public bool ExistsBy(string id)
@@ -36,16 +89,12 @@ namespace PhotoFrame.Persistence.EF
             throw new NotImplementedException();
         }
 
+
         public Album FindBy(string id)
         {
             // TODO: DBプログラミング講座で実装
             throw new NotImplementedException();
         }
 
-        public Album Store(Album entity)
-        {
-            // TODO: DBプログラミング講座で実装
-            throw new NotImplementedException();
-        }
     }
 }
