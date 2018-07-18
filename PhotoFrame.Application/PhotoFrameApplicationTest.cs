@@ -81,7 +81,7 @@ namespace PhotoFrame.Application
             a = new Photo(new PhotoFrame.Domain.Model.File(@"C:\研修用\Album1\Chrysanthemum.jpg"), new DateTime(), aaa, true);
             b = new Photo(new PhotoFrame.Domain.Model.File(@"C:\研修用\Album1\Desert.jpg"), date_E, aaaa, false);
             c = new Photo(new PhotoFrame.Domain.Model.File(@"C:\研修用\Album1\Hydrangeas.jpg"), date_E, bbb.ToList(), false);
-            Photo[] photosaa = { a, b};
+            Photo[] photosaa = {a};
             return photosaa.AsEnumerable<Photo>();
         }
 

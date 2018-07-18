@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
@@ -292,6 +293,7 @@
             // 
             this.photoPreview.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.photoPreview.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.photoPreview.Image = ((System.Drawing.Image)(resources.GetObject("photoPreview.Image")));
             this.photoPreview.Location = new System.Drawing.Point(4, 4);
             this.photoPreview.Name = "photoPreview";
             this.photoPreview.Size = new System.Drawing.Size(418, 248);
@@ -337,11 +339,14 @@
             // 
             // fileIcon
             // 
-            this.fileIcon.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.fileIcon.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.fileIcon.Cursor = System.Windows.Forms.Cursors.Default;
+            this.fileIcon.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.fileIcon.Image = ((System.Drawing.Image)(resources.GetObject("fileIcon.Image")));
             this.fileIcon.Location = new System.Drawing.Point(396, 3);
             this.fileIcon.Name = "fileIcon";
             this.fileIcon.Size = new System.Drawing.Size(59, 30);
+            this.fileIcon.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.fileIcon.TabIndex = 1;
             this.fileIcon.TabStop = false;
             this.fileIcon.Click += new System.EventHandler(this.fileIcon_Click);
@@ -438,11 +443,11 @@
             // 
             // dateCheckBox
             // 
-            this.dateCheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.dateCheckBox.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.dateCheckBox.AutoSize = true;
-            this.dateCheckBox.Location = new System.Drawing.Point(3, 10);
+            this.dateCheckBox.Location = new System.Drawing.Point(23, 10);
             this.dateCheckBox.Name = "dateCheckBox";
-            this.dateCheckBox.Size = new System.Drawing.Size(92, 16);
+            this.dateCheckBox.Size = new System.Drawing.Size(72, 16);
             this.dateCheckBox.TabIndex = 0;
             this.dateCheckBox.Text = "日付指定";
             this.dateCheckBox.UseVisualStyleBackColor = true;
@@ -456,7 +461,7 @@
             this.dateStart.Name = "dateStart";
             this.dateStart.Size = new System.Drawing.Size(124, 19);
             this.dateStart.TabIndex = 1;
-            this.dateStart.ValueChanged += new System.EventHandler(this.dateStart_ValueChanged);
+            this.dateStart.Value = new System.DateTime(2018, 7, 18, 13, 44, 37, 0);
             // 
             // dateEnd
             // 
@@ -465,8 +470,7 @@
             this.dateEnd.Location = new System.Drawing.Point(263, 8);
             this.dateEnd.Name = "dateEnd";
             this.dateEnd.Size = new System.Drawing.Size(124, 19);
-            this.dateEnd.TabIndex = 2;
-            this.dateEnd.ValueChanged += new System.EventHandler(this.dateEnd_ValueChanged);
+            this.dateEnd.TabIndex = 1;
             // 
             // label1
             // 
