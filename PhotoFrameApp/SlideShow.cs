@@ -40,7 +40,7 @@ namespace PhotoFrameApp
             {
                 comboBox_AlbumName.Items.Add(albums.Name);
             }
-
+            
             if (this.photo_listview != null)
             {
                 pictureBox_SlideShow.ImageLocation = this.slideshow_list.ElementAt(slideindex).File.FilePath;
