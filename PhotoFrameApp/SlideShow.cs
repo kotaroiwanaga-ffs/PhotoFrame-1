@@ -338,6 +338,7 @@ namespace PhotoFrameApp
             if (this.slideshow_list.Count() !=0)
             {
                 pictureBox_SlideShow.ImageLocation = this.slideshow_list.ElementAt(slideindex).File.FilePath;
+     
             }
             else
             {

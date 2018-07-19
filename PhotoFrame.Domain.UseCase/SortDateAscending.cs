@@ -11,7 +11,17 @@ namespace PhotoFrame.Domain.UseCase
     {
         public IEnumerable<Photo> Execute(IEnumerable<Photo> photos)
         {
-            return photos.OrderBy(p => p.Date);
+            DateTime defaultDate = new DateTime();
+
+            var tempPhotos = photos.Where(p => p.Date != defaultDate).OrderBy(p => p.Date).ToList();
+            var defaultPhotos = photos.Where(p => p.Date == defaultDate);
+
+            foreach (Photo photo in defaultPhotos)
+            {
+                tempPhotos.Add(photo);
+            }
+
+            return tempPhotos;
         }
     }
 }
