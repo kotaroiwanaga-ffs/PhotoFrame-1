@@ -56,27 +56,29 @@ namespace PhotoFrame.Domain.UseCase
 
         private DateTime GetFilmingDate(string filePath)
         {
-            Bitmap bmp = new Bitmap(filePath);
-            DateTime date = new DateTime();
+            System.IO.FileStream stream = System.IO.File.OpenRead(filePath);
+            Image image = Image.FromStream(stream, false, false);
+            DateTime defaultDate = new DateTime();
 
-            foreach(PropertyItem item in bmp.PropertyItems)
+            foreach(PropertyItem item in image.PropertyItems)
             {
                 if(item.Id == 0x9003 && item.Type == 2)
                 {
                     string val = System.Text.Encoding.ASCII.GetString(item.Value);
                     val = val.Trim(new char[] { '\0' });
-                    date = DateTime.ParseExact(val, "yyyy:MM:dd HH:mm:ss", null);
+                    defaultDate = DateTime.ParseExact(val, "yyyy:MM:dd HH:mm:ss", null);
                 }
             }
 
-            if(date != null)
+            if(defaultDate != null)
             {
-                return date;
+                return defaultDate;
             }
             else
             {
                 return new DateTime();
             }
         }
+
     }
 }
