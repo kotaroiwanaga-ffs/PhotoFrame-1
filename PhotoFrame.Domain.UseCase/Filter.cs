@@ -38,11 +38,11 @@ namespace PhotoFrame.Domain.UseCase
             }
             else if(firstDate != defaultDate && lastDate == defaultDate)
             {
-                photos = repositoryMaster.Filter(((Photo photo) => (photo.Date.Date >= firstDate.Date)), photos);
+                photos = repositoryMaster.Filter(((Photo photo) => (photo.Date != defaultDate && photo.Date.Date >= firstDate.Date)), photos);
             }
             else if(firstDate == defaultDate && lastDate != defaultDate)
             {
-                photos = repositoryMaster.Filter(((Photo photo) => (photo.Date.Date <= lastDate.Date)), photos);
+                photos = repositoryMaster.Filter(((Photo photo) => (photo.Date != defaultDate && photo.Date.Date <= lastDate.Date)), photos);
             }
 
             return photos;

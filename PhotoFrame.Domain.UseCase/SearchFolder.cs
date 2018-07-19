@@ -45,9 +45,11 @@ namespace PhotoFrame.Domain.UseCase
                 }
                 else
                 {
-                    photos.Add(new Photo(file, GetFilmingDate(file.FilePath), new List<string>()));
+                    photos.Add(new Photo(file, GetFilmingDate(file.FilePath)));
                 }
             }
+
+            this.repositoryMaster.SetAllPhotos(photos);
 
             return photos;
         }
