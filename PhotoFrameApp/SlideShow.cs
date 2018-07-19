@@ -71,6 +71,12 @@ namespace PhotoFrameApp
             {//「保存済みのアルバム」のラジオボタンのチェックが入ったとき
                 comboBox_AlbumName.Enabled = true;
                 radioButton_ListViewSlideShow.Checked = false;
+
+                if (comboBox_AlbumName.Text != "")
+                {
+                    this.slideshow_list = application.SearchAlbum(comboBox_AlbumName.Text);
+                    pictureBox_SlideShow.ImageLocation = this.slideshow_list.ElementAt(0).File.FilePath;
+                }
             }
         }
 
@@ -89,11 +95,11 @@ namespace PhotoFrameApp
             {
                 this.slideindex = 0;
                 this.slideshow_list = this.photo_listview;
-                comboBox_AlbumName.Enabled = false;
-                radioButton_AlbumSlideShow.Checked = false;
 
                 Stop();
 
+                comboBox_AlbumName.Enabled = false;
+                radioButton_AlbumSlideShow.Checked = false;
             }
         }
 
@@ -278,7 +284,11 @@ namespace PhotoFrameApp
                 radioButton_ListViewSlideShow.Enabled = true;
             }
             radioButton_AlbumSlideShow.Enabled = true;
-            comboBox_AlbumName.Enabled = true;
+
+            if (radioButton_AlbumSlideShow.Checked == true)
+            {
+                comboBox_AlbumName.Enabled = true;
+            }
             textBox_SaveAlbumName.Enabled = true;
             button_SaveAlbumName.Enabled = true;
             button_Next.Enabled = true;
@@ -319,7 +329,10 @@ namespace PhotoFrameApp
                 radioButton_ListViewSlideShow.Enabled = true;
             }
             radioButton_AlbumSlideShow.Enabled = true;
-            comboBox_AlbumName.Enabled = true;
+            if (radioButton_AlbumSlideShow.Checked == true)
+            {
+                comboBox_AlbumName.Enabled = true;
+            }
             textBox_SaveAlbumName.Enabled = true;
             button_SaveAlbumName.Enabled = true;
 
