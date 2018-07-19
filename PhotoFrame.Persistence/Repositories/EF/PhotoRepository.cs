@@ -187,7 +187,7 @@ namespace PhotoFrame.Persistence.EF
 
         public Photo FindBy(string id)
         {
-            return entity;
+            throw new NotImplementedException();
         }
 
         public void StoreIfNotExists(IEnumerable<Photo> photos)
