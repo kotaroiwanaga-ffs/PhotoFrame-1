@@ -109,7 +109,11 @@ namespace PhotoFrame.Domain.UseCase
 
         public Album StoreSlideShow(Album album, IEnumerable<Photo> photos)
         {
-            return slideShowRepository.Store(album, photos);
+            foreach(var photo in photos)
+            {
+                slideShowRepository.Store(album, photo);
+            }
+            return album;
         }
     
     }

@@ -37,7 +37,7 @@ namespace PhotoFrame.Application
             this.ServiceFactory = new ServiceFactory();
 
             //this.repositoryMaster = new RepositoryMaster();
-            this.repositoryMaster = new RepositoryMaster_Dummy();
+            this.repositoryMaster = new RepositoryMaster();
             this.photoFileService = ServiceFactory.PhotoFileService;
 
             this.searchFolder = new SearchFolder(repositoryMaster, photoFileService);
