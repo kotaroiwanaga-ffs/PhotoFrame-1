@@ -19,10 +19,11 @@ namespace PhotoFrameApp
         private IEnumerable<PhotoFrame.Domain.Model.Photo> slideshow_list;//スライドショーを行う写真リスト
 
         private IEnumerable<Album> albumlist;
-        private PhotoFrameApplication application;
+        //private PhotoFrameApplication application;
+        private PhotoFrameApplicationTest application;
         private int slideindex;
 
-        public SlideShow(IEnumerable<PhotoFrame.Domain.Model.Photo> photolist, PhotoFrameApplication application )
+        public SlideShow(IEnumerable<PhotoFrame.Domain.Model.Photo> photolist, PhotoFrameApplicationTest application )
         {
             InitializeComponent();
 
@@ -42,18 +43,38 @@ namespace PhotoFrameApp
             }
             
             if (this.photo_listview.Count() >0)
-            {
-                pictureBox_SlideShow.ImageLocation = this.slideshow_list.ElementAt(slideindex).File.FilePath;
+            {//リストビューに写真が存在するとき
+                //pictureBox_SlideShow.ImageLocation = this.slideshow_list.ElementAt(slideindex).File.FilePath;
+                pictureBox_SlideShow.Image = Image.FromFile(this.slideshow_list.ElementAt(slideindex).File.FilePath);
             }
             else
-            {
-                button_Next.Enabled = false;
-                button_Back.Enabled = false;
-                button_StartSlideShow.Enabled = false;
-                radioButton_ListViewSlideShow.Enabled = false;
-                radioButton_ListViewSlideShow.Checked = false;
-                radioButton_AlbumSlideShow.Checked = true;
-                pictureBox_SlideShow.ImageLocation = @"C:\研修用\写真がなし.png";
+            {//リストビューに写真が一枚もない時
+                if (albumlist.Count() > 0)
+                {
+                    //アルバムがある時
+                    button_Next.Enabled = false;
+                    button_Back.Enabled = false;
+                    button_StartSlideShow.Enabled = false;
+                    radioButton_ListViewSlideShow.Enabled = false;
+                    radioButton_ListViewSlideShow.Checked = false;
+                    radioButton_AlbumSlideShow.Checked = true;
+                    textBox_SaveAlbumName.Enabled = false;
+                    button_SaveAlbumName.Enabled = false;
+                    pictureBox_SlideShow.ImageLocation = @"C:\研修用\リストビューに写真がなし.png";
+                }
+                else
+                {
+                    //アルバムがない時
+                    button_Next.Enabled = false;
+                    button_Back.Enabled = false;
+                    button_StartSlideShow.Enabled = false;
+                    radioButton_ListViewSlideShow.Enabled = false;
+                    radioButton_ListViewSlideShow.Checked = false;
+                    radioButton_AlbumSlideShow.Enabled = false;
+                    comboBox_AlbumName.Enabled = false;
+                    pictureBox_SlideShow.ImageLocation = @"C:\研修用\アルバムなしリストビューに写真がなし.png";
+
+                }
             }
 
         }
@@ -75,7 +96,8 @@ namespace PhotoFrameApp
                 if (comboBox_AlbumName.Text != "")
                 {
                     this.slideshow_list = application.SearchAlbum(comboBox_AlbumName.Text);
-                    pictureBox_SlideShow.ImageLocation = this.slideshow_list.ElementAt(0).File.FilePath;
+                    //pictureBox_SlideShow.ImageLocation = this.slideshow_list.ElementAt(0).File.FilePath;
+                    pictureBox_SlideShow.Image = Image.FromFile(this.slideshow_list.ElementAt(0).File.FilePath);
                 }
             }
         }
@@ -112,7 +134,8 @@ namespace PhotoFrameApp
         {
             this.slideindex = 0;
             this.slideshow_list = application.SearchAlbum(comboBox_AlbumName.Text);
-            pictureBox_SlideShow.ImageLocation = this.slideshow_list.ElementAt(slideindex).File.FilePath;
+            //pictureBox_SlideShow.ImageLocation = this.slideshow_list.ElementAt(slideindex).File.FilePath;
+            pictureBox_SlideShow.Image = Image.FromFile(this.slideshow_list.ElementAt(slideindex).File.FilePath);
             Stop();
             
             if(this.photo_listview.Count()==0)
@@ -205,8 +228,8 @@ namespace PhotoFrameApp
             if (this.slideindex > 0)
             {
                 slideindex--;
-                pictureBox_SlideShow.ImageLocation = this.slideshow_list.ElementAt(slideindex).File.FilePath;
-
+                //pictureBox_SlideShow.ImageLocation = this.slideshow_list.ElementAt(slideindex).File.FilePath;
+                pictureBox_SlideShow.Image = Image.FromFile(this.slideshow_list.ElementAt(slideindex).File.FilePath);
             }
 
             ScreenTransition();
@@ -223,7 +246,8 @@ namespace PhotoFrameApp
             if (this.slideindex < slideshow_list.Count() - 1)
             {
                 slideindex++;
-                pictureBox_SlideShow.ImageLocation = this.slideshow_list.ElementAt(slideindex).File.FilePath;
+                //pictureBox_SlideShow.ImageLocation = this.slideshow_list.ElementAt(slideindex).File.FilePath;
+                pictureBox_SlideShow.Image = Image.FromFile(this.slideshow_list.ElementAt(slideindex).File.FilePath);
             }
 
             ScreenTransition();
@@ -240,7 +264,8 @@ namespace PhotoFrameApp
             if (slideindex < slideshow_list.Count()-1)
             {
                 slideindex++;
-                pictureBox_SlideShow.ImageLocation = this.slideshow_list.ElementAt(slideindex).File.FilePath;
+                //pictureBox_SlideShow.ImageLocation = this.slideshow_list.ElementAt(slideindex).File.FilePath;
+                pictureBox_SlideShow.Image = Image.FromFile(this.slideshow_list.ElementAt(slideindex).File.FilePath);
             }
             else
             {
@@ -344,12 +369,13 @@ namespace PhotoFrameApp
 
             if (this.slideshow_list.Count() !=0)
             {
-                pictureBox_SlideShow.ImageLocation = this.slideshow_list.ElementAt(slideindex).File.FilePath;
+                //pictureBox_SlideShow.ImageLocation = this.slideshow_list.ElementAt(slideindex).File.FilePath;
+                pictureBox_SlideShow.Image = Image.FromFile(this.slideshow_list.ElementAt(slideindex).File.FilePath);
             }
             else
             {
-                pictureBox_SlideShow.ImageLocation = @"C:\研修用\写真がなし.png";
-
+                //pictureBox_SlideShow.ImageLocation = @"C:\研修用\写真がなし.png";
+                pictureBox_SlideShow.Image = Image.FromFile(@"C:\研修用\写真がなし.png");
             }
         }
 
