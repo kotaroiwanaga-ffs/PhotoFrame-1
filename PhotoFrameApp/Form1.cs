@@ -32,8 +32,8 @@ namespace PhotoFrameApp
         private　DateTime? dateTime_S;
         private DateTime? dateTime_E;
 
-        private PhotoFrameApplication application;
-        //private PhotoFrameApplicationTest application;
+        //private PhotoFrameApplication application;
+        private PhotoFrameApplicationTest application;
 
         /// <summary>
         /// コンストラクタ
@@ -41,7 +41,7 @@ namespace PhotoFrameApp
         public Form1()
         {
             InitializeComponent();
-            application = new PhotoFrameApplication();
+            application = new PhotoFrameApplicationTest();
             searchedPhotos = new List<Photo>().AsEnumerable();
             isFavorite_F_now = false;
             isFavorite_RD_now = false;
@@ -440,7 +440,8 @@ namespace PhotoFrameApp
                 //１枚選択のとき、プレビューに画像とキーワード表示
                 selectNumber = photoListView.SelectedItems[0].Index;
                 selectedPhoto = searchedPhotos.ElementAt(selectNumber);
-                photoPreview.ImageLocation = selectedPhoto.File.FilePath;
+                //photoPreview.ImageLocation = selectedPhoto.File.FilePath;
+                photoPreview.Image = Image.FromFile(selectedPhoto.File.FilePath);
                 if (selectedPhoto.Keywords != null)
                 {
                     photoKeyword.Text = string.Join(",", selectedPhoto.Keywords);
@@ -463,7 +464,8 @@ namespace PhotoFrameApp
             else
             {
                 //２枚以上のときの処理
-                photoPreview.ImageLocation = @"C:\研修用\複数選択しています.png";
+                //photoPreview.ImageLocation = @"C:\研修用\複数選択しています.png";
+                photoPreview.Image = Image.FromFile(@"C:\研修用\複数選択しています.png");
                 photoKeyword.Text = "";
                 isFavorite_RD_now = false;
                 isFavorite_RD.ForeColor = Color.Gray;
@@ -535,8 +537,9 @@ namespace PhotoFrameApp
                     {
                         searchedPhotos = application.Filter(filterKeyword, isFavorite_F_now, filterDateS, filterDateE);
                         renewPhotoListView();
-                        photoPreview.ImageLocation = @"C:\研修用\写真が選択されていません.png";
-                        if(searchedPhotos.Count() == 0)
+                        //photoPreview.ImageLocation = @"C:\研修用\写真が選択されていません.png";
+                        photoPreview.Image = Image.FromFile(@"C:\研修用\写真が選択されていません.png");
+                        if (searchedPhotos.Count() == 0)
                         {
                             MessageBox.Show("フィルタの条件に合致する画像はありませんでした。");
                         }
@@ -564,7 +567,8 @@ namespace PhotoFrameApp
                         }
                     }
                     renewPhotoListView();
-                    photoPreview.ImageLocation = @"C:\研修用\写真が選択されていません.png";
+                    //photoPreview.ImageLocation = @"C:\研修用\写真が選択されていません.png";
+                    photoPreview.Image = Image.FromFile(@"C:\研修用\写真が選択されていません.png");
                 }
             }
         }
