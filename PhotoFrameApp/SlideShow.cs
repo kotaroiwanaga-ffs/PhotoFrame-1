@@ -123,9 +123,7 @@ namespace PhotoFrameApp
         /// <param name="e"></param>
         private void button_SaveAlbumName_Click(object sender, EventArgs e)
         {
-            string savaName = textBox_SaveAlbumName.Text;
-            //var list = (from p in this.albumlist where p.Name == savaName select p).ToList();
-
+            string savaName = textBox_SaveAlbumName.Text.Trim();
 
             if (this.slideshow_list.Count() ==0)
             {
@@ -324,8 +322,6 @@ namespace PhotoFrameApp
             comboBox_AlbumName.Enabled = true;
             textBox_SaveAlbumName.Enabled = true;
             button_SaveAlbumName.Enabled = true;
-            button_Next.Enabled = true;
-            button_Back.Enabled = true;
 
             button_Back.Enabled = false;
             button_Next.Enabled = true;
@@ -352,6 +348,7 @@ namespace PhotoFrameApp
                 button_Next.Enabled = true;
                 button_Pause_SlideShow.Enabled = false;
                 button_StopSlideShow.Enabled = false;
+                button_StartSlideShow.Enabled = true;
             }
             else if (slideindex == this.slideshow_list.Count() - 1)
             {
@@ -369,7 +366,7 @@ namespace PhotoFrameApp
 
                 button_Pause_SlideShow.Enabled = false;
                 button_StopSlideShow.Enabled = true;
-
+                button_StartSlideShow.Enabled = true;
 
             }
 
