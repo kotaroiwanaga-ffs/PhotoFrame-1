@@ -413,7 +413,7 @@ namespace PhotoFrameApp
         {
             //検索する
             searchedPhotos = application.SearchFolder(filepath);
-            if (searchedPhotos.Count() == 0)
+            if (searchedPhotos.Count() == 0 || searchedPhotos.Count() > 100)
             {
                 MessageBox.Show("検索することができませんでした。");
             }
