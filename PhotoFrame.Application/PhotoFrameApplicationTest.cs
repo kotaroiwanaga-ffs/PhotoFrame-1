@@ -127,6 +127,7 @@ namespace PhotoFrame.Application
         public bool AddAlbum(string albumName, IEnumerable<Photo> photos)
         {
             return true;
+            //return false;
         }
 
         public IEnumerable<Photo> SearchAlbum(string albumName)
@@ -139,9 +140,9 @@ namespace PhotoFrame.Application
             string[] bbb = { "test", "takemoto" };
             DateTime date_E = DateTime.Now;
 
-            a = new Photo(new PhotoFrame.Domain.Model.File(@"C:\研修用\Album1\Chrysanthemum.jpg"), new DateTime(), aaa, true);
-            b = new Photo(new PhotoFrame.Domain.Model.File(@"C:\研修用\Album1\Desert.jpg"), date_E, aaaa, false);
-            c = new Photo(new PhotoFrame.Domain.Model.File(@"C:\研修用\Album1\Hydrangeas.jpg"), date_E, bbb.ToList(), false);
+            a = new Photo(new PhotoFrame.Domain.Model.File(@"C:\研修用\Album2\Jellyfish.jpg"), new DateTime(), aaa, true);
+            b = new Photo(new PhotoFrame.Domain.Model.File(@"C:\研修用\Album2\Koala.jpg"), date_E, aaaa, false);
+            c = new Photo(new PhotoFrame.Domain.Model.File(@"C:\研修用\Album2\Lighthouse.jpg"), date_E, bbb.ToList(), false);
             Photo[] photosa = { a, b, c };
             return photosa.AsEnumerable<Photo>();
 
@@ -159,11 +160,12 @@ namespace PhotoFrame.Application
 
         public IEnumerable<Album> GetAllAlbums()
         {
+            List<Album> list = new List<Album>();
+
             Album album1 = new Album("abc", "test1", "test説明");
             Album album2 = new Album("def", "test2", "test1説明");
             Album album3 = new Album("ghi", "test3", "test2説明");
 
-            List<Album> list = new List<Album>();
             list.Add(album1);
             list.Add(album2);
             list.Add(album3);
