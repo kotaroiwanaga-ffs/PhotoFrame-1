@@ -27,8 +27,7 @@ namespace PhotoFrame.Domain.UseCase
             List<Photo> photos = new List<Photo>();
             IEnumerable<File> files = photoFileService.FindAllPhotoFilesFromDirectory(folderPath);
 
-
-            foreach(File file in files)
+            foreach (File file in files)
             {
                 Func<IQueryable<Photo>, Photo> query = ((folderPhotos) =>
                 {
@@ -39,13 +38,21 @@ namespace PhotoFrame.Domain.UseCase
 
                 Photo hitPhoto = repositoryMaster.FindPhoto(query);
 
-                if(hitPhoto != null)
+                if (hitPhoto != null)
                 {
-                    photos.Add(hitPhoto);
+                    if (GetFilmingDate(file.FilePath) != null)
+                    {
+                        photos.Add(hitPhoto);
+                    }
                 }
                 else
                 {
-                    photos.Add(new Photo(file, GetFilmingDate(file.FilePath)));
+                    DateTime? date = GetFilmingDate(file.FilePath);
+
+                    if (date != null)
+                    {
+                        photos.Add(new Photo(file, (DateTime)date));
+                    }
                 }
             }
 
@@ -54,25 +61,35 @@ namespace PhotoFrame.Domain.UseCase
             return photos;
         }
 
-        private DateTime GetFilmingDate(string filePath)
+        private DateTime? GetFilmingDate(string filePath)
         {
             System.IO.FileStream stream = System.IO.File.OpenRead(filePath);
-            Image image = Image.FromStream(stream, false, false);
-            DateTime defaultDate = new DateTime();
+            Image image;
 
-            foreach(PropertyItem item in image.PropertyItems)
+            try
             {
-                if(item.Id == 0x9003 && item.Type == 2)
+                image = Image.FromStream(stream, false, false);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+
+            DateTime date = new DateTime();
+
+            foreach (PropertyItem item in image.PropertyItems)
+            {
+                if (item.Id == 0x9003 && item.Type == 2)
                 {
                     string val = System.Text.Encoding.ASCII.GetString(item.Value);
                     val = val.Trim(new char[] { '\0' });
-                    defaultDate = DateTime.ParseExact(val, "yyyy:MM:dd HH:mm:ss", null);
+                    date = DateTime.ParseExact(val, "yyyy:MM:dd HH:mm:ss", null);
                 }
             }
 
-            if(defaultDate != null)
+            if (date != null)
             {
-                return defaultDate;
+                return date;
             }
             else
             {

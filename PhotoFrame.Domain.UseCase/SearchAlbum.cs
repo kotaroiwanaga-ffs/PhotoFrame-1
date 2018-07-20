@@ -40,7 +40,7 @@ namespace PhotoFrame.Domain.UseCase
 
             }
 
-            return photos;
+            return photos.Where(p => System.IO.File.Exists(p.File.FilePath)).ToList();
         }
     }
 }
