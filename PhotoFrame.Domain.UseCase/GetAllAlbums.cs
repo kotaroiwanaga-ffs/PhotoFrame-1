@@ -18,8 +18,15 @@ namespace PhotoFrame.Domain.UseCase
 
         public IEnumerable<Album> Execute()
         {
-            return repositoryMaster.FindAlbum((allAlbums) => allAlbums);
+            IEnumerable<Album> albums = repositoryMaster.FindAlbum((allAlbums) => allAlbums);
+            List<Album> sortedAlbums = new List<Album>();
  
+            for(int i = albums.Count() - 1; i >= 0; i--)
+            {
+                sortedAlbums.Add(albums.ElementAt(i));
+            }
+
+            return sortedAlbums;
         }
     }
 }
