@@ -60,7 +60,7 @@ namespace PhotoFrameApp
                     radioButton_AlbumSlideShow.Checked = true;
                     textBox_SaveAlbumName.Enabled = false;
                     button_SaveAlbumName.Enabled = false;
-                    pictureBox_SlideShow.ImageLocation = @"C:\研修用\リストビューに写真がなし.png";
+                    pictureBox_SlideShow.Image = Image.FromFile(@"C:\研修用\リストビューに写真がなし.png");
                 }
                 else
                 {
@@ -72,7 +72,9 @@ namespace PhotoFrameApp
                     radioButton_ListViewSlideShow.Checked = false;
                     radioButton_AlbumSlideShow.Enabled = false;
                     comboBox_AlbumName.Enabled = false;
-                    pictureBox_SlideShow.ImageLocation = @"C:\研修用\アルバムなしリストビューに写真がなし.png";
+                    textBox_SaveAlbumName.Enabled = false;
+                    button_SaveAlbumName.Enabled = false;
+                    pictureBox_SlideShow.Image = Image.FromFile(@"C:\研修用\アルバムなしリストビューに写真がなし.png");
 
                 }
             }
@@ -95,6 +97,7 @@ namespace PhotoFrameApp
 
                 if (comboBox_AlbumName.Text != "")
                 {
+                    Stop();
                     this.slideshow_list = application.SearchAlbum(comboBox_AlbumName.Text);
                     //pictureBox_SlideShow.ImageLocation = this.slideshow_list.ElementAt(0).File.FilePath;
                     pictureBox_SlideShow.Image = Image.FromFile(this.slideshow_list.ElementAt(0).File.FilePath);
