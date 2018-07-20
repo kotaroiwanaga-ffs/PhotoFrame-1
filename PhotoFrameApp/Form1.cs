@@ -32,8 +32,7 @@ namespace PhotoFrameApp
         private　DateTime? dateTime_S;
         private DateTime? dateTime_E;
 
-        //private PhotoFrameApplication application;
-        private PhotoFrameApplicationTest application;
+        private PhotoFrameApplication application;
 
         /// <summary>
         /// コンストラクタ
@@ -41,7 +40,7 @@ namespace PhotoFrameApp
         public Form1()
         {
             InitializeComponent();
-            application = new PhotoFrameApplicationTest();
+            application = new PhotoFrameApplication();
             searchedPhotos = new List<Photo>().AsEnumerable();
             isFavorite_F_now = false;
             isFavorite_RD_now = false;
