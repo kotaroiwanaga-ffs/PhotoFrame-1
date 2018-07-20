@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using PhotoFrame.Domain.Model;
 using PhotoFrame.Persistence;
+using PhotoFrame.Persistence.Repositories.EF;
 
 namespace PhotoFrame.Domain.UseCase
 {
@@ -12,7 +13,7 @@ namespace PhotoFrame.Domain.UseCase
     {
         private readonly IAlbumRepository albumRepository;
         private readonly IPhotoRepository photoRepository;
-        //private readonly SlideShowRepository slideShowRepository;
+        private readonly SlideShowRepository slideShowRepository;
 
         private IEnumerable<Photo> allPhotos;
 
@@ -21,7 +22,7 @@ namespace PhotoFrame.Domain.UseCase
             RepositoryFactory repositoryFactory = new RepositoryFactory(PhotoFrame.Persistence.Type.EF);
             photoRepository = repositoryFactory.PhotoRepository;
             albumRepository = repositoryFactory.AlbumRepository;
-            //slideShowRepository = new SlideShowRepository();
+            slideShowRepository = new SlideShowRepository();
 
             allPhotos = new List<Photo>();
         }
@@ -103,20 +104,17 @@ namespace PhotoFrame.Domain.UseCase
 
         public IEnumerable<string> FindSlideShow(Album album)
         {
-            //return slideShowRepository.Find(album);
-            return null;
+            return slideShowRepository.Find(album);
         }
 
         public Album StoreSlideShow(Album album, IEnumerable<Photo> photos)
         {
-            //return slideShowRepository.Store(album, photos);
-            return null;
+            foreach(var photo in photos)
+            {
+                slideShowRepository.Store(album, photo);
+            }
+            return album;
         }
     
-
-        // Dummy Method /////////////////////////////////////////////////////
-
-
-
     }
 }

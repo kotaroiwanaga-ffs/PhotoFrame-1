@@ -54,7 +54,6 @@
             this.tableLayoutPanel8 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel9 = new System.Windows.Forms.TableLayoutPanel();
             this.selectKeyword_F = new System.Windows.Forms.ComboBox();
-            this.testlabel = new System.Windows.Forms.Label();
             this.tableLayoutPanel11 = new System.Windows.Forms.TableLayoutPanel();
             this.dateCheckBox = new System.Windows.Forms.CheckBox();
             this.dateStart = new System.Windows.Forms.DateTimePicker();
@@ -386,7 +385,6 @@
             this.tableLayoutPanel9.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 65F));
             this.tableLayoutPanel9.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel9.Controls.Add(this.selectKeyword_F, 0, 0);
-            this.tableLayoutPanel9.Controls.Add(this.testlabel, 1, 0);
             this.tableLayoutPanel9.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel9.Location = new System.Drawing.Point(1, 1);
             this.tableLayoutPanel9.Margin = new System.Windows.Forms.Padding(1);
@@ -405,17 +403,6 @@
             this.selectKeyword_F.Name = "selectKeyword_F";
             this.selectKeyword_F.Size = new System.Drawing.Size(222, 20);
             this.selectKeyword_F.TabIndex = 0;
-            // 
-            // testlabel
-            // 
-            this.testlabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.testlabel.AutoSize = true;
-            this.testlabel.Location = new System.Drawing.Point(231, 11);
-            this.testlabel.Name = "testlabel";
-            this.testlabel.Size = new System.Drawing.Size(420, 12);
-            this.testlabel.TabIndex = 1;
-            this.testlabel.Text = "test";
-            this.testlabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // tableLayoutPanel11
             // 
@@ -531,7 +518,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.fileIcon)).EndInit();
             this.tableLayoutPanel8.ResumeLayout(false);
             this.tableLayoutPanel9.ResumeLayout(false);
-            this.tableLayoutPanel9.PerformLayout();
             this.tableLayoutPanel11.ResumeLayout(false);
             this.tableLayoutPanel11.PerformLayout();
             this.ResumeLayout(false);
@@ -572,7 +558,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label isFavorite_F;
         private System.Windows.Forms.Button filterButton;
-        private System.Windows.Forms.Label testlabel;
     }
 }
 

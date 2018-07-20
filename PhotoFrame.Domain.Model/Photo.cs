@@ -128,12 +128,12 @@ namespace PhotoFrame.Domain.Model
             IsFavorite = false;
         }
 
-        public override bool Equals(object obj)
-        {
-            if ((object)this == obj) return true;
-            if (obj == null || GetType() != obj.GetType()) return false;
-            return Id == ((Photo)obj).Id;
-        }
+        //public override bool Equals(object obj)
+        //{
+        //    if ((object)this == obj) return true;
+        //    if (obj == null || GetType() != obj.GetType()) return false;
+        //    return Id == ((Photo)obj).Id;
+        //}
 
         public override int GetHashCode() => Id.GetHashCode();
 

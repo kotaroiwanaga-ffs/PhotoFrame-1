@@ -27,8 +27,7 @@ namespace PhotoFrame.Domain.UseCase
             List<Photo> photos = new List<Photo>();
             IEnumerable<File> files = photoFileService.FindAllPhotoFilesFromDirectory(folderPath);
 
-
-            foreach(File file in files)
+            foreach (File file in files)
             {
                 Func<IQueryable<Photo>, Photo> query = ((folderPhotos) =>
                 {
@@ -39,27 +38,48 @@ namespace PhotoFrame.Domain.UseCase
 
                 Photo hitPhoto = repositoryMaster.FindPhoto(query);
 
-                if(hitPhoto != null)
+                if (hitPhoto != null)
                 {
-                    photos.Add(hitPhoto);
+                    if (GetFilmingDate(file.FilePath) != null)
+                    {
+                        photos.Add(hitPhoto);
+                    }
                 }
                 else
                 {
-                    photos.Add(new Photo(file, GetFilmingDate(file.FilePath), new List<string>()));
+                    DateTime? date = GetFilmingDate(file.FilePath);
+
+                    if (date != null)
+                    {
+                        photos.Add(new Photo(file, (DateTime)date));
+                    }
                 }
             }
+
+            this.repositoryMaster.SetAllPhotos(photos);
 
             return photos;
         }
 
-        private DateTime GetFilmingDate(string filePath)
+        private DateTime? GetFilmingDate(string filePath)
         {
-            Bitmap bmp = new Bitmap(filePath);
+            System.IO.FileStream stream = System.IO.File.OpenRead(filePath);
+            Image image;
+
+            try
+            {
+                image = Image.FromStream(stream, false, false);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+
             DateTime date = new DateTime();
 
-            foreach(PropertyItem item in bmp.PropertyItems)
+            foreach (PropertyItem item in image.PropertyItems)
             {
-                if(item.Id == 0x9003 && item.Type == 2)
+                if (item.Id == 0x9003 && item.Type == 2)
                 {
                     string val = System.Text.Encoding.ASCII.GetString(item.Value);
                     val = val.Trim(new char[] { '\0' });
@@ -67,7 +87,7 @@ namespace PhotoFrame.Domain.UseCase
                 }
             }
 
-            if(date != null)
+            if (date != null)
             {
                 return date;
             }
@@ -76,5 +96,6 @@ namespace PhotoFrame.Domain.UseCase
                 return new DateTime();
             }
         }
+
     }
 }

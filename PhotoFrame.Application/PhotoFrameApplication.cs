@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using PhotoFrame.Persistence;
 
+
 namespace PhotoFrame.Application
 {
     /// <summary>
@@ -35,6 +36,7 @@ namespace PhotoFrame.Application
         {
             this.ServiceFactory = new ServiceFactory();
 
+            //this.repositoryMaster = new RepositoryMaster();
             this.repositoryMaster = new RepositoryMaster();
             this.photoFileService = ServiceFactory.PhotoFileService;
 

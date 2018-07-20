@@ -79,8 +79,7 @@ namespace PhotoFrame.Persistence.EF
 
         public IEnumerable<Album> Find(Func<IQueryable<Album>, IQueryable<Album>> query)
         {
-            // TODO: DBプログラミング講座で実装
-            throw new NotImplementedException();
+            return query(Find().AsQueryable());
         }
 
         public Album Find(Func<IQueryable<Album>, Album> query)

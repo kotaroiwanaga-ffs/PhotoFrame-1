@@ -20,7 +20,7 @@ namespace PhotoFrame.Domain.UseCase
         {
             Album album = Album.Create(albumName);
 
-            if(repositoryMaster.ExistsAlbum(album))
+            if(!repositoryMaster.ExistsAlbum(album))
             {
                 repositoryMaster.StoreAlbum(album);
                 
