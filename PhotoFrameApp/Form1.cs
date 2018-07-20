@@ -413,7 +413,7 @@ namespace PhotoFrameApp
         {
             //検索する
             searchedPhotos = application.SearchFolder(filepath);
-            if (searchedPhotos.Count() == 0)
+            if (searchedPhotos.Count() == 0 || searchedPhotos.Count() >100)
             {
                 MessageBox.Show("検索することができませんでした。");
             }
@@ -469,6 +469,24 @@ namespace PhotoFrameApp
                 photoKeyword.Text = "";
                 isFavorite_RD_now = false;
                 isFavorite_RD.ForeColor = Color.Gray;
+
+                selectNumbers = new List<int>();
+                List<Photo> selectedPhotos = new List<Photo>();
+                for (int i = 0; i < photoListView.SelectedItems.Count; i++)
+                {
+                    selectNumber = photoListView.SelectedItems[i].Index;
+                    selectedPhotos.Add(searchedPhotos.ElementAt(selectNumber));
+                }
+                List<bool> isTrue = new List<bool>();
+                foreach(Photo photo in selectedPhotos)
+                {
+                    isTrue.Add(photo.IsFavorite);
+                }
+                if(isTrue.All(i => i == true))
+                {
+                    isFavorite_RD_now = true;
+                    isFavorite_RD.ForeColor = Color.Orange;
+                }
             }
 
         }
@@ -569,6 +587,7 @@ namespace PhotoFrameApp
                     renewPhotoListView();
                     //photoPreview.ImageLocation = @"C:\研修用\写真が選択されていません.png";
                     photoPreview.Image = Image.FromFile(@"C:\研修用\写真が選択されていません.png");
+                    photoKeyword.Text = "";
                 }
             }
         }

@@ -62,9 +62,14 @@ namespace PhotoFrame.Application
             DateTime date_E = DateTime.Now;
 
             a = new Photo(new PhotoFrame.Domain.Model.File(@"C:\研修用\Album1\Chrysanthemum.jpg"), new DateTime(), aaa, true);
-            b = new Photo(new PhotoFrame.Domain.Model.File(@"C:\研修用\Album1\Desert.jpg"), date_E, aaaa, false);
+            b = new Photo(new PhotoFrame.Domain.Model.File(@"C:\研修用\Album1\Desert.jpg"), new DateTime(1993, 7, 17), aaaa, false);
             c = new Photo(new PhotoFrame.Domain.Model.File(@"C:\研修用\Album1\Hydrangeas.jpg"), date_E, bbb.ToList(), false);
-            Photo[] photos = { a, b, c };
+            //Photo[] photos = { a, b, c };
+            //for(int i = 0;i<7;i++)
+            //{
+            //    photos = photos.Concat(photos).ToArray();
+            //}
+            Photo[] photos = {a,b,c };
             return photos.AsEnumerable<Photo>();
         }
 
@@ -81,26 +86,40 @@ namespace PhotoFrame.Application
             a = new Photo(new PhotoFrame.Domain.Model.File(@"C:\研修用\Album1\Chrysanthemum.jpg"), new DateTime(), aaa, true);
             b = new Photo(new PhotoFrame.Domain.Model.File(@"C:\研修用\Album1\Desert.jpg"), date_E, aaaa, false);
             c = new Photo(new PhotoFrame.Domain.Model.File(@"C:\研修用\Album1\Hydrangeas.jpg"), date_E, bbb.ToList(), false);
-            Photo[] photosaa = {a};
+            Photo[] photosaa = {};
             return photosaa.AsEnumerable<Photo>();
         }
 
         public bool AddKeyword(string keyword, IEnumerable<Photo> photos)
         {
-            foreach(Photo photo in photos)
+            bool success = false;
+
+            foreach (Photo photo in photos)
             {
-                photo.AddKeyword(keyword);
+                if (photo.AddKeyword(keyword))
+                {
+                    //repositoryMaster.StorePhoto(photo);
+                    success = true;
+                }
             }
-            return true;
+
+            return success;
         }
 
         public bool DeleteKeyword(string keyword, IEnumerable<Photo> photos)
         {
+            bool success = false;
+
             foreach (Photo photo in photos)
             {
-                photo.DeleteKeyword(keyword);
+                if (photo.DeleteKeyword(keyword))
+                {
+                    //repositoryMaster.StorePhoto(photo);
+                    success = true;
+                }
             }
-            return true;
+
+            return success;
         }
 
         public IEnumerable<Photo> ToggleIsFavorite(IEnumerable<Photo> photos)
@@ -149,7 +168,17 @@ namespace PhotoFrame.Application
 
         public IEnumerable<Photo> SortDateAscending(IEnumerable<Photo> photos)
         {
-            return photos.OrderBy(p => p.Date);
+            DateTime defaultDate = new DateTime();
+
+            var tempPhotos = photos.Where(p => p.Date != defaultDate).OrderBy(p => p.Date).ToList();
+            var defaultPhotos = photos.Where(p => p.Date == defaultDate);
+
+            foreach (Photo photo in defaultPhotos)
+            {
+                tempPhotos.Add(photo);
+            }
+
+            return tempPhotos;
         }
 
         public IEnumerable<Photo> SortDateDescending(IEnumerable<Photo> photos)
