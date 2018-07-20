@@ -58,7 +58,7 @@ namespace PhotoFrame.Application
             return this.searchFolder.Execute(folderPath);
         }
 
-        public IEnumerable<Photo> Filter(string keyword , bool isFavorite, DateTime firstDate, DateTime lastDate)
+        public IEnumerable<Photo> Filter(string keyword, bool isFavorite, DateTime firstDate, DateTime lastDate)
         {
             return this.filter.Execute(keyword, isFavorite, firstDate, lastDate);
         }
@@ -103,62 +103,19 @@ namespace PhotoFrame.Application
             return this.getAllAlbums.Execute();
         }
 
-        //public int CreateAlbum(string albumName)
-        //{
-        //    return createAlbum.Execute(albumName);
-        //}
+        public Photo Store(Photo entity)
+        {
+            return this.repositoryMaster.StorePhoto(entity);
+        }
 
-        //public async Task<int> CreateAlbumAsync(string albumName)
-        //{
-        //    return await createAlbum.ExecuteAsync(albumName);
-        //}
+        public Album Store(Album entity)
+        {
+            return this.repositoryMaster.StoreAlbum(entity);
+        }
 
-
-
-        //public IEnumerable<Photo> SearchAlbum(string albumName)
-        //{
-        //    return searchAlbum.Execute(albumName);
-        //}
-
-        //public async Task<IEnumerable<Photo>> SearchAlbumAsync(string albumName)
-        //{
-        //    return await searchAlbum.ExecuteAsync(albumName);
-        //}
-
-
-
-        //public IEnumerable<Photo> SearchDirectory(string directoryName)
-        //{
-        //    return searchDirectory.Execute(directoryName);
-        //}
-
-        //public async Task<IEnumerable<Photo>> SearchDirectoryAsync(string directoryName)
-        //{
-        //    return await searchDirectory.ExecuteAsync(directoryName);
-        //}
-
-
-
-        //public Photo ToggleFavorite(Photo photo)
-        //{
-        //    return toggleFavorite.Execute(photo);
-        //}
-
-        //public async Task<Photo> ToggleFavoriteAsync(Photo photo)
-        //{
-        //    return await toggleFavorite.ExecuteAsync(photo);
-        //}
-
-
-
-        //public Photo ChangeAlbum(Photo photo, string newAlbumName)
-        //{
-        //    return changeAlbum.Execute(photo, newAlbumName);
-        //}
-
-        //public async Task<Photo> ChangeAlbumAsync(Photo photo, string newAlbumName)
-        //{
-        //    return await changeAlbum.ExecuteAsync(photo, newAlbumName);
-        //}
+        public Album Store(Album album, IEnumerable<Photo> photos)
+        {
+            return this.repositoryMaster.StoreSlideShow(album, photos);
+        }
     }
 }
