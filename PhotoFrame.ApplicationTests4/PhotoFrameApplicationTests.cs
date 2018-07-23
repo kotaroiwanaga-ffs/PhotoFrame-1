@@ -50,12 +50,14 @@ namespace PhotoFrame.Application.Tests
 
         public void FilterTest(string keyword, bool isFavorite, string s_firstDate, string s_lastDate, bool hit0, bool hit1, bool hit2)
         {
+            //File testfile = new File("Filter\\aaa.jpg");
+            //Photo testphoto = new Photo(testfile, new DateTime());
+            //List<Photo> photos = new List<Photo>();
+            //photos.Add(testphoto);
+            //application.AddKeyword("aaa", photos);
+
             this.photos = application.SearchFolder("FilterAlbum");
 
-            application.AddKeyword("a", photos.Take(1));
-            application.AddKeyword("b", photos.Skip(1));
-            application.AddKeyword("a", photos.Skip(2));
-            application.ToggleIsFavorite(photos.Take(2));
 
             DateTime firstDate, lastDate;
 
@@ -142,8 +144,6 @@ namespace PhotoFrame.Application.Tests
         [DataRow("c")]
         public void DeleteKeywordTest(string keyword)
         {
-            //application.Store(new Photo(new File(@"Album1\Chrysanthemum.jpg"), new DateTime(), new string[] { "a" }));
-            //application.Store(new Photo(new File(@"Album1\Desert.jpg"), new DateTime(), new string[] { "a", "b" }));
 
             this.photos = application.SearchFolder("Album1");
 
@@ -185,9 +185,6 @@ namespace PhotoFrame.Application.Tests
         [DataRow(false, false)]
         public void ToggleIsFavoriteTest(bool isFavorite0, bool isFavorite1)
         {
-            //application.Store(new Photo(new File(@"Album1\Chrysanthemum.jpg"), new DateTime(), null, isFavorite0));
-            //application.Store(new Photo(new File(@"Album1\Desert.jpg"), new DateTime(), null, isFavorite1));
-
             this.photos = application.SearchFolder("Album1");
 
             application.ToggleIsFavorite(this.photos.Take(2));
@@ -227,14 +224,7 @@ namespace PhotoFrame.Application.Tests
             tempPhotos.Add(new Photo(new File(@"Album1\Chrysanthemum.jpg"), new DateTime()));
             tempPhotos.Add(new Photo(new File(@"Album1\Desert.jpg"), new DateTime()));
             tempPhotos.Add(new Photo(new File(@"Album1\Hydrangeas.jpg"), new DateTime()));
-
-            //application.Store(album1);
-            //application.Store(album2);
-            //tempPhotos.ForEach(p => application.Store(p));
-            //application.Store(album1, tempPhotos.Take(2));
-            //application.Store(album2, tempPhotos.Skip(2));
-
-
+        
             IEnumerable<Photo> photos = application.SearchAlbum(album1.Name);
 
             for (int i = 0; i < photos.Count(); i++)
@@ -254,28 +244,6 @@ namespace PhotoFrame.Application.Tests
             photos.Add(new Photo(new File(@"photo3.jpg"), DateTime.Parse("2008/02/11 11:32")));
 
             IEnumerable<Photo> sortedPhotos = application.SortDateAscending(photos);
-            //int index;
-            //DateTime defaultDate = new DateTime();
-
-            //for (index = 0; index < sortedPhotos.Count(); index++)
-            //{
-            //    if (sortedPhotos.ElementAt(index).Date != defaultDate)
-            //    {
-            //        if (index >= 1)
-            //        {
-            //            Assert.IsTrue(sortedPhotos.ElementAt(index - 1).Date <= sortedPhotos.ElementAt(index).Date);
-            //        }
-            //    }
-            //    else
-            //    {
-            //        break;
-            //    }
-            //}
-
-            //for (index = index; index < sortedPhotos.Count(); index++)
-            //{
-            //    Assert.IsTrue(sortedPhotos.ElementAt(index).Date == defaultDate);
-            //}
 
             Assert.AreEqual(sortedPhotos.ElementAt(0).File.FilePath, @"photo3.jpg");
             Assert.AreEqual(sortedPhotos.ElementAt(1).File.FilePath, @"photo1.jpg");
@@ -295,28 +263,6 @@ namespace PhotoFrame.Application.Tests
             photos.Add(new Photo(new File(@"photo3.jpg"), DateTime.Parse("2008/03/14 13:59")));
 
             IEnumerable<Photo> sortedPhotos = application.SortDateDescending(photos);
-            //int index;
-            //DateTime defaultDate = new DateTime();
-
-            //for(index = 0; index < sortedPhotos.Count(); index++)
-            //{
-            //    if(sortedPhotos.ElementAt(index).Date != defaultDate)
-            //    {
-            //        if(index >= 1)
-            //        {
-            //            Assert.IsTrue(sortedPhotos.ElementAt(index - 1).Date <= sortedPhotos.ElementAt(index).Date);
-            //        }
-            //    }
-            //    else
-            //    {
-            //        break;
-            //    }
-            //}
-
-            //for(index = index; index < sortedPhotos.Count(); index++)
-            //{
-            //    Assert.IsTrue(sortedPhotos.ElementAt(index).Date == defaultDate);
-            //}
 
             Assert.AreEqual(sortedPhotos.ElementAt(0).File.FilePath, @"photo2.jpg");
             Assert.AreEqual(sortedPhotos.ElementAt(1).File.FilePath, @"photo3.jpg");
@@ -336,6 +282,7 @@ namespace PhotoFrame.Application.Tests
             {
                 Assert.IsTrue(true);
             }
+            else Assert.Fail();
         }
     }
 }
