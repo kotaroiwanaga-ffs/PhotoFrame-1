@@ -53,7 +53,7 @@ namespace PhotoFrame.Persistence
             List<string> file_list = new List<string>();
             TimeSpan elapsedTime = DateTime.Now - startTime;
 
-            if(elapsedTime.Seconds < 10000)
+            if(elapsedTime.Seconds < 10)
             {
                 try
                 {

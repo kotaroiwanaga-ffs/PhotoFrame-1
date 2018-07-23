@@ -415,11 +415,9 @@ namespace PhotoFrameApp
             if (searchedPhotos.Count() == 0 || searchedPhotos.Count() > 100)
             {
                 MessageBox.Show("検索することができませんでした。");
+                searchedPhotos = new List<Photo>().AsEnumerable();
             }
-            else
-            {
-                renewPhotoListView();
-            }
+            renewPhotoListView();
         }
 
         /// <summary>

@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="TeamB_PhotoFrameModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="TeamB_PhotoFrameModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="ALBUM_TABLE">
           <Key>
             <PropertyRef Name="NAME" />
@@ -16,7 +16,7 @@
             <PropertyRef Name="FILEPATH" />
             <PropertyRef Name="ALBUMNAME" />
           </Key>
-          <Property Name="FILEPATH" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="FILEPATH" Type="varchar" MaxLength="300" Nullable="false" />
           <Property Name="ALBUMNAME" Type="varchar" MaxLength="100" Nullable="false" />
         </EntityType>
         <EntityType Name="KEYWORD_TABLE">
@@ -24,14 +24,14 @@
             <PropertyRef Name="FILEPATH" />
             <PropertyRef Name="KEYWORD" />
           </Key>
-          <Property Name="FILEPATH" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="FILEPATH" Type="varchar" MaxLength="300" Nullable="false" />
           <Property Name="KEYWORD" Type="varchar" MaxLength="100" Nullable="false" />
         </EntityType>
         <EntityType Name="PHOTO_TABLE">
           <Key>
             <PropertyRef Name="FILEPATH" />
           </Key>
-          <Property Name="FILEPATH" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="FILEPATH" Type="varchar" MaxLength="300" Nullable="false" />
           <Property Name="ISFAVORITE" Type="bit" />
           <Property Name="TAKEDATE" Type="varchar" MaxLength="100" />
         </EntityType>
@@ -95,8 +95,7 @@
             <End Role="KEYWORD_TABLE" EntitySet="KEYWORD_TABLE" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="TeamB_PhotoFrameModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -112,7 +111,7 @@
             <PropertyRef Name="FILEPATH" />
             <PropertyRef Name="KEYWORD" />
           </Key>
-          <Property Name="FILEPATH" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="FILEPATH" Type="String" MaxLength="300" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="KEYWORD" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="PHOTO_TABLE" Relationship="Self.FK__KEYWORD_T__FILEP__145C0A3F" FromRole="KEYWORD_TABLE" ToRole="PHOTO_TABLE" />
         </EntityType>
@@ -120,7 +119,7 @@
           <Key>
             <PropertyRef Name="FILEPATH" />
           </Key>
-          <Property Name="FILEPATH" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="FILEPATH" Type="String" MaxLength="300" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="ISFAVORITE" Type="Boolean" />
           <Property Name="TAKEDATE" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="KEYWORD_TABLE" Relationship="Self.FK__KEYWORD_T__FILEP__145C0A3F" FromRole="PHOTO_TABLE" ToRole="KEYWORD_TABLE" />
