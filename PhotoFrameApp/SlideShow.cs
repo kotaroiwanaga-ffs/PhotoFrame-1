@@ -138,8 +138,29 @@ namespace PhotoFrameApp
             this.slideindex = 0;
             this.slideshow_list = application.SearchAlbum(comboBox_AlbumName.Text);
             //pictureBox_SlideShow.ImageLocation = this.slideshow_list.ElementAt(slideindex).File.FilePath;
-            pictureBox_SlideShow.Image = Image.FromFile(this.slideshow_list.ElementAt(slideindex).File.FilePath);
-            Stop();
+
+            if ( this.slideshow_list.Count() == 0)
+            {
+                MessageBox.Show("アルバムが存在しません");
+
+                button_Next.Enabled = false;
+                button_Back.Enabled = false;
+                button_StartSlideShow.Enabled = false;
+                radioButton_ListViewSlideShow.Enabled = true;
+                radioButton_ListViewSlideShow.Checked = false;
+                radioButton_AlbumSlideShow.Enabled = true;
+                radioButton_AlbumSlideShow.Checked = true;
+                comboBox_AlbumName.Enabled = false;
+                textBox_SaveAlbumName.Enabled = false;
+                button_SaveAlbumName.Enabled = false;
+
+            }
+            else
+            {
+                pictureBox_SlideShow.Image = Image.FromFile(this.slideshow_list.ElementAt(slideindex).File.FilePath);
+                Stop();
+            }
+           
             
             if(this.photo_listview.Count()==0)
             {
