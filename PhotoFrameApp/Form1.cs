@@ -547,21 +547,35 @@ namespace PhotoFrameApp
                     {
                         filterDateE = (DateTime)dateTime_E;
                     }
-                    //日付指定が正しく行われているか（終＞始：１、終＝始：０、終＜始：－１）
-                    if ((dateTime_S != null && dateTime_E != null) && (filterDateE.CompareTo(filterDateS) >= 0))
+                    //nullが用いられているか
+                    if (dateTime_S != null && dateTime_E != null)
+                    {
+                        //日付指定が正しく行われているか（終＞始：１、終＝始：０、終＜始：－１）
+                        if (filterDateE.CompareTo(filterDateS) >= 0)
+                        {
+                            searchedPhotos = application.Filter(filterKeyword, isFavorite_F_now, filterDateS, filterDateE);
+                            renewPhotoListView();
+                            //photoPreview.ImageLocation = @"C:\研修用\写真が選択されていません.png";
+                            photoPreview.Image = Image.FromFile(@"C:\研修用\写真が選択されていません.png");
+                            if (searchedPhotos.Count() == 0)
+                            {
+                                MessageBox.Show("フィルタの条件に合致する画像はありませんでした。");
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show("日付の設定が間違っています。左のボックスに古い日付を指定してください。");
+                        }
+                    }
+                    else
                     {
                         searchedPhotos = application.Filter(filterKeyword, isFavorite_F_now, filterDateS, filterDateE);
                         renewPhotoListView();
-                        //photoPreview.ImageLocation = @"C:\研修用\写真が選択されていません.png";
                         photoPreview.Image = Image.FromFile(@"C:\研修用\写真が選択されていません.png");
                         if (searchedPhotos.Count() == 0)
                         {
                             MessageBox.Show("フィルタの条件に合致する画像はありませんでした。");
                         }
-                    }
-                    else
-                    {
-                        MessageBox.Show("日付の設定が間違っています。左のボックスに古い日付を指定してください。");
                     }
                 }
                 else
