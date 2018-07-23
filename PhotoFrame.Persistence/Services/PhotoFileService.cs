@@ -21,7 +21,16 @@ namespace PhotoFrame.Persistence
             // directoryが存在する場合
             if (Directory.Exists(directory))
             {
-                List<string> path_list = Enumerate(directory);
+                List<string> path_list = new List<string>();
+
+                try
+                {
+                    path_list = Enumerate(directory, DateTime.Now);
+                }
+                catch (Exception)
+                {
+                    return file_list;
+                }
 
                 foreach (string filePath in path_list)
                 {
@@ -39,37 +48,46 @@ namespace PhotoFrame.Persistence
             
         }
 
-        private List<string> Enumerate(string dir)
+        private List<string> Enumerate(string dir, DateTime startTime)
         {
             List<string> file_list = new List<string>();
+            TimeSpan elapsedTime = DateTime.Now - startTime;
 
-            try
+            if(elapsedTime.Seconds < 10000)
             {
-                string[] files = Directory.GetFiles(dir);
-
-                foreach (string s in files)
+                try
                 {
-                    file_list.Add(s);
-                }
+                    string[] files = Directory.GetFiles(dir);
 
-                string[] dirs = Directory.GetDirectories(dir);
-
-                foreach (string s in dirs)
-                {
-                    List<string> temp_list = Enumerate(s);
-
-                    foreach (string t in temp_list)
+                    foreach (string s in files)
                     {
-                        file_list.Add(t);
+                        file_list.Add(s);
                     }
-                }
 
-                return file_list;
+                    string[] dirs = Directory.GetDirectories(dir);
+
+                    foreach (string s in dirs)
+                    {
+                        List<string> temp_list = Enumerate(s, startTime);
+
+                        foreach (string t in temp_list)
+                        {
+                            file_list.Add(t);
+                        }
+                    }
+
+                    return file_list;
+                }
+                catch (Exception)
+                {
+                    return file_list;
+                }
             }
-            catch (Exception)
+            else
             {
-                return file_list;
+                throw new Exception();
             }
+            
             
         }
     }
