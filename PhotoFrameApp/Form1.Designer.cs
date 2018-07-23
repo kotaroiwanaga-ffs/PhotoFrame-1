@@ -56,11 +56,11 @@
             this.selectKeyword_F = new System.Windows.Forms.ComboBox();
             this.tableLayoutPanel11 = new System.Windows.Forms.TableLayoutPanel();
             this.dateCheckBox = new System.Windows.Forms.CheckBox();
-            this.dateStart = new System.Windows.Forms.DateTimePicker();
-            this.dateEnd = new System.Windows.Forms.DateTimePicker();
             this.label1 = new System.Windows.Forms.Label();
             this.isFavorite_F = new System.Windows.Forms.Label();
             this.filterButton = new System.Windows.Forms.Button();
+            this.dateStart = new System.Windows.Forms.DateTimePicker();
+            this.dateEnd = new System.Windows.Forms.DateTimePicker();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
@@ -413,12 +413,12 @@
             this.tableLayoutPanel11.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
             this.tableLayoutPanel11.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
             this.tableLayoutPanel11.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30F));
-            this.tableLayoutPanel11.Controls.Add(this.dateCheckBox, 0, 0);
-            this.tableLayoutPanel11.Controls.Add(this.dateStart, 1, 0);
             this.tableLayoutPanel11.Controls.Add(this.dateEnd, 3, 0);
+            this.tableLayoutPanel11.Controls.Add(this.dateCheckBox, 0, 0);
             this.tableLayoutPanel11.Controls.Add(this.label1, 2, 0);
             this.tableLayoutPanel11.Controls.Add(this.isFavorite_F, 4, 0);
             this.tableLayoutPanel11.Controls.Add(this.filterButton, 5, 0);
+            this.tableLayoutPanel11.Controls.Add(this.dateStart, 1, 0);
             this.tableLayoutPanel11.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel11.Location = new System.Drawing.Point(1, 38);
             this.tableLayoutPanel11.Margin = new System.Windows.Forms.Padding(1);
@@ -439,25 +439,6 @@
             this.dateCheckBox.Text = "日付指定";
             this.dateCheckBox.UseVisualStyleBackColor = true;
             this.dateCheckBox.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
-            // 
-            // dateStart
-            // 
-            this.dateStart.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.dateStart.Enabled = false;
-            this.dateStart.Location = new System.Drawing.Point(101, 8);
-            this.dateStart.Name = "dateStart";
-            this.dateStart.Size = new System.Drawing.Size(124, 19);
-            this.dateStart.TabIndex = 1;
-            this.dateStart.Value = new System.DateTime(2018, 7, 18, 13, 44, 37, 0);
-            // 
-            // dateEnd
-            // 
-            this.dateEnd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.dateEnd.Enabled = false;
-            this.dateEnd.Location = new System.Drawing.Point(263, 8);
-            this.dateEnd.Name = "dateEnd";
-            this.dateEnd.Size = new System.Drawing.Size(124, 19);
-            this.dateEnd.TabIndex = 1;
             // 
             // label1
             // 
@@ -494,6 +475,24 @@
             this.filterButton.Text = "フィルタ";
             this.filterButton.UseVisualStyleBackColor = true;
             this.filterButton.Click += new System.EventHandler(this.filterButton_Click);
+            // 
+            // dateStart
+            // 
+            this.dateStart.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.dateStart.Enabled = false;
+            this.dateStart.Location = new System.Drawing.Point(101, 8);
+            this.dateStart.Name = "dateStart";
+            this.dateStart.Size = new System.Drawing.Size(124, 19);
+            this.dateStart.TabIndex = 6;
+            // 
+            // dateEnd
+            // 
+            this.dateEnd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.dateEnd.Enabled = false;
+            this.dateEnd.Location = new System.Drawing.Point(263, 8);
+            this.dateEnd.Name = "dateEnd";
+            this.dateEnd.Size = new System.Drawing.Size(124, 19);
+            this.dateEnd.TabIndex = 7;
             // 
             // Form1
             // 
@@ -553,11 +552,11 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel11;
         private System.Windows.Forms.ComboBox selectKeyword_F;
         private System.Windows.Forms.CheckBox dateCheckBox;
-        private System.Windows.Forms.DateTimePicker dateStart;
-        private System.Windows.Forms.DateTimePicker dateEnd;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label isFavorite_F;
         private System.Windows.Forms.Button filterButton;
+        private System.Windows.Forms.DateTimePicker dateStart;
+        private System.Windows.Forms.DateTimePicker dateEnd;
     }
 }
 
