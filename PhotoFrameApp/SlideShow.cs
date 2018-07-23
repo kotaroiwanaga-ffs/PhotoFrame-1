@@ -141,7 +141,7 @@ namespace PhotoFrameApp
 
             if ( this.slideshow_list.Count() == 0)
             {
-                MessageBox.Show("アルバムが存在しません");
+                MessageBox.Show("保存したアルバム内の写真がすべて削除されています");
 
                 button_Next.Enabled = false;
                 button_Back.Enabled = false;
