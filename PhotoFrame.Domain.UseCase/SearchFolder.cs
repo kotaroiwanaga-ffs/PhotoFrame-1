@@ -27,36 +27,39 @@ namespace PhotoFrame.Domain.UseCase
             List<Photo> photos = new List<Photo>();
             IEnumerable<File> files = photoFileService.FindAllPhotoFilesFromDirectory(folderPath);
 
-            foreach (File file in files)
+            if(files.Count() <= 100)
             {
-                Func<IQueryable<Photo>, Photo> query = ((folderPhotos) =>
+                foreach (File file in files)
                 {
-                    return folderPhotos
-                        .Where(p => p.File.FilePath == file.FilePath)
-                        .FirstOrDefault();
-                });
-
-                Photo hitPhoto = repositoryMaster.FindPhoto(query);
-
-                if (hitPhoto != null)
-                {
-                    if (GetFilmingDate(file.FilePath) != null)
+                    Func<IQueryable<Photo>, Photo> query = ((folderPhotos) =>
                     {
-                        photos.Add(hitPhoto);
+                        return folderPhotos
+                            .Where(p => p.File.FilePath == file.FilePath)
+                            .FirstOrDefault();
+                    });
+
+                    Photo hitPhoto = repositoryMaster.FindPhoto(query);
+
+                    if (hitPhoto != null)
+                    {
+                        if (GetFilmingDate(file.FilePath) != null)
+                        {
+                            photos.Add(hitPhoto);
+                        }
+                    }
+                    else
+                    {
+                        DateTime? date = GetFilmingDate(file.FilePath);
+
+                        if (date != null)
+                        {
+                            photos.Add(new Photo(file, (DateTime)date));
+                        }
                     }
                 }
-                else
-                {
-                    DateTime? date = GetFilmingDate(file.FilePath);
 
-                    if (date != null)
-                    {
-                        photos.Add(new Photo(file, (DateTime)date));
-                    }
-                }
+                this.repositoryMaster.SetAllPhotos(photos);
             }
-
-            this.repositoryMaster.SetAllPhotos(photos);
 
             return photos;
         }

@@ -41,27 +41,36 @@ namespace PhotoFrame.Persistence
 
         private List<string> Enumerate(string dir)
         {
-            string[] files = Directory.GetFiles(dir);
             List<string> file_list = new List<string>();
 
-            foreach (string s in files)
+            try
             {
-                file_list.Add(s);
-            }
+                string[] files = Directory.GetFiles(dir);
 
-            string[] dirs = Directory.GetDirectories(dir);
-
-            foreach(string s in dirs)
-            {
-                List<string> temp_list = Enumerate(s);
-
-                foreach(string t in temp_list)
+                foreach (string s in files)
                 {
-                    file_list.Add(t);
+                    file_list.Add(s);
                 }
-            }
 
-            return file_list;
+                string[] dirs = Directory.GetDirectories(dir);
+
+                foreach (string s in dirs)
+                {
+                    List<string> temp_list = Enumerate(s);
+
+                    foreach (string t in temp_list)
+                    {
+                        file_list.Add(t);
+                    }
+                }
+
+                return file_list;
+            }
+            catch (Exception)
+            {
+                return file_list;
+            }
+            
         }
     }
 }
