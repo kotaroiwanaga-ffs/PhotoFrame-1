@@ -305,9 +305,16 @@ namespace PhotoFrameApp
             //ダイアログを表示する
             if (fbd.ShowDialog(this) == DialogResult.OK)
             {
+                try
+                {
                 //選択されたフォルダを表示する
                 filepath = fbd.SelectedPath;
                 filePathView.Text = (filepath);
+                }
+                catch(Exception)
+                {
+                    MessageBox.Show("ファイルパスが長すぎます！！！！！");
+                }
             }
         }
 
