@@ -46,6 +46,11 @@ namespace PhotoFrameApp
             {//リストビューに写真が存在するとき
                 //pictureBox_SlideShow.ImageLocation = this.slideshow_list.ElementAt(slideindex).File.FilePath;
                 pictureBox_SlideShow.Image = Image.FromFile(this.slideshow_list.ElementAt(slideindex).File.FilePath);
+
+                if(this.photo_listview.Count() == 1)
+                {
+                    this.button_Next.Enabled = false;
+                }
             }
             else
             {//リストビューに写真が一枚もない時
@@ -101,6 +106,12 @@ namespace PhotoFrameApp
                     this.slideshow_list = application.SearchAlbum(comboBox_AlbumName.Text);
                     //pictureBox_SlideShow.ImageLocation = this.slideshow_list.ElementAt(0).File.FilePath;
                     pictureBox_SlideShow.Image = Image.FromFile(this.slideshow_list.ElementAt(0).File.FilePath);
+
+                    if (this.photo_listview.Count() == 1)
+                    {
+                        this.button_Next.Enabled = false;
+                    }
+
                 }
             }
         }
@@ -125,6 +136,12 @@ namespace PhotoFrameApp
 
                 comboBox_AlbumName.Enabled = false;
                 radioButton_AlbumSlideShow.Checked = false;
+
+                if (this.photo_listview.Count() == 1)
+                {
+                    this.button_Next.Enabled = false;
+                }
+
             }
         }
 
