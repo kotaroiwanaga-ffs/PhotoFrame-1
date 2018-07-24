@@ -15,24 +15,26 @@ namespace PhotoFrameApp
     public partial class SlideShow : Form
     {
 
-        private IEnumerable<PhotoFrame.Domain.Model.Photo> photo_listview;//リストビュー上のフォト
-        private IEnumerable<PhotoFrame.Domain.Model.Photo> slideshow_list;//スライドショーを行う写真リスト
+        private IEnumerable<Photo> photo_listview; //リストビュー上のフォト
+        private IEnumerable<Photo> slideshow_list; //スライドショーを行う写真リスト
 
-        private IEnumerable<Album> albumlist;
-        private PhotoFrameApplication application;
-        //private PhotoFrameApplicationTest application;
+        private IEnumerable<Album> albumlist; // 保存済みのアルバムのリスト
+        private PhotoFrameApplication application; 
         private int slideindex;
 
-        public SlideShow(IEnumerable<PhotoFrame.Domain.Model.Photo> photolist, PhotoFrameApplication application )
+        public SlideShow(IEnumerable<Photo> photolist, PhotoFrameApplication application )
         {
             InitializeComponent();
 
+            // メンバ変数の初期化
             this.application = application;
             this.photo_listview = photolist;
             this.slideshow_list = photolist;
             
             this.albumlist = application.GetAllAlbums();
             this.slideindex = 0;
+
+            // タイマーのセット(スライドショーの写真切り替え間隔)
             timer_SlideShow.Interval = 3000;
 
             button_Back.Enabled = false;
@@ -461,6 +463,13 @@ namespace PhotoFrameApp
 
             }
 
+        }
+
+        private void SetPreviewImage()
+        {
+            pictureBox_SlideShow.Image = Image.FromFile(this.slideshow_list.ElementAt(slideindex).File.FilePath);
+            button_Back.Enabled = (this.slideindex == 0);
+            button_Back.Enabled = (this.slideindex >= this.slideshow_list.Count() - 1);
         }
     }
 }
