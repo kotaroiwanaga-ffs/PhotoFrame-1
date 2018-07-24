@@ -351,7 +351,11 @@ namespace PhotoFrameApp
             }
             textBox_SaveAlbumName.Enabled = true;
             button_SaveAlbumName.Enabled = true;
-            button_Next.Enabled = true;
+            if (this.photo_listview.Count() == 1)
+            {
+                this.button_Next.Enabled = false;
+            }
+
             button_Back.Enabled = true;
 
             if (slideindex == 0)
