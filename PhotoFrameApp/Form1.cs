@@ -583,17 +583,10 @@ namespace PhotoFrameApp
                     filterDateS = new DateTime();
                     filterDateE = new DateTime();
                     //フィルタ条件がすべてない場合、今までのフィルタを解除
-                    if (isFavorite_F_now == false && filterKeyword == null)
+                    searchedPhotos = application.Filter(filterKeyword, isFavorite_F_now, filterDateS, filterDateE);
+                    if (searchedPhotos.Count() == 0)
                     {
-                        searchedPhotos = application.SearchFolder(filepath);
-                    }
-                    else
-                    {
-                        searchedPhotos = application.Filter(filterKeyword, isFavorite_F_now, filterDateS, filterDateE);
-                        if (searchedPhotos.Count() == 0)
-                        {
-                            MessageBox.Show("フィルタの条件に合致する画像はありませんでした。");
-                        }
+                        MessageBox.Show("フィルタの条件に合致する画像はありませんでした。");
                     }
                     renewPhotoListView();
                     //photoPreview.ImageLocation = @"C:\研修用\写真が選択されていません.png";
