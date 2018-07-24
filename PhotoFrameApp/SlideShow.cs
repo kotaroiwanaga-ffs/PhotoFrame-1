@@ -397,6 +397,17 @@ namespace PhotoFrameApp
             button_SaveAlbumName.Enabled = true;
 
             button_Back.Enabled = false;
+
+            if (this.photo_listview.Count() == 1)
+            {
+                this.button_Next.Enabled = false;
+            }
+            else if(this.photo_listview.Count() > 1)
+            {
+                this.button_Next.Enabled = true;
+
+            }
+
             button_Next.Enabled = true;
 
 
@@ -413,10 +424,6 @@ namespace PhotoFrameApp
                 pictureBox_SlideShow.Image = Image.FromFile(@"C:\研修用\写真がなし.png");
             }
 
-            if (this.photo_listview.Count() == 1)
-            {
-                this.button_Next.Enabled = false;
-            }
 
         }
 
