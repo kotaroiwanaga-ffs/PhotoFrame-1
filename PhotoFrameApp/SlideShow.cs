@@ -107,10 +107,6 @@ namespace PhotoFrameApp
                     //pictureBox_SlideShow.ImageLocation = this.slideshow_list.ElementAt(0).File.FilePath;
                     pictureBox_SlideShow.Image = Image.FromFile(this.slideshow_list.ElementAt(0).File.FilePath);
 
-                    if (this.photo_listview.Count() == 1)
-                    {
-                        this.button_Next.Enabled = false;
-                    }
 
                 }
             }
@@ -137,10 +133,6 @@ namespace PhotoFrameApp
                 comboBox_AlbumName.Enabled = false;
                 radioButton_AlbumSlideShow.Checked = false;
 
-                if (this.photo_listview.Count() == 1)
-                {
-                    this.button_Next.Enabled = false;
-                }
 
             }
         }
@@ -178,10 +170,6 @@ namespace PhotoFrameApp
             {
                 pictureBox_SlideShow.Image = Image.FromFile(this.slideshow_list.ElementAt(slideindex).File.FilePath);
                 Stop();
-                if (this.photo_listview.Count() == 1)
-                {
-                    this.button_Next.Enabled = false;
-                }
             }
            
             
@@ -424,6 +412,12 @@ namespace PhotoFrameApp
                 //pictureBox_SlideShow.ImageLocation = @"C:\研修用\写真がなし.png";
                 pictureBox_SlideShow.Image = Image.FromFile(@"C:\研修用\写真がなし.png");
             }
+
+            if (this.photo_listview.Count() == 1)
+            {
+                this.button_Next.Enabled = false;
+            }
+
         }
 
         private void ScreenTransition()
