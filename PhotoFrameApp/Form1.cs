@@ -91,6 +91,7 @@ namespace PhotoFrameApp
             //DeleteキーBackSpaceキーが押されたら、dateTimeにnullを設定してdateTimePickerを非表示に
             if (e.KeyData == Keys.Delete || e.KeyData == Keys.Back)
             {
+                dateStart.Value = DateTime.Now;
                 dateTime_S = null;
                 setDateTimePickerS(dateTime_S);
             }
@@ -150,6 +151,7 @@ namespace PhotoFrameApp
             //DeleteキーBackSpaceキーが押されたら、dateTimeにnullを設定してdateTimePickerを非表示に
             if (e.KeyData == Keys.Delete || e.KeyData == Keys.Back)
             {
+                dateEnd.Value = DateTime.Now;
                 dateTime_E = null;
                 setDateTimePickerE(dateTime_E);
             }
