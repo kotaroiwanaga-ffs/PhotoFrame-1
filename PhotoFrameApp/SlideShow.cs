@@ -156,6 +156,8 @@ namespace PhotoFrameApp
             this.slideshow_list = application.SearchAlbum(comboBox_AlbumName.Text);
             //pictureBox_SlideShow.ImageLocation = this.slideshow_list.ElementAt(slideindex).File.FilePath;
 
+           
+
             if ( this.slideshow_list.Count() == 0)
             {
                 MessageBox.Show("保存したアルバム内の写真がすべて削除されています");
@@ -176,6 +178,10 @@ namespace PhotoFrameApp
             {
                 pictureBox_SlideShow.Image = Image.FromFile(this.slideshow_list.ElementAt(slideindex).File.FilePath);
                 Stop();
+                if (this.photo_listview.Count() == 1)
+                {
+                    this.button_Next.Enabled = false;
+                }
             }
            
             
