@@ -351,17 +351,13 @@ namespace PhotoFrameApp
             }
             textBox_SaveAlbumName.Enabled = true;
             button_SaveAlbumName.Enabled = true;
-            if (this.slideshow_list.Count() == 1)
-            {
-                this.button_Next.Enabled = false;
-            }
 
             button_Back.Enabled = true;
 
             if (slideindex == 0)
             {
                 button_Back.Enabled = false;
-                button_Next.Enabled = true;
+                if(slideindex != this.slideshow_list.Count() - 1 ) button_Next.Enabled = true;
             }
             else if (slideindex == this.slideshow_list.Count() - 1)
             {
