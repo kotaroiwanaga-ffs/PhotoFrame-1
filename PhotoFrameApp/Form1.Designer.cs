@@ -46,7 +46,6 @@
             this.registerButton = new System.Windows.Forms.Button();
             this.deleteButton = new System.Windows.Forms.Button();
             this.photoPreview = new System.Windows.Forms.PictureBox();
-            this.photoKeyword = new System.Windows.Forms.TextBox();
             this.tableLayoutPanel10 = new System.Windows.Forms.TableLayoutPanel();
             this.filePathView = new System.Windows.Forms.TextBox();
             this.fileIcon = new System.Windows.Forms.PictureBox();
@@ -55,12 +54,15 @@
             this.tableLayoutPanel9 = new System.Windows.Forms.TableLayoutPanel();
             this.selectKeyword_F = new System.Windows.Forms.ComboBox();
             this.tableLayoutPanel11 = new System.Windows.Forms.TableLayoutPanel();
+            this.dateEnd = new System.Windows.Forms.DateTimePicker();
             this.dateCheckBox = new System.Windows.Forms.CheckBox();
             this.label1 = new System.Windows.Forms.Label();
             this.isFavorite_F = new System.Windows.Forms.Label();
             this.filterButton = new System.Windows.Forms.Button();
             this.dateStart = new System.Windows.Forms.DateTimePicker();
-            this.dateEnd = new System.Windows.Forms.DateTimePicker();
+            this.tableLayoutPanel12 = new System.Windows.Forms.TableLayoutPanel();
+            this.photoKeyword = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
@@ -74,6 +76,7 @@
             this.tableLayoutPanel8.SuspendLayout();
             this.tableLayoutPanel9.SuspendLayout();
             this.tableLayoutPanel11.SuspendLayout();
+            this.tableLayoutPanel12.SuspendLayout();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -181,7 +184,7 @@
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel4.Controls.Add(this.tableLayoutPanel5, 0, 2);
             this.tableLayoutPanel4.Controls.Add(this.photoPreview, 0, 0);
-            this.tableLayoutPanel4.Controls.Add(this.photoKeyword, 0, 1);
+            this.tableLayoutPanel4.Controls.Add(this.tableLayoutPanel12, 0, 1);
             this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel4.Location = new System.Drawing.Point(231, 1);
             this.tableLayoutPanel4.Margin = new System.Windows.Forms.Padding(0);
@@ -196,8 +199,8 @@
             // tableLayoutPanel5
             // 
             this.tableLayoutPanel5.ColumnCount = 2;
-            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 60F));
-            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 40F));
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 70F));
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30F));
             this.tableLayoutPanel5.Controls.Add(this.tableLayoutPanel6, 0, 0);
             this.tableLayoutPanel5.Controls.Add(this.tableLayoutPanel7, 1, 0);
             this.tableLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -222,7 +225,6 @@
             this.tableLayoutPanel6.Name = "tableLayoutPanel6";
             this.tableLayoutPanel6.RowCount = 1;
             this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 70F));
             this.tableLayoutPanel6.Size = new System.Drawing.Size(251, 70);
             this.tableLayoutPanel6.TabIndex = 0;
             // 
@@ -299,15 +301,6 @@
             this.photoPreview.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.photoPreview.TabIndex = 1;
             this.photoPreview.TabStop = false;
-            // 
-            // photoKeyword
-            // 
-            this.photoKeyword.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.photoKeyword.Location = new System.Drawing.Point(4, 264);
-            this.photoKeyword.Name = "photoKeyword";
-            this.photoKeyword.ReadOnly = true;
-            this.photoKeyword.Size = new System.Drawing.Size(418, 19);
-            this.photoKeyword.TabIndex = 2;
             // 
             // tableLayoutPanel10
             // 
@@ -428,6 +421,15 @@
             this.tableLayoutPanel11.Size = new System.Drawing.Size(654, 36);
             this.tableLayoutPanel11.TabIndex = 1;
             // 
+            // dateEnd
+            // 
+            this.dateEnd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.dateEnd.Enabled = false;
+            this.dateEnd.Location = new System.Drawing.Point(263, 8);
+            this.dateEnd.Name = "dateEnd";
+            this.dateEnd.Size = new System.Drawing.Size(124, 19);
+            this.dateEnd.TabIndex = 7;
+            // 
             // dateCheckBox
             // 
             this.dateCheckBox.Anchor = System.Windows.Forms.AnchorStyles.Right;
@@ -485,14 +487,41 @@
             this.dateStart.Size = new System.Drawing.Size(124, 19);
             this.dateStart.TabIndex = 6;
             // 
-            // dateEnd
+            // tableLayoutPanel12
             // 
-            this.dateEnd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.dateEnd.Enabled = false;
-            this.dateEnd.Location = new System.Drawing.Point(263, 8);
-            this.dateEnd.Name = "dateEnd";
-            this.dateEnd.Size = new System.Drawing.Size(124, 19);
-            this.dateEnd.TabIndex = 7;
+            this.tableLayoutPanel12.ColumnCount = 2;
+            this.tableLayoutPanel12.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14F));
+            this.tableLayoutPanel12.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 86F));
+            this.tableLayoutPanel12.Controls.Add(this.photoKeyword, 1, 0);
+            this.tableLayoutPanel12.Controls.Add(this.label2, 0, 0);
+            this.tableLayoutPanel12.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel12.Location = new System.Drawing.Point(2, 257);
+            this.tableLayoutPanel12.Margin = new System.Windows.Forms.Padding(1);
+            this.tableLayoutPanel12.Name = "tableLayoutPanel12";
+            this.tableLayoutPanel12.RowCount = 1;
+            this.tableLayoutPanel12.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel12.Size = new System.Drawing.Size(422, 34);
+            this.tableLayoutPanel12.TabIndex = 2;
+            // 
+            // photoKeyword
+            // 
+            this.photoKeyword.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.photoKeyword.Location = new System.Drawing.Point(62, 7);
+            this.photoKeyword.Name = "photoKeyword";
+            this.photoKeyword.ReadOnly = true;
+            this.photoKeyword.Size = new System.Drawing.Size(357, 19);
+            this.photoKeyword.TabIndex = 0;
+            // 
+            // label2
+            // 
+            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(3, 11);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(53, 12);
+            this.label2.TabIndex = 1;
+            this.label2.Text = "キーワード";
+            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // Form1
             // 
@@ -506,7 +535,6 @@
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel3.ResumeLayout(false);
             this.tableLayoutPanel4.ResumeLayout(false);
-            this.tableLayoutPanel4.PerformLayout();
             this.tableLayoutPanel5.ResumeLayout(false);
             this.tableLayoutPanel6.ResumeLayout(false);
             this.tableLayoutPanel6.PerformLayout();
@@ -519,6 +547,8 @@
             this.tableLayoutPanel9.ResumeLayout(false);
             this.tableLayoutPanel11.ResumeLayout(false);
             this.tableLayoutPanel11.PerformLayout();
+            this.tableLayoutPanel12.ResumeLayout(false);
+            this.tableLayoutPanel12.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -542,7 +572,6 @@
         private System.Windows.Forms.Button registerButton;
         private System.Windows.Forms.Button deleteButton;
         private System.Windows.Forms.PictureBox photoPreview;
-        private System.Windows.Forms.TextBox photoKeyword;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel10;
         private System.Windows.Forms.TextBox filePathView;
         private System.Windows.Forms.PictureBox fileIcon;
@@ -557,6 +586,9 @@
         private System.Windows.Forms.Button filterButton;
         private System.Windows.Forms.DateTimePicker dateStart;
         private System.Windows.Forms.DateTimePicker dateEnd;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel12;
+        private System.Windows.Forms.TextBox photoKeyword;
+        private System.Windows.Forms.Label label2;
     }
 }
 
