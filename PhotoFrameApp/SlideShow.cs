@@ -408,7 +408,7 @@ namespace PhotoFrameApp
 
             }
 
-            button_Next.Enabled = true;
+           
 
 
             //最初の画像をセット
