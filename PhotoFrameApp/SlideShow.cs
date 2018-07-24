@@ -351,7 +351,7 @@ namespace PhotoFrameApp
             }
             textBox_SaveAlbumName.Enabled = true;
             button_SaveAlbumName.Enabled = true;
-            if (this.photo_listview.Count() == 1)
+            if (this.slideshow_list.Count() == 1)
             {
                 this.button_Next.Enabled = false;
             }
@@ -402,11 +402,11 @@ namespace PhotoFrameApp
 
             button_Back.Enabled = false;
 
-            if (this.photo_listview.Count() == 1)
+            if (this.slideshow_list.Count() == 1)
             {
                 this.button_Next.Enabled = false;
             }
-            else if(this.photo_listview.Count() > 1)
+            else if(this.slideshow_list.Count() > 1)
             {
                 this.button_Next.Enabled = true;
 
