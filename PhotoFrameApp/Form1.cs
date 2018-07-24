@@ -313,7 +313,7 @@ namespace PhotoFrameApp
                 }
                 catch(Exception)
                 {
-                    MessageBox.Show("ファイルパスが長すぎます！！！！！");
+                    MessageBox.Show("検索できませんでした");
                 }
             }
         }
