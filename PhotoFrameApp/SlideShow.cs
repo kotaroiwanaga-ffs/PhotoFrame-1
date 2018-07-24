@@ -150,7 +150,7 @@ namespace PhotoFrameApp
                 radioButton_ListViewSlideShow.Checked = false;
                 radioButton_AlbumSlideShow.Enabled = true;
                 radioButton_AlbumSlideShow.Checked = true;
-                comboBox_AlbumName.Enabled = false;
+                comboBox_AlbumName.Enabled = true;
                 textBox_SaveAlbumName.Enabled = false;
                 button_SaveAlbumName.Enabled = false;
 
