@@ -427,6 +427,7 @@ namespace PhotoFrameApp
                 searchedPhotos = new List<Photo>().AsEnumerable();
             }
             renewPhotoListView();
+            photoPreview.Image = Image.FromFile(@"C:\研修用\写真が選択されていません.png");
         }
 
         /// <summary>
