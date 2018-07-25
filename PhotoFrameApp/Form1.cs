@@ -721,6 +721,7 @@ namespace PhotoFrameApp
                     {
                         photoKeyword.Text = "";
                     }
+                    selectKeyword_RD.Text = "";
                 }
                 else
                 {
@@ -738,6 +739,7 @@ namespace PhotoFrameApp
                 if (application.DeleteKeyword(selectKeyword_RD.Text, selectedPhotos.AsEnumerable()))
                 {
                     renewPhotoListView();
+                    selectKeyword_RD.Text = "";
                 }
                 else
                 {
