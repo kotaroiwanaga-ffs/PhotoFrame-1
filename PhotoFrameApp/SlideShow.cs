@@ -20,34 +20,41 @@ namespace PhotoFrameApp
 
         private IEnumerable<Album> albumlist;
         private PhotoFrameApplication application;
-        //private PhotoFrameApplicationTest application;
         private int slideindex;
 
-        public SlideShow(IEnumerable<PhotoFrame.Domain.Model.Photo> photolist, PhotoFrameApplication application )
+
+        public SlideShow(IEnumerable<PhotoFrame.Domain.Model.Photo> photolist, PhotoFrameApplication application)
         {
+            // * 1つのメソッド内でも近い操作はまとめたほうが見やすいかも
+            // * this.albumlist = application.GetAllAlbums() と comboBox_AlbumName.Items.Add(albums.Name) とか
+            // * コンストラクタが長すぎるのでプライベートメソッドをつくって、それを呼ぶようにしたほうがすっきりするかと ★２
+
             InitializeComponent();
 
+            // 初期値セット
             this.application = application;
             this.photo_listview = photolist;
             this.slideshow_list = photolist;
-            
+
+            // 既存のアルバムの取得
             this.albumlist = application.GetAllAlbums();
-            this.slideindex = 0;
-            timer_SlideShow.Interval = 3000;
-
-            button_Back.Enabled = false;
-
             foreach (var albums in this.albumlist)
             {
                 comboBox_AlbumName.Items.Add(albums.Name);
             }
-            
-            if (this.photo_listview.Count() >0)
+
+            // プレビューの初期設定
+            this.slideindex = 0;
+            //button_Back.Enabled = (this.slideindex == 0); // このほうがもしthis.slideindexの値が変わっても大丈夫
+            //button_Next.Enabled = (this.slideindex >= this.photo_listview.Count() - 1);
+            RenewButtonEnabled_BackNext(); // メソッドにしちゃったほうがいいかも
+
+            // プレビューに画像をセット
+            if (this.photo_listview.Count() > 0)
             {//リストビューに写真が存在するとき
-                //pictureBox_SlideShow.ImageLocation = this.slideshow_list.ElementAt(slideindex).File.FilePath;
                 pictureBox_SlideShow.Image = Image.FromFile(this.slideshow_list.ElementAt(slideindex).File.FilePath);
 
-                if(this.photo_listview.Count() == 1)
+                if (this.photo_listview.Count() == 1)
                 {
                     this.button_Next.Enabled = false;
                 }
@@ -82,9 +89,35 @@ namespace PhotoFrameApp
                     pictureBox_SlideShow.Image = Image.FromFile(@"C:\研修用\アルバムなしリストビューに写真がなし.png");
 
                 }
+
+                // タイマーセット
+                timer_SlideShow.Interval = 3000;
+
             }
 
         }
+
+        // ★２ コンストラクタ
+        //public SlideShow(IEnumerable<PhotoFrame.Domain.Model.Photo> photolist, PhotoFrameApplication application)
+        //{
+        //    InitializeComponent();
+
+        //    // 初期値セット
+        //    this.application = application;
+        //    this.photo_listview = photolist;
+        //    this.slideshow_list = photolist;
+
+        //    // 既存のアルバムの取得
+        //    SetComboBox_AlbumName();
+
+        //    // プレビューの初期設定
+        //    this.slideindex = 0;
+        //    RenewButtonEnabled_BackNext();
+
+        //    // プレビューに画像をセット
+        //    SetPreview();
+        //}
+
 
         /// <summary>
         /// 「保存済みのアルバム」のラジオボタンが変化したら//
@@ -104,7 +137,6 @@ namespace PhotoFrameApp
                 if (comboBox_AlbumName.Text != "")
                 {
                     this.slideshow_list = application.SearchAlbum(comboBox_AlbumName.Text);
-                    //pictureBox_SlideShow.ImageLocation = this.slideshow_list.ElementAt(0).File.FilePath;
                     pictureBox_SlideShow.Image = Image.FromFile(this.slideshow_list.ElementAt(0).File.FilePath);
 
 
@@ -146,8 +178,6 @@ namespace PhotoFrameApp
         {
             this.slideindex = 0;
             this.slideshow_list = application.SearchAlbum(comboBox_AlbumName.Text);
-            //pictureBox_SlideShow.ImageLocation = this.slideshow_list.ElementAt(slideindex).File.FilePath;
-
            
 
             if ( this.slideshow_list.Count() == 0)
@@ -267,7 +297,6 @@ namespace PhotoFrameApp
             if (this.slideindex > 0)
             {
                 slideindex--;
-                //pictureBox_SlideShow.ImageLocation = this.slideshow_list.ElementAt(slideindex).File.FilePath;
                 pictureBox_SlideShow.Image = Image.FromFile(this.slideshow_list.ElementAt(slideindex).File.FilePath);
             }
 
@@ -285,7 +314,6 @@ namespace PhotoFrameApp
             if (this.slideindex < slideshow_list.Count() - 1)
             {
                 slideindex++;
-                //pictureBox_SlideShow.ImageLocation = this.slideshow_list.ElementAt(slideindex).File.FilePath;
                 pictureBox_SlideShow.Image = Image.FromFile(this.slideshow_list.ElementAt(slideindex).File.FilePath);
             }
 
@@ -303,7 +331,6 @@ namespace PhotoFrameApp
             if (slideindex < slideshow_list.Count()-1)
             {
                 slideindex++;
-                //pictureBox_SlideShow.ImageLocation = this.slideshow_list.ElementAt(slideindex).File.FilePath;
                 pictureBox_SlideShow.Image = Image.FromFile(this.slideshow_list.ElementAt(slideindex).File.FilePath);
             }
             else
@@ -419,12 +446,10 @@ namespace PhotoFrameApp
 
             if (this.slideshow_list.Count() !=0)
             {
-                //pictureBox_SlideShow.ImageLocation = this.slideshow_list.ElementAt(slideindex).File.FilePath;
                 pictureBox_SlideShow.Image = Image.FromFile(this.slideshow_list.ElementAt(slideindex).File.FilePath);
             }
             else
             {
-                //pictureBox_SlideShow.ImageLocation = @"C:\研修用\写真がなし.png";
                 pictureBox_SlideShow.Image = Image.FromFile(@"C:\研修用\リストビューに写真がなし.png");
             }
 
@@ -433,20 +458,24 @@ namespace PhotoFrameApp
 
         private void ScreenTransition()
         {
+            // * このメソッドを作ってること自体はとてもいいと思います
+            // * ただ、冗長な書き方になってるのがもったいない(ミスの原因になります)
+            // * もしslideindex==0なら停止状態というのがなければ、button_Next/Backとbutton_Pause/Stop/Startは別々のメソッドでもいいかも ★１
+
             if (slideindex == 0)
             {
                 button_Back.Enabled = false;
                 button_Next.Enabled = true;
-                button_Pause_SlideShow.Enabled = false;
+                button_Pause_SlideShow.Enabled = false; // * このメソッドが呼ばれるときってbutton_Pause_SlideShow.Enabled = falseのときだからいらなくない？
                 button_StopSlideShow.Enabled = false;
-                button_StartSlideShow.Enabled = true;
+                button_StartSlideShow.Enabled = true; // *このメソッドが呼ばれるときってbutton_StartSlideShow.Enabled = trueのときだからいらなくない？
             }
             else if (slideindex == this.slideshow_list.Count() - 1)
             {
                 button_Back.Enabled = true;
                 button_Next.Enabled = false;
-                button_StartSlideShow.Enabled = false;
-                button_Pause_SlideShow.Enabled = false;
+                button_StartSlideShow.Enabled = false; 
+                button_Pause_SlideShow.Enabled = false; 
                 button_StopSlideShow.Enabled = true;
 
             }
@@ -460,7 +489,79 @@ namespace PhotoFrameApp
                 button_StartSlideShow.Enabled = true;
 
             }
+            // * if/if else/ else でbuttonXXX.Enableの順番が違うのが気になる・・・
+        }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        // ★1
+        private void RenewButtonEnabled_BackNext()
+        {
+            button_Back.Enabled = (this.slideindex == 0);
+            button_Next.Enabled = (this.slideindex >= this.slideshow_list.Count() - 1);
+            //button_Pause_SlideShow.Enabled = false;
+            //button_StopSlideShow.Enabled = button_Back.Enabled;
+            //button_StartSlideShow.Enabled = true;
+        }
+
+        private void RenewButtonEnabled_PauseStopStart()
+        {
+            button_Pause_SlideShow.Enabled = false;
+            button_StopSlideShow.Enabled = (this.slideindex == 0);
+            button_StartSlideShow.Enabled = true;
 
         }
+
+        private void SetComboBox_AlbumName()
+        {
+            this.albumlist = application.GetAllAlbums();
+            foreach (var albums in this.albumlist)
+            {
+                comboBox_AlbumName.Items.Add(albums.Name);
+            }
+        }
+
+        private void SetPreview()
+        {
+            if(this.photo_listview.Count() > 0)
+            {//リストビューに写真が存在するとき
+                pictureBox_SlideShow.Image = Image.FromFile(this.slideshow_list.ElementAt(slideindex).File.FilePath);
+
+                if (this.photo_listview.Count() == 1)
+                {
+                    this.button_Next.Enabled = false;
+                }
+            }
+            else
+            {//リストビューに写真が一枚もない時
+                if (albumlist.Count() > 0)
+                {
+                    //アルバムがある時
+                    button_Next.Enabled = false;
+                    button_Back.Enabled = false;
+                    button_StartSlideShow.Enabled = false;
+                    radioButton_ListViewSlideShow.Enabled = false;
+                    radioButton_ListViewSlideShow.Checked = false;
+                    radioButton_AlbumSlideShow.Checked = true;
+                    textBox_SaveAlbumName.Enabled = false;
+                    button_SaveAlbumName.Enabled = false;
+                    pictureBox_SlideShow.Image = Image.FromFile(@"C:\研修用\リストビューに写真がなし.png");
+                }
+                else
+                {
+                    //アルバムがない時
+                    button_Next.Enabled = false;
+                    button_Back.Enabled = false;
+                    button_StartSlideShow.Enabled = false;
+                    radioButton_ListViewSlideShow.Enabled = false;
+                    radioButton_ListViewSlideShow.Checked = false;
+                    radioButton_AlbumSlideShow.Enabled = false;
+                    comboBox_AlbumName.Enabled = false;
+                    textBox_SaveAlbumName.Enabled = false;
+                    button_SaveAlbumName.Enabled = false;
+                    pictureBox_SlideShow.Image = Image.FromFile(@"C:\研修用\アルバムなしリストビューに写真がなし.png");
+
+                }
+            }
     }
 }
