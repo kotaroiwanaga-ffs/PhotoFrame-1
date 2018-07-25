@@ -46,6 +46,9 @@
             this.registerButton = new System.Windows.Forms.Button();
             this.deleteButton = new System.Windows.Forms.Button();
             this.photoPreview = new System.Windows.Forms.PictureBox();
+            this.tableLayoutPanel12 = new System.Windows.Forms.TableLayoutPanel();
+            this.photoKeyword = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.tableLayoutPanel10 = new System.Windows.Forms.TableLayoutPanel();
             this.filePathView = new System.Windows.Forms.TextBox();
             this.fileIcon = new System.Windows.Forms.PictureBox();
@@ -60,9 +63,6 @@
             this.isFavorite_F = new System.Windows.Forms.Label();
             this.filterButton = new System.Windows.Forms.Button();
             this.dateStart = new System.Windows.Forms.DateTimePicker();
-            this.tableLayoutPanel12 = new System.Windows.Forms.TableLayoutPanel();
-            this.photoKeyword = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
@@ -71,12 +71,12 @@
             this.tableLayoutPanel6.SuspendLayout();
             this.tableLayoutPanel7.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.photoPreview)).BeginInit();
+            this.tableLayoutPanel12.SuspendLayout();
             this.tableLayoutPanel10.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.fileIcon)).BeginInit();
             this.tableLayoutPanel8.SuspendLayout();
             this.tableLayoutPanel9.SuspendLayout();
             this.tableLayoutPanel11.SuspendLayout();
-            this.tableLayoutPanel12.SuspendLayout();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -172,7 +172,6 @@
             this.slideShowButton.Name = "slideShowButton";
             this.slideShowButton.Size = new System.Drawing.Size(223, 31);
             this.slideShowButton.TabIndex = 1;
-            this.slideShowButton.Text = "スライドショー";
             this.slideShowButton.UseVisualStyleBackColor = true;
             this.slideShowButton.Click += new System.EventHandler(this.slideShowButton_Click);
             // 
@@ -225,7 +224,7 @@
             this.tableLayoutPanel6.Name = "tableLayoutPanel6";
             this.tableLayoutPanel6.RowCount = 1;
             this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel6.Size = new System.Drawing.Size(251, 70);
+            this.tableLayoutPanel6.Size = new System.Drawing.Size(293, 70);
             this.tableLayoutPanel6.TabIndex = 0;
             // 
             // isFavorite_RD
@@ -236,7 +235,7 @@
             this.isFavorite_RD.ForeColor = System.Drawing.Color.Gray;
             this.isFavorite_RD.Location = new System.Drawing.Point(3, 0);
             this.isFavorite_RD.Name = "isFavorite_RD";
-            this.isFavorite_RD.Size = new System.Drawing.Size(44, 70);
+            this.isFavorite_RD.Size = new System.Drawing.Size(52, 70);
             this.isFavorite_RD.TabIndex = 0;
             this.isFavorite_RD.Text = "★";
             this.isFavorite_RD.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -246,9 +245,9 @@
             // 
             this.selectKeyword_RD.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.selectKeyword_RD.FormattingEnabled = true;
-            this.selectKeyword_RD.Location = new System.Drawing.Point(53, 25);
+            this.selectKeyword_RD.Location = new System.Drawing.Point(61, 25);
             this.selectKeyword_RD.Name = "selectKeyword_RD";
-            this.selectKeyword_RD.Size = new System.Drawing.Size(195, 20);
+            this.selectKeyword_RD.Size = new System.Drawing.Size(229, 20);
             this.selectKeyword_RD.TabIndex = 1;
             // 
             // tableLayoutPanel7
@@ -259,13 +258,13 @@
             this.tableLayoutPanel7.Controls.Add(this.registerButton, 0, 0);
             this.tableLayoutPanel7.Controls.Add(this.deleteButton, 0, 1);
             this.tableLayoutPanel7.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel7.Location = new System.Drawing.Point(254, 1);
+            this.tableLayoutPanel7.Location = new System.Drawing.Point(296, 1);
             this.tableLayoutPanel7.Margin = new System.Windows.Forms.Padding(1);
             this.tableLayoutPanel7.Name = "tableLayoutPanel7";
             this.tableLayoutPanel7.RowCount = 2;
             this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel7.Size = new System.Drawing.Size(167, 70);
+            this.tableLayoutPanel7.Size = new System.Drawing.Size(125, 70);
             this.tableLayoutPanel7.TabIndex = 1;
             // 
             // registerButton
@@ -273,9 +272,8 @@
             this.registerButton.Dock = System.Windows.Forms.DockStyle.Fill;
             this.registerButton.Location = new System.Drawing.Point(3, 3);
             this.registerButton.Name = "registerButton";
-            this.registerButton.Size = new System.Drawing.Size(161, 29);
+            this.registerButton.Size = new System.Drawing.Size(119, 29);
             this.registerButton.TabIndex = 0;
-            this.registerButton.Text = "登録";
             this.registerButton.UseVisualStyleBackColor = true;
             this.registerButton.Click += new System.EventHandler(this.registerButton_Click);
             // 
@@ -284,9 +282,8 @@
             this.deleteButton.Dock = System.Windows.Forms.DockStyle.Fill;
             this.deleteButton.Location = new System.Drawing.Point(3, 38);
             this.deleteButton.Name = "deleteButton";
-            this.deleteButton.Size = new System.Drawing.Size(161, 29);
+            this.deleteButton.Size = new System.Drawing.Size(119, 29);
             this.deleteButton.TabIndex = 1;
-            this.deleteButton.Text = "削除";
             this.deleteButton.UseVisualStyleBackColor = true;
             this.deleteButton.Click += new System.EventHandler(this.deleteButton_Click);
             // 
@@ -301,6 +298,42 @@
             this.photoPreview.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.photoPreview.TabIndex = 1;
             this.photoPreview.TabStop = false;
+            // 
+            // tableLayoutPanel12
+            // 
+            this.tableLayoutPanel12.ColumnCount = 2;
+            this.tableLayoutPanel12.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14F));
+            this.tableLayoutPanel12.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 86F));
+            this.tableLayoutPanel12.Controls.Add(this.photoKeyword, 1, 0);
+            this.tableLayoutPanel12.Controls.Add(this.label2, 0, 0);
+            this.tableLayoutPanel12.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel12.Location = new System.Drawing.Point(2, 257);
+            this.tableLayoutPanel12.Margin = new System.Windows.Forms.Padding(1);
+            this.tableLayoutPanel12.Name = "tableLayoutPanel12";
+            this.tableLayoutPanel12.RowCount = 1;
+            this.tableLayoutPanel12.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel12.Size = new System.Drawing.Size(422, 34);
+            this.tableLayoutPanel12.TabIndex = 2;
+            // 
+            // photoKeyword
+            // 
+            this.photoKeyword.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.photoKeyword.Location = new System.Drawing.Point(62, 7);
+            this.photoKeyword.Name = "photoKeyword";
+            this.photoKeyword.ReadOnly = true;
+            this.photoKeyword.Size = new System.Drawing.Size(357, 19);
+            this.photoKeyword.TabIndex = 0;
+            // 
+            // label2
+            // 
+            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(3, 11);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(53, 12);
+            this.label2.TabIndex = 1;
+            this.label2.Text = "キーワード";
+            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // tableLayoutPanel10
             // 
@@ -350,7 +383,6 @@
             this.searchButton.Name = "searchButton";
             this.searchButton.Size = new System.Drawing.Size(192, 30);
             this.searchButton.TabIndex = 2;
-            this.searchButton.Text = "検索";
             this.searchButton.UseVisualStyleBackColor = true;
             this.searchButton.Click += new System.EventHandler(this.searchButton_Click);
             // 
@@ -474,7 +506,6 @@
             this.filterButton.Name = "filterButton";
             this.filterButton.Size = new System.Drawing.Size(193, 30);
             this.filterButton.TabIndex = 5;
-            this.filterButton.Text = "フィルタ";
             this.filterButton.UseVisualStyleBackColor = true;
             this.filterButton.Click += new System.EventHandler(this.filterButton_Click);
             // 
@@ -486,42 +517,6 @@
             this.dateStart.Name = "dateStart";
             this.dateStart.Size = new System.Drawing.Size(124, 19);
             this.dateStart.TabIndex = 6;
-            // 
-            // tableLayoutPanel12
-            // 
-            this.tableLayoutPanel12.ColumnCount = 2;
-            this.tableLayoutPanel12.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14F));
-            this.tableLayoutPanel12.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 86F));
-            this.tableLayoutPanel12.Controls.Add(this.photoKeyword, 1, 0);
-            this.tableLayoutPanel12.Controls.Add(this.label2, 0, 0);
-            this.tableLayoutPanel12.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel12.Location = new System.Drawing.Point(2, 257);
-            this.tableLayoutPanel12.Margin = new System.Windows.Forms.Padding(1);
-            this.tableLayoutPanel12.Name = "tableLayoutPanel12";
-            this.tableLayoutPanel12.RowCount = 1;
-            this.tableLayoutPanel12.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel12.Size = new System.Drawing.Size(422, 34);
-            this.tableLayoutPanel12.TabIndex = 2;
-            // 
-            // photoKeyword
-            // 
-            this.photoKeyword.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.photoKeyword.Location = new System.Drawing.Point(62, 7);
-            this.photoKeyword.Name = "photoKeyword";
-            this.photoKeyword.ReadOnly = true;
-            this.photoKeyword.Size = new System.Drawing.Size(357, 19);
-            this.photoKeyword.TabIndex = 0;
-            // 
-            // label2
-            // 
-            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(3, 11);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(53, 12);
-            this.label2.TabIndex = 1;
-            this.label2.Text = "キーワード";
-            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // Form1
             // 
@@ -540,6 +535,8 @@
             this.tableLayoutPanel6.PerformLayout();
             this.tableLayoutPanel7.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.photoPreview)).EndInit();
+            this.tableLayoutPanel12.ResumeLayout(false);
+            this.tableLayoutPanel12.PerformLayout();
             this.tableLayoutPanel10.ResumeLayout(false);
             this.tableLayoutPanel10.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.fileIcon)).EndInit();
@@ -547,8 +544,6 @@
             this.tableLayoutPanel9.ResumeLayout(false);
             this.tableLayoutPanel11.ResumeLayout(false);
             this.tableLayoutPanel11.PerformLayout();
-            this.tableLayoutPanel12.ResumeLayout(false);
-            this.tableLayoutPanel12.PerformLayout();
             this.ResumeLayout(false);
 
         }

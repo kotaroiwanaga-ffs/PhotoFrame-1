@@ -60,6 +60,16 @@ namespace PhotoFrameApp
             dateTime_E = null;
             setDateTimePickerS(dateTime_S);
             setDateTimePickerE(dateTime_E);
+            searchButton.BackgroundImageLayout = ImageLayout.Stretch; 
+            searchButton.BackgroundImage = Image.FromFile(@"C:\研修用\検索.png");
+            filterButton.BackgroundImageLayout = ImageLayout.Stretch;
+            filterButton.BackgroundImage = Image.FromFile(@"C:\研修用\フィルタ.png");
+            registerButton.BackgroundImageLayout = ImageLayout.Stretch;
+            registerButton.BackgroundImage = Image.FromFile(@"C:\研修用\登録.png");
+            deleteButton.BackgroundImageLayout = ImageLayout.Stretch;
+            deleteButton.BackgroundImage = Image.FromFile(@"C:\研修用\削除.png");
+            slideShowButton.BackgroundImageLayout = ImageLayout.Stretch;
+            slideShowButton.BackgroundImage = Image.FromFile(@"C:\研修用\スライドショー.png");
         }
 
         /// <summary>
@@ -142,7 +152,7 @@ namespace PhotoFrameApp
         }
 
         /// <summary>
-        /// dateEndrの表示を消す処理
+        /// dateEndの表示を消す処理
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -302,7 +312,7 @@ namespace PhotoFrameApp
             fbd.SelectedPath = @"C:\Windows";
             //ユーザーが新しいフォルダを作成できるようにする
             //デフォルトでTrue
-            fbd.ShowNewFolderButton = true;
+            fbd.ShowNewFolderButton = false;
 
             //ダイアログを表示する
             if (fbd.ShowDialog(this) == DialogResult.OK)
@@ -738,6 +748,7 @@ namespace PhotoFrameApp
                 if (application.DeleteKeyword(selectKeyword_RD.Text, selectedPhotos.AsEnumerable()))
                 {
                     renewPhotoListView();
+                    photoKeyword.Text = "";
                 }
                 else
                 {
