@@ -19,11 +19,11 @@ namespace PhotoFrameApp
         private IEnumerable<PhotoFrame.Domain.Model.Photo> slideshow_list;//スライドショーを行う写真リスト
 
         private IEnumerable<Album> albumlist;
-        private PhotoFrameApplication application;
-        //private PhotoFrameApplicationTest application;
+        //private PhotoFrameApplication application;
+        private PhotoFrameApplicationTest application;
         private int slideindex;
 
-        public SlideShow(IEnumerable<PhotoFrame.Domain.Model.Photo> photolist, PhotoFrameApplication application)
+        public SlideShow(IEnumerable<PhotoFrame.Domain.Model.Photo> photolist, PhotoFrameApplicationTest application)
         {
             InitializeComponent();
 
