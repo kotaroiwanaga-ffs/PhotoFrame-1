@@ -13,6 +13,7 @@ namespace PhotoFrame.Persistence.EF
     /// </summary>
     public class AlbumRepository : IAlbumRepository
     {
+        //DBから保存したすべてのアルバムをAlbum型に変更して返す
         public IEnumerable<Album> Find()
         {
             using (TeamBEntities database = new TeamBEntities())
@@ -27,6 +28,11 @@ namespace PhotoFrame.Persistence.EF
             }
         }
 
+        /// <summary>
+        /// アルバムを新規保存
+        /// </summary>
+        /// <param name="album"></param>
+        /// <returns></returns>
         public Album Store(Album album)
         {
             if (!Exists(album) && album.Name != null && album.Name != "")
@@ -55,6 +61,11 @@ namespace PhotoFrame.Persistence.EF
             return album;
         }
 
+        /// <summary>
+        /// アルバムがDBに存在しているかどうかを確認
+        /// </summary>
+        /// <param name="album"></param>
+        /// <returns></returns>
         public bool Exists(Album album)
         {
             using (TeamBEntities database = new TeamBEntities())
