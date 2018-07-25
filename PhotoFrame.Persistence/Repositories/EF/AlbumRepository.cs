@@ -43,8 +43,8 @@ namespace PhotoFrame.Persistence.EF
 
                         database.ALBUM_TABLE.Add(saveAlbum);
 
-                        transaction.Commit();
                         database.SaveChanges();
+                        transaction.Commit();
                     }
                     catch
                     {

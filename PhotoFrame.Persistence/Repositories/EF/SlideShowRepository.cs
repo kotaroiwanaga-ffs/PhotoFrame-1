@@ -48,8 +48,8 @@ namespace PhotoFrame.Persistence.Repositories.EF
                         var phototable = database.PHOTO_TABLE.Find(photo.File.FilePath);
                         albumtable.PHOTO_TABLE.Add(phototable);
 
-                        transaction.Commit();
                         database.SaveChanges();
+                        transaction.Commit();
                     }
                     catch
                     {

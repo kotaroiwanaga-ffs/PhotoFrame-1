@@ -88,8 +88,8 @@ namespace PhotoFrame.Persistence.EF
                                 database.KEYWORD_TABLE.Add(keyworddata);
                             }
                         }
-                        transaction.Commit();
                         database.SaveChanges();
+                        transaction.Commit();
                     }
                     catch
                     {
@@ -110,8 +110,8 @@ namespace PhotoFrame.Persistence.EF
                     var photodata = database.PHOTO_TABLE.Find(photo.File.FilePath);
                     photodata.ISFAVORITE = photo.IsFavorite;
 
-                    transaction.Commit();
                     database.SaveChanges();
+                    transaction.Commit();
                 }
                 catch
                 {
@@ -156,8 +156,8 @@ namespace PhotoFrame.Persistence.EF
                         }
                     }
                     
-                    transaction.Commit();
                     database.SaveChanges();
+                    transaction.Commit();
                 }
                 catch
                 {

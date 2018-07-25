@@ -99,10 +99,10 @@ namespace PhotoFrameApp
             {//「保存済みのアルバム」のラジオボタンのチェックが入ったとき
                 comboBox_AlbumName.Enabled = true;
                 radioButton_ListViewSlideShow.Checked = false;
+                Stop();
 
                 if (comboBox_AlbumName.Text != "")
                 {
-                    Stop();
                     this.slideshow_list = application.SearchAlbum(comboBox_AlbumName.Text);
                     //pictureBox_SlideShow.ImageLocation = this.slideshow_list.ElementAt(0).File.FilePath;
                     pictureBox_SlideShow.Image = Image.FromFile(this.slideshow_list.ElementAt(0).File.FilePath);
@@ -199,6 +199,10 @@ namespace PhotoFrameApp
                 {
                     MessageBox.Show("アルバム名を入力してください。");
 
+                }
+                else if (savaName.Length > 30)
+                {
+                    MessageBox.Show("アルバム名が30文字以内にしてください。");
                 }
                 else
                 {
@@ -421,7 +425,7 @@ namespace PhotoFrameApp
             else
             {
                 //pictureBox_SlideShow.ImageLocation = @"C:\研修用\写真がなし.png";
-                pictureBox_SlideShow.Image = Image.FromFile(@"C:\研修用\写真がなし.png");
+                pictureBox_SlideShow.Image = Image.FromFile(@"C:\研修用\リストビューに写真がなし.png");
             }
 
 
