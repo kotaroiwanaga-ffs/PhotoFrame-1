@@ -16,6 +16,12 @@ namespace PhotoFrame.Domain.UseCase
             this.repositoryMaster = repositoryMaster;
         }
 
+        /// <summary>
+        /// photosの各要素から指定したキーワードを削除する
+        /// </summary>
+        /// <param name="keyword"></param>
+        /// <param name="photos"></param>
+        /// <returns>photosのうち一つでもキーワード削除が成功したらtrue</returns>
         public bool Execute(string keyword, IEnumerable<Photo> photos)
         {
             bool success = false;
