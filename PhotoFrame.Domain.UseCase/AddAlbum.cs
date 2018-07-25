@@ -20,7 +20,7 @@ namespace PhotoFrame.Domain.UseCase
         {
             Album album = Album.Create(albumName);
 
-            if(!repositoryMaster.ExistsAlbum(album))
+            if(album.Name != "" && album.Name.Length <= 30 && !repositoryMaster.ExistsAlbum(album))
             {
                 repositoryMaster.StoreAlbum(album);
                 
@@ -33,6 +33,7 @@ namespace PhotoFrame.Domain.UseCase
                 }
 
                 repositoryMaster.StoreSlideShow(album, photos);
+
                 return true;
             }
             else
