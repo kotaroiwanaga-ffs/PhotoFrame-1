@@ -202,7 +202,7 @@ namespace PhotoFrameApp
                 }
                 else if (savaName.Length > 30)
                 {
-                    MessageBox.Show("アルバム名が30文字以内にしてください。");
+                    MessageBox.Show("アルバム名を30文字以内にしてください。");
                 }
                 else
                 {
