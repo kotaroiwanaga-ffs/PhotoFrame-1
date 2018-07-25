@@ -523,7 +523,7 @@ namespace PhotoFrameApp
 
         private void SetPreview()
         {
-            if(this.photo_listview.Count() > 0)
+            if (this.photo_listview.Count() > 0)
             {//リストビューに写真が存在するとき
                 pictureBox_SlideShow.Image = Image.FromFile(this.slideshow_list.ElementAt(slideindex).File.FilePath);
 
@@ -563,5 +563,6 @@ namespace PhotoFrameApp
 
                 }
             }
+        }
     }
 }
